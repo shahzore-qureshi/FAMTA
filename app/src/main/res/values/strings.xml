@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FAMTA</string>
+    <string name="title_subway_lines">Subway Lines</string>
+    <string name="title_feeds">Feeds</string>
+    <string name="title_construction">Construction</string>
+</resources>
