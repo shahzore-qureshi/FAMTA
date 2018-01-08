@@ -1,5 +1,5 @@
-<vector android:height="40dp" android:viewportHeight="90.0"
-    android:viewportWidth="90.0" android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector android:height="@dimen/subway_service_icon_size" android:viewportHeight="90.0"
+    android:viewportWidth="90.0" android:width="@dimen/subway_service_icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#FF6219" android:pathData="M45,45m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0"/>
-    <path android:fillColor="#ffffff" android:fillType="nonZero" android:pathData="M54.11,21.01L68.54,21.01L68.54,68.99L59.19,68.99L59.19,36.54C59.19,35.6 59.2,34.3 59.23,32.61C59.25,30.93 59.26,29.64 59.26,28.72L50.18,68.99L40.44,68.99L31.43,28.72C31.43,29.64 31.44,30.93 31.46,32.61C31.48,34.3 31.49,35.6 31.49,36.54L31.49,68.99L22.15,68.99L22.15,21.01L36.73,21.01L45.46,58.74L54.11,21.01Z"/>
+    <path android:fillColor="#ffffff" android:pathData="M54.11,21.01L68.54,21.01L68.54,68.99L59.19,68.99L59.19,36.54C59.19,35.6 59.2,34.3 59.23,32.61C59.25,30.93 59.26,29.64 59.26,28.72L50.18,68.99L40.44,68.99L31.43,28.72C31.43,29.64 31.44,30.93 31.46,32.61C31.48,34.3 31.49,35.6 31.49,36.54L31.49,68.99L22.15,68.99L22.15,21.01L36.73,21.01L45.46,58.74L54.11,21.01Z"/>
 </vector>

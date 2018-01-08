@@ -1,5 +1,5 @@
-<vector android:height="40dp" android:viewportHeight="90.0"
-    android:viewportWidth="90.0" android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector android:height="@dimen/subway_service_icon_size" android:viewportHeight="90.0"
+    android:viewportWidth="90.0" android:width="@dimen/subway_service_icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#A7A9AC" android:pathData="M45,45m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0"/>
-    <path android:fillColor="#ffffff" android:fillType="nonZero" android:pathData="M29.72,21.01L39.74,21.01L39.74,60.36L63.51,60.36L63.51,68.99L29.72,68.99L29.72,21.01Z"/>
+    <path android:fillColor="#ffffff" android:pathData="M29.72,21.01L39.74,21.01L39.74,60.36L63.51,60.36L63.51,68.99L29.72,68.99L29.72,21.01Z"/>
 </vector>

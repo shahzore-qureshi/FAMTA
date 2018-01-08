@@ -1,5 +1,5 @@
-<vector android:height="40dp" android:viewportHeight="90.0"
-    android:viewportWidth="90.0" android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector android:height="@dimen/subway_service_icon_size" android:viewportHeight="90.0"
+    android:viewportWidth="90.0" android:width="@dimen/subway_service_icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#FF6219" android:pathData="M45,45m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0"/>
-    <path android:fillColor="#ffffff" android:fillType="nonZero" android:pathData="M35.74,29.34L35.74,60.66L44.98,60.66C49.71,60.66 53.01,58.32 54.88,53.66C55.9,51.1 56.41,48.05 56.41,44.51C56.41,39.63 55.64,35.88 54.11,33.26C52.58,30.65 49.54,29.34 44.98,29.34L35.74,29.34ZM54.1,22.05C57.46,23.16 60.19,25.19 62.27,28.14C63.94,30.53 65.08,33.11 65.69,35.89C66.29,38.66 66.6,41.31 66.6,43.83C66.6,50.21 65.32,55.61 62.76,60.04C59.28,66.01 53.92,68.99 46.68,68.99L26.01,68.99L26.01,21.01L46.68,21.01C49.65,21.05 52.12,21.4 54.1,22.05Z"/>
+    <path android:fillColor="#ffffff" android:pathData="M35.74,29.34L35.74,60.66L44.98,60.66C49.71,60.66 53.01,58.32 54.88,53.66C55.9,51.1 56.41,48.05 56.41,44.51C56.41,39.63 55.64,35.88 54.11,33.26C52.58,30.65 49.54,29.34 44.98,29.34L35.74,29.34ZM54.1,22.05C57.46,23.16 60.19,25.19 62.27,28.14C63.94,30.53 65.08,33.11 65.69,35.89C66.29,38.66 66.6,41.31 66.6,43.83C66.6,50.21 65.32,55.61 62.76,60.04C59.28,66.01 53.92,68.99 46.68,68.99L26.01,68.99L26.01,21.01L46.68,21.01C49.65,21.05 52.12,21.4 54.1,22.05Z"/>
 </vector>

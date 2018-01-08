@@ -6,20 +6,18 @@
     android:name="com.shahzorequreshi.famta.fragments.SubwayLineFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     tools:context="com.shahzorequreshi.famta.fragments.SubwayLineFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/bottom_navigation_view_height"
             android:layout_marginBottom="@dimen/activity_vertical_margin">
 
             <ImageView
