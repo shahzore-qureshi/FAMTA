@@ -11,14 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.dummy.DummyContent
-import com.shahzorequreshi.famta.fragments.dummy.DummyContent.DummyItem
+import com.shahzorequreshi.famta.fragments.dummy.Subway
+import com.shahzorequreshi.famta.fragments.dummy.Subway.SubwayLine
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MyConstructionRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
  *
  *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
+ * Activities containing this fragment MUST implement the [OnConstructionFragmentInteractionListener]
  * interface.
  */
 /**
@@ -28,7 +29,7 @@ import com.shahzorequreshi.famta.fragments.dummy.DummyContent.DummyItem
 class ConstructionFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
-    private var mListener: OnListFragmentInteractionListener? = null
+    private var mListener: OnConstructionFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class ConstructionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_construction_list, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_construction, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -50,7 +51,7 @@ class ConstructionFragment : Fragment() {
             } else {
                 view.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            view.adapter = MyConstructionRecyclerViewAdapter(DummyContent.ITEMS, mListener)
+            view.adapter = MyConstructionRecyclerViewAdapter(Subway.LINES, mListener)
         }
         return view
     }
@@ -58,10 +59,10 @@ class ConstructionFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is OnConstructionFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnFeedFragmentInteractionListener")
         }
     }
 
@@ -79,9 +80,9 @@ class ConstructionFragment : Fragment() {
      *
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
-    interface OnListFragmentInteractionListener {
+    interface OnConstructionFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem)
+        fun onConstructionFragmentInteraction(item: SubwayLine)
     }
 
     companion object {

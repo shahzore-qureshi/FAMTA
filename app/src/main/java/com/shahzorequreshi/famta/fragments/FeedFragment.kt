@@ -11,8 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.dummy.DummyContent
-import com.shahzorequreshi.famta.fragments.dummy.DummyContent.DummyItem
+import com.shahzorequreshi.famta.fragments.dummy.Subway
+import com.shahzorequreshi.famta.fragments.dummy.Subway.SubwayLine
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MyFeedRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -28,7 +29,7 @@ import com.shahzorequreshi.famta.fragments.dummy.DummyContent.DummyItem
 class FeedFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
-    private var mListener: OnListFragmentInteractionListener? = null
+    private var mListener: OnFeedFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class FeedFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_feed_list, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_feed, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -50,7 +51,7 @@ class FeedFragment : Fragment() {
             } else {
                 view.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            view.adapter = MyFeedRecyclerViewAdapter(DummyContent.ITEMS, mListener)
+            view.adapter = MyFeedRecyclerViewAdapter(Subway.LINES, mListener)
         }
         return view
     }
@@ -58,10 +59,10 @@ class FeedFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is OnFeedFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnFeedFragmentInteractionListener")
         }
     }
 
@@ -79,9 +80,9 @@ class FeedFragment : Fragment() {
      *
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
-    interface OnListFragmentInteractionListener {
+    interface OnFeedFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem)
+        fun onFeedFragmentInteraction(item: SubwayLine)
     }
 
     companion object {

@@ -3,4 +3,6 @@
     <string name="title_subway_lines">Subway Lines</string>
     <string name="title_feeds">Feeds</string>
     <string name="title_construction">Construction</string>
+    <string name="subway_service_1">Subway Service 1</string>
+
 </resources>
