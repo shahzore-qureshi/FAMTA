@@ -1,9 +1,9 @@
-package com.shahzorequreshi.famta.fragments.dummy
+package com.shahzorequreshi.famta.objects
 
 import java.util.ArrayList
 
 object Subway {
-    val LINES: MutableList<SubwayLine> = ArrayList<SubwayLine>()
+    val LINES: MutableList<SubwayLine> = ArrayList()
 
     init {
         addItem(SubwayLine("blue", arrayOf("A", "C", "E")))

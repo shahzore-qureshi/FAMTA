@@ -9,7 +9,7 @@ import com.shahzorequreshi.famta.R.id.construction_list_item_text
 import com.shahzorequreshi.famta.R.layout.fragment_construction_list_item
 
 import com.shahzorequreshi.famta.fragments.ConstructionFragment.OnConstructionFragmentInteractionListener
-import com.shahzorequreshi.famta.fragments.dummy.Subway.SubwayLine
+import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 
 /**
  * [RecyclerView.Adapter] that can display a [SubwayLine] and makes a call to the

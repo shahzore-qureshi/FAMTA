@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.dummy.Subway
-import com.shahzorequreshi.famta.fragments.dummy.Subway.SubwayLine
+import com.shahzorequreshi.famta.objects.Subway
+import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MyConstructionRecyclerViewAdapter
 
 /**

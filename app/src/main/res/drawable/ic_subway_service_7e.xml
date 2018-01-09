@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="@dimen/subway_service_icon_express_size"
+        android:height="@dimen/subway_service_icon_express_size"
+        android:viewportWidth="90.0"
+        android:viewportHeight="90.0">
+    <path
+        android:pathData="M45.17,0.63l44.55,44.55l-44.55,44.55l-44.55,-44.55z"
+        android:fillColor="#B933AE"
+        android:strokeWidth="0"/>
+    <path
+        android:pathData="M61.62,29.67C60.23,31.04 58.3,33.47 55.82,36.98C53.35,40.48 51.28,44.1 49.61,47.83C48.28,50.76 47.09,54.34 46.03,58.57C44.96,62.81 44.43,66.28 44.43,68.99L34.79,68.99C35.08,60.53 37.85,51.73 43.13,42.59C46.54,36.93 49.39,32.98 51.69,30.74L28.15,30.74L28.28,22.41L61.62,22.41L61.62,29.67Z"
+        android:fillColor="#ffffff"/>
+</vector>
