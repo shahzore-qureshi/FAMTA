@@ -44,15 +44,15 @@ class ConstructionFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_construction, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
-            } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-            view.adapter = MyConstructionRecyclerViewAdapter(Subway.LINES, mListener)
-        }
+//        if (view is RecyclerView) {
+//            val context = view.getContext()
+//            if (mColumnCount <= 1) {
+//                view.layoutManager = LinearLayoutManager(context)
+//            } else {
+//                view.layoutManager = GridLayoutManager(context, mColumnCount)
+//            }
+//            view.adapter = MyConstructionRecyclerViewAdapter(Subway.Lines, mListener)
+//        }
         return view
     }
 

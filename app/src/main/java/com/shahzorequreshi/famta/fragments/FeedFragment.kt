@@ -44,15 +44,15 @@ class FeedFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_feed, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
-            } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-            view.adapter = MyFeedRecyclerViewAdapter(Subway.LINES, mListener)
-        }
+//        if (view is RecyclerView) {
+//            val context = view.getContext()
+//            if (mColumnCount <= 1) {
+//                view.layoutManager = LinearLayoutManager(context)
+//            } else {
+//                view.layoutManager = GridLayoutManager(context, mColumnCount)
+//            }
+//            view.adapter = MyFeedRecyclerViewAdapter(Subway.LINES, mListener)
+//        }
         return view
     }
 

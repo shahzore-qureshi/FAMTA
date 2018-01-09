@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 
 import com.shahzorequreshi.famta.R
+import com.shahzorequreshi.famta.objects.Subway
 import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 
 /**
@@ -30,7 +31,47 @@ class SubwayLineFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_subway_line, container, false)
 
         view.findViewById<LinearLayout>(R.id.subway_line_blue).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(SubwayLine("blue", arrayOf("A", "C", "E")))
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["blue"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_orange).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["orange"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_lime_green).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["lime green"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_light_gray).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["light gray"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_brown).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["brown"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_yellow).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["yellow"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_red).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["red"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_green).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["green"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_raspberry).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["raspberry"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_gray).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_dark_blue).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["dark blue"]!!)
         }
 
         return view
@@ -51,16 +92,10 @@ class SubwayLineFragment : Fragment() {
     }
 
     interface OnSubwayLineFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onSubwayLineFragmentInteraction(item: SubwayLine)
     }
 
     companion object {
-        @Volatile private var INSTANCE: SubwayLineFragment? = null
-
-        fun getInstance(): SubwayLineFragment =
-            INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: SubwayLineFragment().also { INSTANCE = it }
-            }
+        fun newInstance() = SubwayLineFragment()
     }
 }

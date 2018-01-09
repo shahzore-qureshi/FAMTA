@@ -4,5 +4,29 @@
     <string name="title_feeds">Feeds</string>
     <string name="title_construction">Construction</string>
     <string name="subway_service_1">Subway Service 1</string>
-
+    <string name="subway_service_2">Subway Service 2</string>
+    <string name="subway_service_3">Subway Service 3</string>
+    <string name="subway_service_4">Subway Service 4</string>
+    <string name="subway_service_5">Subway Service 5</string>
+    <string name="subway_service_6">Subway Service 6</string>
+    <string name="subway_service_6e">Subway Service 6 Express</string>
+    <string name="subway_service_7">Subway Service 7</string>
+    <string name="subway_service_7e">Subway Service 7 Express</string>
+    <string name="subway_service_a">Subway Service A</string>
+    <string name="subway_service_b">Subway Service B</string>
+    <string name="subway_service_c">Subway Service C</string>
+    <string name="subway_service_d">Subway Service D</string>
+    <string name="subway_service_e">Subway Service E</string>
+    <string name="subway_service_f">Subway Service F</string>
+    <string name="subway_service_g">Subway Service G</string>
+    <string name="subway_service_j">Subway Service J</string>
+    <string name="subway_service_l">Subway Service L</string>
+    <string name="subway_service_m">Subway Service M</string>
+    <string name="subway_service_n">Subway Service N</string>
+    <string name="subway_service_q">Subway Service Q</string>
+    <string name="subway_service_r">Subway Service R</string>
+    <string name="subway_service_s">Subway Service S</string>
+    <string name="subway_service_sir">Subway Service SIR</string>
+    <string name="subway_service_w">Subway Service W</string>
+    <string name="subway_service_z">Subway Service Z</string>
 </resources>
