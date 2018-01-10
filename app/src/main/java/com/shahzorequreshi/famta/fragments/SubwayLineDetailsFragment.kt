@@ -14,6 +14,7 @@ import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MySubwayLineDe
 import com.shahzorequreshi.famta.objects.Subway
 import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 import com.shahzorequreshi.famta.objects.Subway.SubwayService
+import android.support.v7.widget.DividerItemDecoration
 
 /**
  * A fragment representing a list of Items.
@@ -43,7 +44,8 @@ class SubwayLineDetailsFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = MySubwayLineDetailsRecyclerViewAdapter(mSubwayLine!!.services, mListener)
+            view.adapter = MySubwayLineDetailsRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
+            view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
     }

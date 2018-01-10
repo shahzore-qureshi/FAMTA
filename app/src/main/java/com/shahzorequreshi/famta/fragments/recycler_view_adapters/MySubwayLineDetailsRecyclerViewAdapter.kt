@@ -1,5 +1,6 @@
 package com.shahzorequreshi.famta.fragments.recycler_view_adapters
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,8 @@ import com.shahzorequreshi.famta.fragments.SubwayLineDetailsFragment.OnSubwayLin
  */
 class MySubwayLineDetailsRecyclerViewAdapter(
         private val mValues: List<SubwayService?>,
-        private val mListener: OnSubwayLineDetailsFragmentInteractionListener?)
+        private val mListener: OnSubwayLineDetailsFragmentInteractionListener?,
+        private val mContext: Context?)
     : RecyclerView.Adapter<MySubwayLineDetailsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +33,12 @@ class MySubwayLineDetailsRecyclerViewAdapter(
         holder.mImageView.setImageResource(holder.mItem!!.drawableId)
         holder.mView.setOnClickListener {
             mListener?.onSubwayLineDetailsFragmentInteraction(holder.mItem!!)
+        }
+        if(position == 0 && mContext != null) {
+            val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
+            val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
+            var params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
+            params.setMargins(0, marginTop.toInt(), 0, marginBottom.toInt())
         }
     }
 

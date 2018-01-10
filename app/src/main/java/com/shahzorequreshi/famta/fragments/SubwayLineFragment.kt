@@ -66,9 +66,9 @@ class SubwayLineFragment : Fragment() {
             mListener?.onSubwayLineFragmentInteraction(Subway.Lines["raspberry"]!!)
         }
 
-        view.findViewById<LinearLayout>(R.id.subway_line_gray).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray"]!!)
-        }
+//        view.findViewById<LinearLayout>(R.id.subway_line_gray).setOnClickListener {
+//            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray"]!!)
+//        }
 
         view.findViewById<LinearLayout>(R.id.subway_line_dark_blue).setOnClickListener {
             mListener?.onSubwayLineFragmentInteraction(Subway.Lines["dark blue"]!!)

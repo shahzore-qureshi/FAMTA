@@ -4,4 +4,6 @@
     android:id="@+id/subway_line_details_list_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:srcCompat="@drawable/ic_subway_service_a"/>
+    app:srcCompat="@drawable/ic_subway_service_a"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
