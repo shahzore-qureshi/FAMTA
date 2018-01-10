@@ -14,10 +14,6 @@ import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 
 /**
  * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
  */
 /**
  * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,9 +62,17 @@ class SubwayLineFragment : Fragment() {
             mListener?.onSubwayLineFragmentInteraction(Subway.Lines["raspberry"]!!)
         }
 
-//        view.findViewById<LinearLayout>(R.id.subway_line_gray).setOnClickListener {
-//            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray"]!!)
-//        }
+        view.findViewById<LinearLayout>(R.id.subway_line_gray_manhattan).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray manhattan"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_gray_queens).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray queens"]!!)
+        }
+
+        view.findViewById<LinearLayout>(R.id.subway_line_gray_brooklyn).setOnClickListener {
+            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray brooklyn"]!!)
+        }
 
         view.findViewById<LinearLayout>(R.id.subway_line_dark_blue).setOnClickListener {
             mListener?.onSubwayLineFragmentInteraction(Subway.Lines["dark blue"]!!)

@@ -29,4 +29,7 @@
     <string name="subway_service_sir">Subway Service SIR</string>
     <string name="subway_service_w">Subway Service W</string>
     <string name="subway_service_z">Subway Service Z</string>
+    <string name="manhattan">Manhattan</string>
+    <string name="queens">Queens</string>
+    <string name="brooklyn">Brooklyn</string>
 </resources>

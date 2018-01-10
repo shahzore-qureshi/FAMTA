@@ -155,14 +155,26 @@ object Subway {
 
         Lines.put("raspberry", SubwayLine("raspberry", listOf(Services["7"], Services["7e"])))
 
-        /*
-        Services.put("s", SubwayService("s",
+        Services.put("s manhattan", SubwayService("s manhattan",
                 R.drawable.ic_subway_service_s,
-                "??",
-                "??"))
+                "Times Square, Manhattan",
+                "Grand Central Station, Manhattan"))
 
-        Lines.put("gray", SubwayLine("gray", listOf(Services["s"])))
-        */
+        Lines.put("gray manhattan", SubwayLine("gray manhattan", listOf(Services["s manhattan"])))
+
+        Services.put("s queens", SubwayService("s queens",
+                R.drawable.ic_subway_service_s,
+                "Broad Channel, Queens",
+                "Rockaway Park, Queens"))
+
+        Lines.put("gray queens", SubwayLine("gray queens", listOf(Services["s queens"])))
+
+        Services.put("s brooklyn", SubwayService("s brooklyn",
+                R.drawable.ic_subway_service_s,
+                "Franklin Avenue, Brooklyn",
+                "Prospect Park, Brooklyn"))
+
+        Lines.put("gray brooklyn", SubwayLine("gray brooklyn", listOf(Services["s brooklyn"])))
 
         Services.put("sir", SubwayService("sir",
                 R.drawable.ic_subway_service_sir,
