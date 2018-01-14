@@ -10,11 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MySubwayLineDetailsRecyclerViewAdapter
-import com.shahzorequreshi.famta.objects.Subway
-import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 import com.shahzorequreshi.famta.objects.Subway.SubwayService
+import com.shahzorequreshi.famta.objects.Subway.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayBoundRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -27,24 +26,36 @@ import android.support.v7.widget.DividerItemDecoration
  * Mandatory empty constructor for the fragment manager to instantiate the
  * fragment (e.g. upon screen orientation changes).
  */
-class SubwayLineDetailsFragment : Fragment() {
-    private var mSubwayLine: SubwayLine? = null
-    private var mListener: OnSubwayLineDetailsFragmentInteractionListener? = null
+class SubwayServiceFragment : Fragment() {
+    private var mSubwayService: SubwayService? = null
+    private var mListener: OnSubwayServiceFragmentInteractionListener? = null
+
+    companion object {
+        private val ARG_SUBWAY_SERVICE = "subway-service"
+
+        fun newInstance(subwayService: SubwayService): SubwayServiceFragment {
+            val fragment = SubwayServiceFragment()
+            val args = Bundle()
+            args.putSerializable(ARG_SUBWAY_SERVICE, subwayService)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mSubwayLine = Subway.Lines[arguments.getString(ARG_SUBWAY_LINE)]
+            mSubwayService = arguments[ARG_SUBWAY_SERVICE] as SubwayService
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_subway_line_details, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_subway_service, container, false)
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = MySubwayLineDetailsRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
+            view.adapter = SubwayBoundRecyclerViewAdapter(mSubwayService!!.bounds, mListener, activity)
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
@@ -52,10 +63,10 @@ class SubwayLineDetailsFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnSubwayLineDetailsFragmentInteractionListener) {
+        if (context is OnSubwayServiceFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnSubwayLineDetailsFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnSubwayServiceFragmentInteractionListener")
         }
     }
 
@@ -64,19 +75,7 @@ class SubwayLineDetailsFragment : Fragment() {
         mListener = null
     }
 
-    interface OnSubwayLineDetailsFragmentInteractionListener {
-        fun onSubwayLineDetailsFragmentInteraction(item: SubwayService)
-    }
-
-    companion object {
-        private val ARG_SUBWAY_LINE = "subway-line"
-
-        fun newInstance(subwayLine: SubwayLine): SubwayLineDetailsFragment {
-            val fragment = SubwayLineDetailsFragment()
-            val args = Bundle()
-            args.putString(ARG_SUBWAY_LINE, subwayLine.name)
-            fragment.arguments = args
-            return fragment
-        }
+    interface OnSubwayServiceFragmentInteractionListener {
+        fun onSubwayServiceFragmentInteraction(item: SubwayBound)
     }
 }

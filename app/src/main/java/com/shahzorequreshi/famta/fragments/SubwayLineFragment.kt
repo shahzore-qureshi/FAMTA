@@ -3,81 +3,61 @@ package com.shahzorequreshi.famta.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayLineRecyclerViewAdapter
 import com.shahzorequreshi.famta.objects.Subway.SubwayLine
+import com.shahzorequreshi.famta.objects.Subway.SubwayService
+import android.support.v7.widget.DividerItemDecoration
 
 /**
  * A fragment representing a list of Items.
+ *
+ *
+ * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
+ * interface.
  */
 /**
  * Mandatory empty constructor for the fragment manager to instantiate the
  * fragment (e.g. upon screen orientation changes).
  */
 class SubwayLineFragment : Fragment() {
+    private var mSubwayLine: SubwayLine? = null
     private var mListener: OnSubwayLineFragmentInteractionListener? = null
+
+    companion object {
+        private val ARG_SUBWAY_LINE = "subway-line"
+
+        fun newInstance(subwayLine: SubwayLine): SubwayLineFragment {
+            val fragment = SubwayLineFragment()
+            val args = Bundle()
+            args.putSerializable(ARG_SUBWAY_LINE, subwayLine)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            mSubwayLine = arguments.getSerializable(ARG_SUBWAY_LINE) as SubwayLine
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_subway_line, container, false)
-
-        view.findViewById<LinearLayout>(R.id.subway_line_blue).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["blue"]!!)
+        if (view is RecyclerView) {
+            val context = view.getContext()
+            view.layoutManager = LinearLayoutManager(context)
+            view.adapter = SubwayLineRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
+            view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_orange).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["orange"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_lime_green).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["lime green"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_light_gray).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["light gray"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_brown).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["brown"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_yellow).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["yellow"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_red).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["red"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_green).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["green"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_raspberry).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["raspberry"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_gray_manhattan).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray manhattan"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_gray_queens).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray queens"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_gray_brooklyn).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["gray brooklyn"]!!)
-        }
-
-        view.findViewById<LinearLayout>(R.id.subway_line_dark_blue).setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(Subway.Lines["dark blue"]!!)
-        }
-
         return view
     }
 
@@ -86,7 +66,7 @@ class SubwayLineFragment : Fragment() {
         if (context is OnSubwayLineFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFeedFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnSubwayLineFragmentInteractionListener")
         }
     }
 
@@ -96,10 +76,6 @@ class SubwayLineFragment : Fragment() {
     }
 
     interface OnSubwayLineFragmentInteractionListener {
-        fun onSubwayLineFragmentInteraction(item: SubwayLine)
-    }
-
-    companion object {
-        fun newInstance() = SubwayLineFragment()
+        fun onSubwayLineFragmentInteraction(item: SubwayService)
     }
 }

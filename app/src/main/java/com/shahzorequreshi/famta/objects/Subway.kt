@@ -1,18 +1,34 @@
 package com.shahzorequreshi.famta.objects
 
 import com.shahzorequreshi.famta.R
+import java.io.Serializable
+import java.util.*
 
 object Subway {
-    class SubwayService(val name: String,
-                        val drawableId: Int,
-                        val northboundStation: String,
-                        val southboundStation: String) {
+    class SubwayStation(val name: String,
+                        val arrivalTimes: List<Date>) : Serializable {
         override fun toString(): String {
             return name
         }
     }
 
-    class SubwayLine(val name: String, val services: List<SubwayService?>) {
+    class SubwayBound(val name: String,
+                      val direction: String,
+                      val stations: List<SubwayStation>) : Serializable {
+        override fun toString(): String {
+            return name
+        }
+    }
+
+    class SubwayService(val name: String,
+                        val drawableId: Int,
+                        val bounds: List<SubwayBound>) : Serializable {
+        override fun toString(): String {
+            return name
+        }
+    }
+
+    class SubwayLine(val name: String, val services: List<SubwayService?>) : Serializable {
         override fun toString(): String {
             return name
         }
@@ -22,21 +38,27 @@ object Subway {
     val Lines: MutableMap<String, SubwayLine> = HashMap()
 
     init {
+        val sampleStation1 = SubwayStation("34 St", listOf(Date(), Date(), Date()))
+        val sampleStation2 = SubwayStation("42 St", listOf(Date(), Date(), Date()))
+
+        val sampleBound1 = SubwayBound("207 St, Manhattan", "N", listOf(sampleStation1, sampleStation2))
+        val sampleBound2 = SubwayBound("Lefferts Blvd, Far Rockaway, Rockaway Park, Queens", "S", listOf(sampleStation1, sampleStation2))
+
+
+
         Services.put("a", SubwayService("a",
                 R.drawable.ic_subway_service_a,
-                "207 St, Manhattan",
-                "Lefferts Blvd, Far Rockaway, Rockaway Park, Queens"))
+                listOf(sampleBound1, sampleBound2)))
         Services.put("c", SubwayService("c",
                 R.drawable.ic_subway_service_c,
-                "168 St, Manhattan",
-                "Euclid Ave, Brooklyn"))
+                listOf(sampleBound1, sampleBound2)))
         Services.put("e", SubwayService("e",
                 R.drawable.ic_subway_service_e,
-                "Jamaica Center, Queens",
-                "World Trade Center, Manhattan"))
+                listOf(sampleBound1, sampleBound2)))
 
         Lines.put("blue", SubwayLine("blue", listOf(Services["a"], Services["c"], Services["e"])))
 
+        /*
         Services.put("b", SubwayService("b",
                 R.drawable.ic_subway_service_b,
                 "Bedford Park Blvd, Bronx",
@@ -182,5 +204,6 @@ object Subway {
                 "Tottenville, Staten Island"))
 
         Lines.put("dark blue", SubwayLine("dark blue", listOf(Services["sir"])))
+        */
     }
 }

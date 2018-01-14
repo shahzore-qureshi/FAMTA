@@ -3,17 +3,12 @@ package com.shahzorequreshi.famta.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway
 import com.shahzorequreshi.famta.objects.Subway.SubwayLine
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.MyConstructionRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -51,7 +46,7 @@ class ConstructionFragment : Fragment() {
 //            } else {
 //                view.layoutManager = GridLayoutManager(context, mColumnCount)
 //            }
-//            view.adapter = MyConstructionRecyclerViewAdapter(Subway.Lines, mListener)
+//            view.adapter = ConstructionRecyclerViewAdapter(Subway.Lines, mListener)
 //        }
         return view
     }

@@ -7,24 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_line_details_list_item
+import com.shahzorequreshi.famta.R.layout.fragment_subway_line_list_item
 
 import com.shahzorequreshi.famta.objects.Subway.SubwayService
-import com.shahzorequreshi.famta.fragments.SubwayLineDetailsFragment.OnSubwayLineDetailsFragmentInteractionListener
+import com.shahzorequreshi.famta.fragments.SubwayLineFragment.OnSubwayLineFragmentInteractionListener
 
 /**
  * [RecyclerView.Adapter] that can display a [SubwayLine] and makes a call to the
  * specified [OnFeedFragmentInteractionListener].
  */
-class MySubwayLineDetailsRecyclerViewAdapter(
+class SubwayLineRecyclerViewAdapter(
         private val mValues: List<SubwayService?>,
-        private val mListener: OnSubwayLineDetailsFragmentInteractionListener?,
+        private val mListener: OnSubwayLineFragmentInteractionListener?,
         private val mContext: Context?)
-    : RecyclerView.Adapter<MySubwayLineDetailsRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<SubwayLineRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.getContext())
-                .inflate(fragment_subway_line_details_list_item, parent, false)
+                .inflate(fragment_subway_line_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -32,7 +32,7 @@ class MySubwayLineDetailsRecyclerViewAdapter(
         holder.mItem = mValues[position]
         holder.mImageView.setImageResource(holder.mItem!!.drawableId)
         holder.mView.setOnClickListener {
-            mListener?.onSubwayLineDetailsFragmentInteraction(holder.mItem!!)
+            mListener?.onSubwayLineFragmentInteraction(holder.mItem!!)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
@@ -47,7 +47,7 @@ class MySubwayLineDetailsRecyclerViewAdapter(
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mImageView: ImageView = mView.findViewById(R.id.subway_line_details_list_item) as ImageView
+        val mImageView: ImageView = mView.findViewById(R.id.subway_line_list_item) as ImageView
         var mItem: SubwayService? = null
 
         override fun toString(): String {

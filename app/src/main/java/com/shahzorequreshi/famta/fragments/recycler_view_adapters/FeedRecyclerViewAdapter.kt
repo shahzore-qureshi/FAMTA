@@ -16,7 +16,7 @@ import com.shahzorequreshi.famta.objects.Subway.SubwayLine
  * specified [OnFeedFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyFeedRecyclerViewAdapter(private val mValues: List<SubwayLine>, private val mListener: OnFeedFragmentInteractionListener?) : RecyclerView.Adapter<MyFeedRecyclerViewAdapter.ViewHolder>() {
+class FeedRecyclerViewAdapter(private val mValues: List<SubwayLine>, private val mListener: OnFeedFragmentInteractionListener?) : RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.getContext())

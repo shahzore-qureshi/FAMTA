@@ -16,10 +16,10 @@ import com.shahzorequreshi.famta.objects.Subway.SubwayLine
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyConstructionRecyclerViewAdapter(
+class ConstructionRecyclerViewAdapter(
         private val mValues: List<SubwayLine>,
         private val mListener: OnConstructionFragmentInteractionListener?
-) : RecyclerView.Adapter<MyConstructionRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ConstructionRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.getContext())
