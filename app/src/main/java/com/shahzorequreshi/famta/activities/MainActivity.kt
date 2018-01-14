@@ -6,17 +6,21 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.fragments.*
+import com.shahzorequreshi.famta.objects.Subway.SubwayStation
 import com.shahzorequreshi.famta.objects.Subway.SubwayLine
 import com.shahzorequreshi.famta.objects.Subway.SubwayService
 import com.shahzorequreshi.famta.objects.Subway.SubwayBound
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.Date
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,
         FeedFragment.OnFeedFragmentInteractionListener,
         SubwayFragment.OnSubwayFragmentInteractionListener,
         SubwayLineFragment.OnSubwayLineFragmentInteractionListener,
-        SubwayServiceFragment.OnSubwayServiceFragmentInteractionListener {
+        SubwayServiceFragment.OnSubwayServiceFragmentInteractionListener,
+        SubwayBoundFragment.OnSubwayBoundFragmentInteractionListener,
+        SubwayStationFragment.OnSubwayStationFragmentInteractionListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -65,6 +69,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayServiceFragmentInteraction(item: SubwayBound) {
-        //changeFragment(SubwayServiceFragment.newInstance(item))
+        changeFragment(SubwayBoundFragment.newInstance(item))
+    }
+
+    override fun onSubwayBoundFragmentInteraction(item: SubwayStation) {
+        changeFragment(SubwayStationFragment.newInstance(item))
+    }
+
+    override fun onSubwayStationFragmentInteraction(item: Date) {
+        //changeFragment(SubwayStationFragment.newInstance(item))
     }
 }

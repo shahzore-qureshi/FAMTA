@@ -10,25 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway.SubwayService
 import com.shahzorequreshi.famta.objects.Subway.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayServiceRecyclerViewAdapter
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayBoundRecyclerViewAdapter
+import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayStationRecyclerViewAdapter
+import com.shahzorequreshi.famta.objects.Subway.SubwayStation
+import java.util.Date
 
 /**
- * A fragment representing subway service information.
+ * A fragment representing information about a subway station.
  */
-class SubwayServiceFragment : Fragment() {
-    private var mSubwayService: SubwayService? = null
-    private var mListener: OnSubwayServiceFragmentInteractionListener? = null
+class SubwayStationFragment : Fragment() {
+    private var mSubwayStation: SubwayStation? = null
+    private var mListener: OnSubwayStationFragmentInteractionListener? = null
 
     companion object {
-        private val ARG_SUBWAY_SERVICE = "subway-service"
+        private val ARG_SUBWAY_STATION = "subway-station"
 
-        fun newInstance(subwayService: SubwayService): SubwayServiceFragment {
-            val fragment = SubwayServiceFragment()
+        fun newInstance(subwayStation: SubwayStation): SubwayStationFragment {
+            val fragment = SubwayStationFragment()
             val args = Bundle()
-            args.putSerializable(ARG_SUBWAY_SERVICE, subwayService)
+            args.putSerializable(ARG_SUBWAY_STATION, subwayStation)
             fragment.arguments = args
             return fragment
         }
@@ -37,7 +39,7 @@ class SubwayServiceFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mSubwayService = arguments[ARG_SUBWAY_SERVICE] as SubwayService
+            mSubwayStation = arguments[ARG_SUBWAY_STATION] as SubwayStation
         }
     }
 
@@ -47,7 +49,7 @@ class SubwayServiceFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = SubwayServiceRecyclerViewAdapter(mSubwayService!!.bounds, mListener, activity)
+            view.adapter = SubwayStationRecyclerViewAdapter(mSubwayStation!!.arrivalTimes, mListener, activity)
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
@@ -55,10 +57,10 @@ class SubwayServiceFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnSubwayServiceFragmentInteractionListener) {
+        if (context is OnSubwayStationFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnSubwayBoundFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnSubwayStationFragmentInteractionListener")
         }
     }
 
@@ -67,7 +69,7 @@ class SubwayServiceFragment : Fragment() {
         mListener = null
     }
 
-    interface OnSubwayServiceFragmentInteractionListener {
-        fun onSubwayServiceFragmentInteraction(item: SubwayBound)
+    interface OnSubwayStationFragmentInteractionListener {
+        fun onSubwayStationFragmentInteraction(item: Date)
     }
 }

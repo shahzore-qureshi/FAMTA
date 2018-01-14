@@ -2,7 +2,7 @@ package com.shahzorequreshi.famta.objects
 
 import com.shahzorequreshi.famta.R
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 object Subway {
     class SubwayStation(val name: String,
