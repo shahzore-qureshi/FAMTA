@@ -1,45 +1,16 @@
-package com.shahzorequreshi.famta.objects
+package com.shahzorequreshi.famta.database.objects
 
 import com.shahzorequreshi.famta.R
-import java.io.Serializable
 import java.util.Date
 
 object Subway {
-    class SubwayStation(val name: String,
-                        val arrivalTimes: List<Date>) : Serializable {
-        override fun toString(): String {
-            return name
-        }
-    }
-
-    class SubwayBound(val name: String,
-                      val direction: String,
-                      val stations: List<SubwayStation>) : Serializable {
-        override fun toString(): String {
-            return name
-        }
-    }
-
-    class SubwayService(val name: String,
-                        val drawableId: Int,
-                        val bounds: List<SubwayBound>) : Serializable {
-        override fun toString(): String {
-            return name
-        }
-    }
-
-    class SubwayLine(val name: String, val services: List<SubwayService?>) : Serializable {
-        override fun toString(): String {
-            return name
-        }
-    }
-
     val Services: MutableMap<String, SubwayService> = HashMap()
     val Lines: MutableMap<String, SubwayLine> = HashMap()
 
     init {
-        val sampleStation1 = SubwayStation("34 St", listOf(Date(), Date(), Date()))
-        val sampleStation2 = SubwayStation("42 St", listOf(Date(), Date(), Date()))
+        /*
+        val sampleStation1 = SubwayStation("A23", "34 St", listOf(Date(), Date(), Date()))
+        val sampleStation2 = SubwayStation("B45", "42 St", listOf(Date(), Date(), Date()))
 
         val sampleBound1 = SubwayBound("207 St, Manhattan", "N", listOf(sampleStation1, sampleStation2))
         val sampleBound2 = SubwayBound("Lefferts Blvd, Far Rockaway, Rockaway Park, Queens", "S", listOf(sampleStation1, sampleStation2))
@@ -58,7 +29,7 @@ object Subway {
 
         Lines.put("blue", SubwayLine("blue", listOf(Services["a"], Services["c"], Services["e"])))
 
-        /*
+
         Services.put("b", SubwayService("b",
                 R.drawable.ic_subway_service_b,
                 "Bedford Park Blvd, Bronx",

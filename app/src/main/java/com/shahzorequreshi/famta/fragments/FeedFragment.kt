@@ -6,9 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway.SubwayLine
+import com.shahzorequreshi.famta.database.objects.SubwayLine
 
 /**
  * A fragment representing a list of Items.

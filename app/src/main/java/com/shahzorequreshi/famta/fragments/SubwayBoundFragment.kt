@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayBoundRecyclerViewAdapter
-import com.shahzorequreshi.famta.objects.Subway.SubwayStation
+import com.shahzorequreshi.famta.fragments.adapters.SubwayBoundRecyclerViewAdapter
+import com.shahzorequreshi.famta.database.objects.SubwayStation
+import com.shahzorequreshi.famta.database.objects.SubwayBound
 
 /**
  * A fragment representing subway bound information.
@@ -48,7 +48,7 @@ class SubwayBoundFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = SubwayBoundRecyclerViewAdapter(mSubwayBound!!.stations, mListener, activity)
+            //view.adapter = SubwayBoundRecyclerViewAdapter(mSubwayBound!!.stations, mListener, activity)
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view

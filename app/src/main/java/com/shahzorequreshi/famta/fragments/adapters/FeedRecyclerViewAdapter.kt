@@ -1,4 +1,4 @@
-package com.shahzorequreshi.famta.fragments.recycler_view_adapters
+package com.shahzorequreshi.famta.fragments.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R.id.feed_list_item_text
 import com.shahzorequreshi.famta.R.layout.fragment_feed_list_item
-
 import com.shahzorequreshi.famta.fragments.FeedFragment.OnFeedFragmentInteractionListener
-import com.shahzorequreshi.famta.objects.Subway.SubwayLine
+import com.shahzorequreshi.famta.database.objects.SubwayLine
 
 /**
  * [RecyclerView.Adapter] that can display a [SubwayLine] and makes a call to the

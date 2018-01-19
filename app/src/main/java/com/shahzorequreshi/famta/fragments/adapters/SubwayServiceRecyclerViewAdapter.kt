@@ -1,4 +1,4 @@
-package com.shahzorequreshi.famta.fragments.recycler_view_adapters
+package com.shahzorequreshi.famta.fragments.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_service_list_item
-
-import com.shahzorequreshi.famta.objects.Subway.SubwayBound
+import com.shahzorequreshi.famta.database.objects.SubwayBound
 import com.shahzorequreshi.famta.fragments.SubwayServiceFragment.OnSubwayServiceFragmentInteractionListener
 
 /**

@@ -10,21 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayLineRecyclerViewAdapter
-import com.shahzorequreshi.famta.objects.Subway.SubwayLine
-import com.shahzorequreshi.famta.objects.Subway.SubwayService
+import com.shahzorequreshi.famta.fragments.adapters.SubwayLineRecyclerViewAdapter
+import com.shahzorequreshi.famta.database.objects.SubwayLine
+import com.shahzorequreshi.famta.database.objects.SubwayService
 import android.support.v7.widget.DividerItemDecoration
 
 /**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
+ * A fragment representing a subway line's list of subway services.
  */
 class SubwayLineFragment : Fragment() {
     private var mSubwayLine: SubwayLine? = null
@@ -55,7 +47,7 @@ class SubwayLineFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = SubwayLineRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
+            //view.adapter = SubwayLineRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view

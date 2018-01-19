@@ -10,11 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.objects.Subway.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayBoundRecyclerViewAdapter
-import com.shahzorequreshi.famta.fragments.recycler_view_adapters.SubwayStationRecyclerViewAdapter
-import com.shahzorequreshi.famta.objects.Subway.SubwayStation
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationRecyclerViewAdapter
+import com.shahzorequreshi.famta.database.objects.SubwayStation
 import java.util.Date
 
 /**
@@ -49,7 +47,7 @@ class SubwayStationFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            view.adapter = SubwayStationRecyclerViewAdapter(mSubwayStation!!.arrivalTimes, mListener, activity)
+            //view.adapter = SubwayStationRecyclerViewAdapter(mSubwayStation!!.arrivalTimes, mListener, activity)
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
