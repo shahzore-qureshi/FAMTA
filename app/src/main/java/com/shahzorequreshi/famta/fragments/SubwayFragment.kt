@@ -14,16 +14,15 @@ import android.view.ViewGroup
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.objects.SubwayLine
 import com.shahzorequreshi.famta.fragments.adapters.SubwayRecyclerViewAdapter
-import com.shahzorequreshi.famta.repositories.SubwayRepository
 import com.shahzorequreshi.famta.viewmodels.SubwayViewModel
 
 /**
  * A fragment representing a subway's list of subway lines.
  */
 class SubwayFragment : Fragment() {
+    private lateinit var mSubwayViewModel: SubwayViewModel
     private var mListener: OnSubwayFragmentInteractionListener? = null
     private var mSubwayAdapter: SubwayRecyclerViewAdapter? = null
-    private var mSubwayViewModel: SubwayViewModel? = null
 
     companion object {
         fun newInstance(): SubwayFragment {
@@ -34,9 +33,9 @@ class SubwayFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mSubwayViewModel = ViewModelProviders
-                .of(this, SubwayViewModel.Factory(SubwayRepository.getInstance(context)))
+                .of(this, SubwayViewModel.Factory())
                 .get(SubwayViewModel::class.java)
-        mSubwayViewModel?.getSubwayLines()?.observe(this, Observer { subwayLines ->
+        mSubwayViewModel.getSubwayLines()?.observe(this, Observer { subwayLines ->
             if(subwayLines !== null) {
                 mSubwayAdapter?.mValues = subwayLines
                 mSubwayAdapter?.notifyDataSetChanged()
@@ -44,9 +43,9 @@ class SubwayFragment : Fragment() {
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_subway, container, false)
+        val view = inflater.inflate(R.layout.fragment_subway, container, false)
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)

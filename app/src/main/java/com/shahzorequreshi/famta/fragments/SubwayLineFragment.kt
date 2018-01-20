@@ -37,13 +37,13 @@ class SubwayLineFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mSubwayLine = arguments.getSerializable(ARG_SUBWAY_LINE) as SubwayLine
+            mSubwayLine = arguments!!.getSerializable(ARG_SUBWAY_LINE) as SubwayLine
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_subway_line, container, false)
+        val view = inflater.inflate(R.layout.fragment_subway_line, container, false)
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)

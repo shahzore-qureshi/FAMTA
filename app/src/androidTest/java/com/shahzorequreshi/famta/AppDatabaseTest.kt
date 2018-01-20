@@ -2,14 +2,13 @@ package com.shahzorequreshi.famta
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
+import android.content.Context
 import org.junit.After
 import android.support.test.InstrumentationRegistry
 import org.junit.Before
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
+import com.shahzorequreshi.famta.dagger.AppModule
 import com.shahzorequreshi.famta.database.AppDatabase
-import com.shahzorequreshi.famta.database.dao.SubwayLineDao
-import com.shahzorequreshi.famta.database.objects.SubwayLine
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -18,48 +17,47 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- * Created by Shahzore Qureshi on 1/15/18.
+ * Simple database test.
  */
 @RunWith(AndroidJUnit4::class)
 class AppDatabaseTest {
-    private var mSubwayLineDao: SubwayLineDao? = null
-    private var mDb: AppDatabase? = null
+    private lateinit var mContext: Context
+    private lateinit var mDb: AppDatabase
 
     @Before
     fun createDb() {
-        val context = InstrumentationRegistry.getTargetContext()
-        mDb = AppDatabase.getInstance(context)
-        mSubwayLineDao = mDb?.getSubwayLineDao()
+        mContext = InstrumentationRegistry.getTargetContext()
+        mDb = AppModule(mContext).providesDatabase()
     }
 
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        mDb?.close()
+        mDb.close()
     }
 
     @Test
     @Throws(Exception::class)
     fun createSubwayLine() {
-        var test = mSubwayLineDao?.all()?.blockingObserve()
+        var test = mDb.getSubwayLineDao().all().blockingObserve()
         var size = test?.size
-        if(size == null) {
-            Log.e("AppDatabaseTest", "size is null")
+        if (size == null) {
+            println("size is NULL")
         } else {
-            Log.e("AppDatabaseTest", "Size is: " + size)
+            println("size is: " + size)
         }
 
-        val subwayLineBlue = SubwayLine("blue")
-        val subwayLineOrange = SubwayLine("orange")
-        mSubwayLineDao!!.insertAll(subwayLineBlue, subwayLineOrange)
-
-        test = mSubwayLineDao?.all()?.blockingObserve()
-        size = test?.size
-        if(size == null) {
-            Log.e("AppDatabaseTest", "size is null")
-        } else {
-            Log.e("AppDatabaseTest", "Size is: " + size)
-        }
+//        val subwayLineBlue = SubwayLine("blue")
+//        val subwayLineOrange = SubwayLine("orange")
+//        mSubwayLineDao.insertAll(subwayLineBlue, subwayLineOrange)
+//
+//        test = mSubwayLineDao.all().blockingObserve()
+//        size = test?.size
+//        if (size == null) {
+//            println("size is NULL")
+//        } else {
+//            println("size is: " + size)
+//        }
 
         /*
         val byName = mSubwayLineDao!!.findByName("blue")
@@ -67,7 +65,7 @@ class AppDatabaseTest {
         */
     }
 
-    fun <T> LiveData<T>.blockingObserve(): T? {
+    private fun <T> LiveData<T>.blockingObserve(): T? {
         var value: T? = null
         val latch = CountDownLatch(1)
         val innerObserver = Observer<T> {

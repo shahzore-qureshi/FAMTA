@@ -10,15 +10,7 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.objects.SubwayLine
 
 /**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnConstructionFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
+ * A fragment representing a list of construction details.
  */
 class ConstructionFragment : Fragment() {
     // TODO: Customize parameters
@@ -29,13 +21,13 @@ class ConstructionFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
+            mColumnCount = arguments!!.getInt(ARG_COLUMN_COUNT)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_construction, container, false)
+        val view = inflater.inflate(R.layout.fragment_construction, container, false)
 
         // Set the adapter
 //        if (view is RecyclerView) {
