@@ -10,10 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.database.objects.SubwayService
-import com.shahzorequreshi.famta.database.objects.SubwayBound
+import com.shahzorequreshi.famta.database.entities.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.adapters.SubwayServiceRecyclerViewAdapter
 
 /**
  * A fragment representing subway service information.

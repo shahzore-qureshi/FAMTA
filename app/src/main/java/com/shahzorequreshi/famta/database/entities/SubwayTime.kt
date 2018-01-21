@@ -1,4 +1,4 @@
-package com.shahzorequreshi.famta.database.objects
+package com.shahzorequreshi.famta.database.entities
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

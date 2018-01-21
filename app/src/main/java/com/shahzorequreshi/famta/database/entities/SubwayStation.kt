@@ -1,11 +1,10 @@
-package com.shahzorequreshi.famta.database.objects
+package com.shahzorequreshi.famta.database.entities
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
-import java.util.Date
 
 /**
  * Created by Shahzore Qureshi on 1/14/18.

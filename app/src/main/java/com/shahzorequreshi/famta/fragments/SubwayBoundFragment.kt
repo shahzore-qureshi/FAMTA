@@ -11,9 +11,8 @@ import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.adapters.SubwayBoundRecyclerViewAdapter
-import com.shahzorequreshi.famta.database.objects.SubwayStation
-import com.shahzorequreshi.famta.database.objects.SubwayBound
+import com.shahzorequreshi.famta.database.entities.SubwayStation
+import com.shahzorequreshi.famta.database.entities.SubwayBound
 
 /**
  * A fragment representing subway bound information.

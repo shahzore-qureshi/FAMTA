@@ -11,8 +11,7 @@ import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
 import android.support.v7.widget.DividerItemDecoration
-import com.shahzorequreshi.famta.fragments.adapters.SubwayStationRecyclerViewAdapter
-import com.shahzorequreshi.famta.database.objects.SubwayStation
+import com.shahzorequreshi.famta.database.entities.SubwayStation
 import java.util.Date
 
 /**

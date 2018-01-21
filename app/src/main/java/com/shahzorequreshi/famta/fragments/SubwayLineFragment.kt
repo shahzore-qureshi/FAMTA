@@ -10,9 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.fragments.adapters.SubwayLineRecyclerViewAdapter
-import com.shahzorequreshi.famta.database.objects.SubwayLine
-import com.shahzorequreshi.famta.database.objects.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayService
 import android.support.v7.widget.DividerItemDecoration
 
 /**

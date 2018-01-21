@@ -23,7 +23,7 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun providesDatabase(): AppDatabase {
-        return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+        return Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java)
                 .build()
     }
 

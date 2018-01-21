@@ -3,7 +3,8 @@ package com.shahzorequreshi.famta.repositories
 import android.arch.lifecycle.LiveData
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.database.AppDatabase
-import com.shahzorequreshi.famta.database.objects.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayService
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,6 +20,10 @@ class SubwayRepository {
     }
 
     fun getSubwayLines(): LiveData<List<SubwayLine>>? {
-        return mDatabase.getSubwayLineDao().all()
+        return mDatabase.getSubwayLineDao().get()
+    }
+
+    fun getSubwayServices(): LiveData<List<SubwayService>>? {
+        return mDatabase.getSubwayServiceDao().get()
     }
 }

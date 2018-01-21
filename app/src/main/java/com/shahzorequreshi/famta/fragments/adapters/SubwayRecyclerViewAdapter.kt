@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_list_item
-import com.shahzorequreshi.famta.database.objects.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayLine
 import com.shahzorequreshi.famta.fragments.SubwayFragment.OnSubwayFragmentInteractionListener
 import com.shahzorequreshi.famta.util.SubwayLineImageMap
 

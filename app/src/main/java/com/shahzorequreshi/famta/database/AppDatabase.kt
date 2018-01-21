@@ -5,14 +5,14 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.TypeConverters
 import com.shahzorequreshi.famta.database.converters.DateConverter
 import com.shahzorequreshi.famta.database.dao.SubwayLineDao
-import com.shahzorequreshi.famta.database.objects.*
+import com.shahzorequreshi.famta.database.dao.SubwayServiceDao
+import com.shahzorequreshi.famta.database.entities.*
 import javax.inject.Singleton
 
 /**
  * Database that holds all application persistent information.
  */
-@Database(entities = [
-    (SubwayLine::class)], version = 1)
+@Database(entities = [SubwayLine::class, SubwayService::class], version = 1)
 @TypeConverters(DateConverter::class)
 @Singleton
 abstract class AppDatabase : RoomDatabase() {
@@ -20,5 +20,5 @@ abstract class AppDatabase : RoomDatabase() {
         const val DATABASE_NAME = "app-database"
     }
     abstract fun getSubwayLineDao(): SubwayLineDao
-    //abstract fun getSubwayStationDao(): SubwayStationDao
+    abstract fun getSubwayServiceDao(): SubwayServiceDao
 }

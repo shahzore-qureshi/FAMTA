@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_line_list_item
-import com.shahzorequreshi.famta.database.objects.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayService
 import com.shahzorequreshi.famta.fragments.SubwayLineFragment.OnSubwayLineFragmentInteractionListener
 
 /**
@@ -28,7 +28,7 @@ class SubwayLineRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mImageView.setImageResource(holder.mItem!!.drawableId)
+        //holder.mImageView.setImageResource(holder.mItem!!.drawableId)
         holder.mView.setOnClickListener {
             mListener?.onSubwayLineFragmentInteraction(holder.mItem!!)
         }

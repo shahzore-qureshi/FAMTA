@@ -1,7 +1,4 @@
-package com.shahzorequreshi.famta.database.objects
-
-import com.shahzorequreshi.famta.R
-import java.util.Date
+package com.shahzorequreshi.famta.database.entities
 
 object Subway {
     val Services: MutableMap<String, SubwayService> = HashMap()

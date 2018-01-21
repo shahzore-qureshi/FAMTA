@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.database.objects.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayLine
 
 /**
  * A fragment representing a list of construction details.

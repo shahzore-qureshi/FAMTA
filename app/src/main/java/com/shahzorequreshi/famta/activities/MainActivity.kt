@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.fragments.*
-import com.shahzorequreshi.famta.database.objects.SubwayStation
-import com.shahzorequreshi.famta.database.objects.SubwayLine
-import com.shahzorequreshi.famta.database.objects.SubwayService
-import com.shahzorequreshi.famta.database.objects.SubwayBound
+import com.shahzorequreshi.famta.database.entities.SubwayStation
+import com.shahzorequreshi.famta.database.entities.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayBound
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Date
 

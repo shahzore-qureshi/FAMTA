@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.shahzorequreshi.famta.R.id.feed_list_item_text
 import com.shahzorequreshi.famta.R.layout.fragment_feed_list_item
 import com.shahzorequreshi.famta.fragments.FeedFragment.OnFeedFragmentInteractionListener
-import com.shahzorequreshi.famta.database.objects.SubwayLine
+import com.shahzorequreshi.famta.database.entities.SubwayLine
 
 /**
  * [RecyclerView.Adapter] that can display a [SubwayLine] and makes a call to the

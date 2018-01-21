@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_bound_list_item
-import com.shahzorequreshi.famta.database.objects.SubwayStation
+import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.SubwayBoundFragment.OnSubwayBoundFragmentInteractionListener
 
 /**
