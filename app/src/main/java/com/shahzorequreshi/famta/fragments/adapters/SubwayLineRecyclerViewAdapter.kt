@@ -10,32 +10,33 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_line_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayService
 import com.shahzorequreshi.famta.fragments.SubwayLineFragment.OnSubwayLineFragmentInteractionListener
+import com.shahzorequreshi.famta.util.SubwayMaps
 
 /**
  * [RecyclerView.Adapter] that can show information about a subway line.
  */
 class SubwayLineRecyclerViewAdapter(
-        private val mValues: List<SubwayService?>,
+        var mValues: List<SubwayService>,
         private val mListener: OnSubwayLineFragmentInteractionListener?,
         private val mContext: Context?)
     : RecyclerView.Adapter<SubwayLineRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.getContext())
+        val view = LayoutInflater.from(parent.context)
                 .inflate(fragment_subway_line_list_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        //holder.mImageView.setImageResource(holder.mItem!!.drawableId)
+        holder.mImageView.setImageResource(SubwayMaps.getDrawableIdForSubwayService(holder.mItem!!))
         holder.mView.setOnClickListener {
             mListener?.onSubwayLineFragmentInteraction(holder.mItem!!)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
             val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-            var params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
+            val params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
             params.setMargins(0, marginTop.toInt(), 0, marginBottom.toInt())
         }
     }

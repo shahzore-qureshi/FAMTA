@@ -10,7 +10,7 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayLine
 import com.shahzorequreshi.famta.fragments.SubwayFragment.OnSubwayFragmentInteractionListener
-import com.shahzorequreshi.famta.util.SubwayLineImageMap
+import com.shahzorequreshi.famta.util.SubwayMaps
 
 /**
  * [RecyclerView.Adapter] that can display information about a subway.
@@ -29,7 +29,7 @@ class SubwayRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mImageView.setImageResource(SubwayLineImageMap.getDrawableIdForSubwayLine(holder.mItem!!.name))
+        holder.mImageView.setImageResource(SubwayMaps.getDrawableIdForSubwayLine(holder.mItem!!))
         holder.mView.setOnClickListener {
             mListener?.onSubwayFragmentInteraction(holder.mItem!!)
         }

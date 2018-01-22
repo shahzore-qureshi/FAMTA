@@ -1,5 +1,7 @@
 package com.shahzorequreshi.famta.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,16 +15,19 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.SubwayLine
 import com.shahzorequreshi.famta.database.entities.SubwayService
 import android.support.v7.widget.DividerItemDecoration
+import com.shahzorequreshi.famta.fragments.adapters.SubwayLineRecyclerViewAdapter
+import com.shahzorequreshi.famta.viewmodels.SubwayLineViewModel
 
 /**
  * A fragment representing a subway line's list of subway services.
  */
 class SubwayLineFragment : Fragment() {
-    private var mSubwayLine: SubwayLine? = null
+    private lateinit var mSubwayLineViewModel: SubwayLineViewModel
     private var mListener: OnSubwayLineFragmentInteractionListener? = null
+    private var mSubwayLineAdapter: SubwayLineRecyclerViewAdapter? = null
 
     companion object {
-        private val ARG_SUBWAY_LINE = "subway-line"
+        private const val ARG_SUBWAY_LINE = "subway-line"
 
         fun newInstance(subwayLine: SubwayLine): SubwayLineFragment {
             val fragment = SubwayLineFragment()
@@ -36,7 +41,16 @@ class SubwayLineFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mSubwayLine = arguments!!.getSerializable(ARG_SUBWAY_LINE) as SubwayLine
+            val subwayLine = arguments!!.getSerializable(ARG_SUBWAY_LINE) as SubwayLine
+            mSubwayLineViewModel = ViewModelProviders
+                    .of(this, SubwayLineViewModel.Factory(subwayLine))
+                    .get(SubwayLineViewModel::class.java)
+            mSubwayLineViewModel.getSubwayServices()?.observe(this, Observer { subwayServices ->
+                if(subwayServices !== null) {
+                    mSubwayLineAdapter?.mValues = subwayServices
+                    mSubwayLineAdapter?.notifyDataSetChanged()
+                }
+            })
         }
     }
 
@@ -46,7 +60,10 @@ class SubwayLineFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            //view.adapter = SubwayLineRecyclerViewAdapter(mSubwayLine!!.services, mListener, activity)
+
+            mSubwayLineAdapter = SubwayLineRecyclerViewAdapter(listOf(), mListener, activity)
+            view.adapter = mSubwayLineAdapter
+
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view

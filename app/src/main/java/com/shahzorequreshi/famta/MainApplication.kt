@@ -1,6 +1,7 @@
 package com.shahzorequreshi.famta
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.shahzorequreshi.famta.dagger.AppComponent
 import com.shahzorequreshi.famta.dagger.AppModule
 import com.shahzorequreshi.famta.dagger.DaggerAppComponent
@@ -17,6 +18,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeDagger()
+        Stetho.initializeWithDefaults(this);
     }
 
     private fun initializeDagger() {

@@ -8,6 +8,6 @@
 
     <!-- App-specific dimensions. -->
     <dimen name="bottom_navigation_view_height">70dp</dimen>
-    <dimen name="subway_service_icon_size">60dp</dimen>
+    <dimen name="subway_service_icon_size">35dp</dimen>
     <dimen name="subway_service_icon_express_size">65dp</dimen>
 </resources>

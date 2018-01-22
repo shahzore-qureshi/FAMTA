@@ -43,6 +43,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 
     kapt "android.arch.lifecycle:compiler:$android_architecture_version"
     kapt "android.arch.persistence.room:compiler:$android_architecture_version"

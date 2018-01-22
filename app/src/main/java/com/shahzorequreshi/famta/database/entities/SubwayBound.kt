@@ -19,6 +19,6 @@ data class SubwayBound(
     var id: Long = 0
 
     override fun toString(): String {
-        return name
+        return direction + " - " + name
     }
 }

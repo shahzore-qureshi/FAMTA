@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayFragmentInteraction(item: SubwayLine) {
-        //changeFragment(SubwayLineFragment.newInstance(item))
+        changeFragment(SubwayLineFragment.newInstance(item))
     }
 
     override fun onSubwayLineFragmentInteraction(item: SubwayService) {
-        //changeFragment(SubwayServiceFragment.newInstance(item))
+        changeFragment(SubwayServiceFragment.newInstance(item))
     }
 
     override fun onSubwayServiceFragmentInteraction(item: SubwayBound) {

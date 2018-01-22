@@ -15,7 +15,7 @@ import com.shahzorequreshi.famta.fragments.SubwayServiceFragment.OnSubwayService
  * [RecyclerView.Adapter] that can display subway service information.
  */
 class SubwayServiceRecyclerViewAdapter(
-        private val mValues: List<SubwayBound>,
+        var mValues: List<SubwayBound>,
         private val mListener: OnSubwayServiceFragmentInteractionListener?,
         private val mContext: Context?)
     : RecyclerView.Adapter<SubwayServiceRecyclerViewAdapter.ViewHolder>() {
@@ -28,16 +28,7 @@ class SubwayServiceRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-
-        var directionLabel = ""
-        when(holder.mItem!!.direction) {
-            "N" -> directionLabel = "North - "
-            "S" -> directionLabel = "South - "
-            "E" -> directionLabel = "East - "
-            "W" -> directionLabel = "West - "
-        }
-
-        holder.mTextView.text = directionLabel + holder.mItem!!.name
+        holder.mTextView.text = holder.mItem!!.toString()
         holder.mView.setOnClickListener {
             mListener?.onSubwayServiceFragmentInteraction(holder.mItem!!)
         }
