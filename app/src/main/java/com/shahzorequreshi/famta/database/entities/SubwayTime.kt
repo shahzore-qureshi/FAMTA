@@ -11,15 +11,13 @@ import java.util.Date
 /**
  * Created by Shahzore Qureshi on 1/14/18.
  */
-@Entity(tableName = "subway_time", foreignKeys = [
-    ForeignKey(entity = SubwayStation::class, parentColumns = arrayOf("id"), childColumns = arrayOf("station_id"))
-])
-data class SubwayTime(@ColumnInfo(name = "arrival_time") val arrivalTime: Date) : Serializable {
+@Entity(tableName = "subway_time")
+data class SubwayTime(
+        @ColumnInfo(name = "arrival_time") val arrivalTime: Date,
+        @ColumnInfo(name = "station_id") val stationId: String,
+        @ColumnInfo(name = "bound_id") val boundId: Long) : Serializable {
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
-
-    @ColumnInfo(name = "station_id")
-    val stationId: String = ""
+    var id: Long = 0
 
     override fun toString(): String {
         return arrivalTime.toString()

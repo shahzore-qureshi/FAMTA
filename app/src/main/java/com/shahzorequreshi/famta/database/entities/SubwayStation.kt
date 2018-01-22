@@ -9,13 +9,11 @@ import java.io.Serializable
 /**
  * Created by Shahzore Qureshi on 1/14/18.
  */
-@Entity(tableName = "subway_station", foreignKeys = [
-    (ForeignKey(entity = SubwayBound::class, parentColumns = arrayOf("id"), childColumns = arrayOf("bound_id")))
-])
-data class SubwayStation(@PrimaryKey val id: String, val name: String) : Serializable {
-    @ColumnInfo(name = "bound_id")
-    val boundId: Long = 0
-
+@Entity(tableName = "subway_station")
+data class SubwayStation(
+        @PrimaryKey val id: String,
+        val name: String,
+        @ColumnInfo(name = "bound_id") val boundId: Long) : Serializable {
     override fun toString(): String {
         return name
     }

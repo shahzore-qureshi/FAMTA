@@ -12,9 +12,6 @@ interface SubwayLineDao {
     @Query("SELECT * FROM subway_line")
     fun get(): LiveData<List<SubwayLine>>
 
-    @Query("SELECT * FROM subway_line WHERE name LIKE :name LIMIT 1")
-    fun findByName(name: String): SubwayLine
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayLines: SubwayLine)
 

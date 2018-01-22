@@ -1,29 +1,23 @@
 package com.shahzorequreshi.famta.database.dao
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 
 /**
- * Created by Shahzore Qureshi on 1/14/18.
+ * Defines methods for interacting with subway stations.
  */
 @Dao
 interface SubwayStationDao {
     @Query("SELECT * FROM subway_station")
-    fun all(): LiveData<List<SubwayStation>>
+    fun get(): LiveData<List<SubwayStation>>
 
-    @Query("SELECT * FROM subway_station WHERE id IN (:ids)")
-    fun loadAllByIds(ids: IntArray): LiveData<List<SubwayStation>>
+    @Query("SELECT * FROM subway_station WHERE bound_id == :boundId")
+    fun get(boundId: Long): LiveData<List<SubwayStation>>
 
-    @Query("SELECT * FROM subway_station WHERE name LIKE :name LIMIT 1")
-    fun findByName(name: String): SubwayStation
-
-    @Insert
-    fun insertAll(vararg stations: SubwayStation)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(vararg subwayStations: SubwayStation)
 
     @Delete
-    fun delete(station: SubwayStation)
+    fun delete(subwayStation: SubwayStation)
 }

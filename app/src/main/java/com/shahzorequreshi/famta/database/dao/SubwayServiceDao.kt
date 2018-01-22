@@ -15,9 +15,6 @@ interface SubwayServiceDao {
     @Query("SELECT * FROM subway_service WHERE line_id == :lineId")
     fun get(lineId: Long): LiveData<List<SubwayService>>
 
-    @Query("SELECT * FROM subway_service WHERE name LIKE :name LIMIT 1")
-    fun findByName(name: String): SubwayService
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayServices: SubwayService)
 

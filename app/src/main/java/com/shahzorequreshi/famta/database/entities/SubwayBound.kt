@@ -9,15 +9,14 @@ import java.io.Serializable
 /**
  * Created by Shahzore Qureshi on 1/14/18.
  */
-@Entity(tableName = "subway_bound", foreignKeys = [
-    (ForeignKey(entity = SubwayService::class, parentColumns = arrayOf("id"), childColumns = arrayOf("service_id")))
-])
-data class SubwayBound(val name: String, val direction: String) : Serializable {
+@Entity(tableName = "subway_bound")
+data class SubwayBound(
+        val name: String,
+        val direction: String,
+        @ColumnInfo(name = "service_id") val serviceId: Long) : Serializable
+{
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
-
-    @ColumnInfo(name = "service_id")
-    val serviceId: String = ""
+    var id: Long = 0
 
     override fun toString(): String {
         return name

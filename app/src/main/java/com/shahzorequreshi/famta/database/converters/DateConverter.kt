@@ -4,9 +4,9 @@ import android.arch.persistence.room.TypeConverter
 import java.util.*
 
 /**
- * Created by Shahzore Qureshi on 1/15/18.
+ * Converts timestamps to dates and vice versa.
  */
-object DateConverter {
+class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return if (value == null) null else Date(value)
