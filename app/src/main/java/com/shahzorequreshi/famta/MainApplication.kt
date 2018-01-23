@@ -7,7 +7,7 @@ import com.shahzorequreshi.famta.dagger.AppModule
 import com.shahzorequreshi.famta.dagger.DaggerAppComponent
 
 /**
- * Application class is inherited in order to initialize Dagger.
+ * Application class is inherited in order to initialize Dagger, Stetho, and other libraries.
  */
 class MainApplication : Application() {
     companion object {
@@ -18,7 +18,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeDagger()
-        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this)
     }
 
     private fun initializeDagger() {

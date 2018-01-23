@@ -74,9 +74,9 @@ class SubwayRepository {
                 SubwayStation("104S", "231 St", 2),
                 SubwayStation("101S", "238 St", 2))
         mDatabase.getSubwayTimeDao().insert(
-                SubwayTime(Date(), "101N", 1),
-                SubwayTime(Date(), "101N", 1),
-                SubwayTime(Date(), "101N", 1),
+                SubwayTime(Date(1516743420000), "101N", 1),
+                SubwayTime(Date(1516744200000), "101N", 1),
+                SubwayTime(Date(1516748100000), "101N", 1),
                 SubwayTime(Date(), "101S", 2),
                 SubwayTime(Date(), "101S", 2),
                 SubwayTime(Date(), "101S", 2))
