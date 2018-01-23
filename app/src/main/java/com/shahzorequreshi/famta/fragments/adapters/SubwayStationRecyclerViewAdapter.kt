@@ -11,6 +11,7 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_station_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayTime
 import com.shahzorequreshi.famta.fragments.SubwayStationFragment.OnSubwayStationFragmentInteractionListener
+import java.util.*
 
 /**
  * [RecyclerView.Adapter] that can display subway stations.
@@ -31,7 +32,7 @@ class SubwayStationRecyclerViewAdapter(
         holder.mItem = mValues[position]
         holder.mTextView.text = holder.mItem!!.toString()
         holder.mView.setOnClickListener {
-            mListener?.onSubwayStationFragmentInteraction(holder.mItem!!)
+            mListener?.onSubwayTimeClick(holder.mItem!!)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
@@ -42,12 +43,12 @@ class SubwayStationRecyclerViewAdapter(
         if(holder.mCounter != null) {
             holder.mCounter?.cancel()
         }
-        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrivalTime.time, 1000) {
+        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrivalTime.time - Date().time, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 holder.mTextView.text = holder.mItem!!.toString()
             }
             override fun onFinish() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mListener?.onSubwayTimeExpired(holder.mItem!!)
             }
         }.start()
     }

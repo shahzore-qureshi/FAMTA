@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.*
 import com.shahzorequreshi.famta.fragments.*
+import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity(),
         SubwayBoundFragment.OnSubwayBoundFragmentInteractionListener,
         SubwayStationFragment.OnSubwayStationFragmentInteractionListener {
 
+    @Inject lateinit var mRepo: SubwayRepository
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_subway_lines -> changeFragment(SubwayFragment.newInstance())
@@ -25,6 +30,10 @@ class MainActivity : AppCompatActivity(),
             //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
         }
         return@OnNavigationItemSelectedListener true
+    }
+
+    init {
+        MainApplication.component.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +75,11 @@ class MainActivity : AppCompatActivity(),
         changeFragment(SubwayStationFragment.newInstance(item, item2))
     }
 
-    override fun onSubwayStationFragmentInteraction(item: SubwayTime) {
+    override fun onSubwayTimeClick(item: SubwayTime) {
         //changeFragment(SubwayStationFragment.newInstance(item))
+    }
+
+    override fun onSubwayTimeExpired(item: SubwayTime) {
+        mRepo.removeSubwayTime(item)
     }
 }

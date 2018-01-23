@@ -45,6 +45,10 @@ class SubwayRepository {
         return mDatabase.getSubwayTimeDao().get(subwayStation.id, subwayBound.id)
     }
 
+    fun removeSubwayTime(subwayTime: SubwayTime) {
+        mExecutors.diskIO().execute { mDatabase.getSubwayTimeDao().delete(subwayTime) }
+    }
+
     private fun setUpDatabase() {
         mDatabase.getSubwayLineDao().insert(SubwayLine("blue"), SubwayLine("orange"))
 
@@ -74,8 +78,8 @@ class SubwayRepository {
                 SubwayStation("104S", "231 St", 2),
                 SubwayStation("101S", "238 St", 2))
         mDatabase.getSubwayTimeDao().insert(
-                SubwayTime(Date(1516743420000), "101N", 1),
-                SubwayTime(Date(1516744200000), "101N", 1),
+                SubwayTime(Date(1516744980000), "101N", 1),
+                SubwayTime(Date(1516745040000), "101N", 1),
                 SubwayTime(Date(1516748100000), "101N", 1),
                 SubwayTime(Date(), "101S", 2),
                 SubwayTime(Date(), "101S", 2),

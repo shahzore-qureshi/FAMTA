@@ -90,6 +90,7 @@ class SubwayStationFragment : Fragment() {
     }
 
     interface OnSubwayStationFragmentInteractionListener {
-        fun onSubwayStationFragmentInteraction(item: SubwayTime)
+        fun onSubwayTimeClick(item: SubwayTime)
+        fun onSubwayTimeExpired(item: SubwayTime)
     }
 }

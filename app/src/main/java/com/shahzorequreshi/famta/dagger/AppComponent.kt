@@ -1,6 +1,7 @@
 package com.shahzorequreshi.famta.dagger
 
 import android.arch.lifecycle.ViewModel
+import com.shahzorequreshi.famta.activities.MainActivity
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import com.shahzorequreshi.famta.viewmodels.*
 import dagger.Component
@@ -18,4 +19,5 @@ interface AppComponent {
     fun inject(viewModel: SubwayBoundViewModel)
     fun inject(viewModel: SubwayStationViewModel)
     fun inject(repository: SubwayRepository)
+    fun inject(activity: MainActivity)
 }
