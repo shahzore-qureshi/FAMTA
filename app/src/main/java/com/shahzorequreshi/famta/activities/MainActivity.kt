@@ -5,13 +5,9 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.shahzorequreshi.famta.R
+import com.shahzorequreshi.famta.database.entities.*
 import com.shahzorequreshi.famta.fragments.*
-import com.shahzorequreshi.famta.database.entities.SubwayStation
-import com.shahzorequreshi.famta.database.entities.SubwayLine
-import com.shahzorequreshi.famta.database.entities.SubwayService
-import com.shahzorequreshi.famta.database.entities.SubwayBound
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.Date
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,
@@ -63,14 +59,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayServiceFragmentInteraction(item: SubwayBound) {
-        //changeFragment(SubwayBoundFragment.newInstance(item))
+        changeFragment(SubwayBoundFragment.newInstance(item))
     }
 
-    override fun onSubwayBoundFragmentInteraction(item: SubwayStation) {
-        //changeFragment(SubwayStationFragment.newInstance(item))
+    override fun onSubwayBoundFragmentInteraction(item: SubwayStation, item2: SubwayBound) {
+        changeFragment(SubwayStationFragment.newInstance(item, item2))
     }
 
-    override fun onSubwayStationFragmentInteraction(item: Date) {
+    override fun onSubwayStationFragmentInteraction(item: SubwayTime) {
         //changeFragment(SubwayStationFragment.newInstance(item))
     }
 }

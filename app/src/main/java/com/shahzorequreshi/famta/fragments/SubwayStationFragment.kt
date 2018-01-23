@@ -1,5 +1,7 @@
 package com.shahzorequreshi.famta.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,23 +13,30 @@ import android.view.ViewGroup
 
 import com.shahzorequreshi.famta.R
 import android.support.v7.widget.DividerItemDecoration
+import com.shahzorequreshi.famta.database.entities.SubwayBound
 import com.shahzorequreshi.famta.database.entities.SubwayStation
+import com.shahzorequreshi.famta.database.entities.SubwayTime
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationRecyclerViewAdapter
+import com.shahzorequreshi.famta.viewmodels.SubwayStationViewModel
 import java.util.Date
 
 /**
  * A fragment representing information about a subway station.
  */
 class SubwayStationFragment : Fragment() {
-    private var mSubwayStation: SubwayStation? = null
+    private lateinit var mSubwayStationViewModel: SubwayStationViewModel
     private var mListener: OnSubwayStationFragmentInteractionListener? = null
+    private var mSubwayStationAdapter: SubwayStationRecyclerViewAdapter? = null
 
     companion object {
-        private val ARG_SUBWAY_STATION = "subway-station"
+        private const val ARG_SUBWAY_STATION = "subway-station"
+        private const val ARG_SUBWAY_BOUND = "subway-bound"
 
-        fun newInstance(subwayStation: SubwayStation): SubwayStationFragment {
+        fun newInstance(subwayStation: SubwayStation, subwayBound: SubwayBound): SubwayStationFragment {
             val fragment = SubwayStationFragment()
             val args = Bundle()
             args.putSerializable(ARG_SUBWAY_STATION, subwayStation)
+            args.putSerializable(ARG_SUBWAY_BOUND, subwayBound)
             fragment.arguments = args
             return fragment
         }
@@ -36,7 +45,18 @@ class SubwayStationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mSubwayStation = arguments!![ARG_SUBWAY_STATION] as SubwayStation
+            val subwayStation = arguments!![ARG_SUBWAY_STATION] as SubwayStation
+            val subwayBound = arguments!![ARG_SUBWAY_BOUND] as SubwayBound
+            mSubwayStationViewModel = ViewModelProviders
+                    .of(this, SubwayStationViewModel.Factory(subwayStation, subwayBound))
+                    .get(SubwayStationViewModel::class.java)
+            mSubwayStationViewModel.getSubwayTimes()?.observe(this, Observer { subwayTimes ->
+                if(subwayTimes !== null) {
+                    mSubwayStationAdapter?.mValues = subwayTimes
+                    mSubwayStationAdapter?.notifyDataSetChanged()
+                }
+            })
+
         }
     }
 
@@ -46,7 +66,10 @@ class SubwayStationFragment : Fragment() {
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
-            //view.adapter = SubwayStationRecyclerViewAdapter(mSubwayStation!!.arrivalTimes, mListener, activity)
+
+            mSubwayStationAdapter = SubwayStationRecyclerViewAdapter(listOf(), mListener, activity)
+            view.adapter = mSubwayStationAdapter
+
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
@@ -67,6 +90,6 @@ class SubwayStationFragment : Fragment() {
     }
 
     interface OnSubwayStationFragmentInteractionListener {
-        fun onSubwayStationFragmentInteraction(item: Date)
+        fun onSubwayStationFragmentInteraction(item: SubwayTime)
     }
 }

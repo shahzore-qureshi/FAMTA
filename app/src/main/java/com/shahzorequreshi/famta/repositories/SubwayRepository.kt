@@ -37,6 +37,14 @@ class SubwayRepository {
         return mDatabase.getSubwayBoundDao().get(subwayService.id)
     }
 
+    fun getSubwayStations(subwayBound: SubwayBound): LiveData<List<SubwayStation>>? {
+        return mDatabase.getSubwayStationDao().get(subwayBound.id)
+    }
+
+    fun getSubwayTimes(subwayStation: SubwayStation, subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
+        return mDatabase.getSubwayTimeDao().get(subwayStation.id, subwayBound.id)
+    }
+
     private fun setUpDatabase() {
         mDatabase.getSubwayLineDao().insert(SubwayLine("blue"), SubwayLine("orange"))
 

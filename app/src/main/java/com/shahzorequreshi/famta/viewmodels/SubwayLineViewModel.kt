@@ -30,11 +30,7 @@ class SubwayLineViewModel(subwayLine: SubwayLine) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     /**
-     * A creator is used to inject the product ID into the ViewModel
-     *
-     *
-     * This creator is to showcase how to inject dependencies into ViewModels. It's not
-     * actually necessary in this case, as the product ID can be passed in a public method.
+     * A creator is used to inject the subway line into the ViewModel.
      */
     class Factory(subwayLine: SubwayLine): ViewModelProvider.NewInstanceFactory() {
         private val mSubwayLine = subwayLine

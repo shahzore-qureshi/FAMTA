@@ -32,9 +32,7 @@ class SubwayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mSubwayViewModel = ViewModelProviders
-                .of(this, SubwayViewModel.Factory())
-                .get(SubwayViewModel::class.java)
+        mSubwayViewModel = ViewModelProviders.of(this).get(SubwayViewModel::class.java)
         mSubwayViewModel.getSubwayLines()?.observe(this, Observer { subwayLines ->
             if(subwayLines !== null) {
                 mSubwayAdapter?.mValues = subwayLines

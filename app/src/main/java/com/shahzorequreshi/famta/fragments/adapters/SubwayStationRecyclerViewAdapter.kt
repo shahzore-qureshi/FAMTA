@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_station_list_item
+import com.shahzorequreshi.famta.database.entities.SubwayTime
 import com.shahzorequreshi.famta.fragments.SubwayStationFragment.OnSubwayStationFragmentInteractionListener
 import java.util.Date
 
@@ -15,7 +16,7 @@ import java.util.Date
  * [RecyclerView.Adapter] that can display subway stations.
  */
 class SubwayStationRecyclerViewAdapter(
-        private val mValues: List<Date>,
+        var mValues: List<SubwayTime>,
         private val mListener: OnSubwayStationFragmentInteractionListener?,
         private val mContext: Context?)
     : RecyclerView.Adapter<SubwayStationRecyclerViewAdapter.ViewHolder>() {
@@ -35,7 +36,7 @@ class SubwayStationRecyclerViewAdapter(
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
             val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-            var params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
+            val params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
             params.setMargins(0, marginTop.toInt(), 0, marginBottom.toInt())
         }
     }
@@ -46,10 +47,6 @@ class SubwayStationRecyclerViewAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mTextView: TextView = mView.findViewById(R.id.subway_station_list_item) as TextView
-        var mItem: Date? = null
-
-        override fun toString(): String {
-            return "${super.toString()} '${mItem?.toString()}'"
-        }
+        var mItem: SubwayTime? = null
     }
 }

@@ -35,7 +35,7 @@ class SubwayServiceRecyclerViewAdapter(
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
             val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-            var params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
+            val params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
             params.setMargins(0, marginTop.toInt(), 0, marginBottom.toInt())
         }
     }
@@ -47,9 +47,5 @@ class SubwayServiceRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mTextView: TextView = mView.findViewById(R.id.subway_service_list_item) as TextView
         var mItem: SubwayBound? = null
-
-        override fun toString(): String {
-            return "${super.toString()} '${mItem?.name}'"
-        }
     }
 }

@@ -48,9 +48,5 @@ class SubwayRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mImageView: ImageView = mView.findViewById(R.id.subway_list_item) as ImageView
         var mItem: SubwayLine? = null
-
-        override fun toString(): String {
-            return "${super.toString()} '${mItem?.name}'"
-        }
     }
 }
