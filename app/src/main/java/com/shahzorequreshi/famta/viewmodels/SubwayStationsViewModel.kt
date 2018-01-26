@@ -6,14 +6,12 @@ import com.shahzorequreshi.famta.repositories.SubwayRepository
 import javax.inject.Inject
 import android.arch.lifecycle.ViewModelProvider
 import com.shahzorequreshi.famta.MainApplication
-import com.shahzorequreshi.famta.database.entities.SubwayBound
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 
 /**
- * ViewModel that holds subway bound information, such as subway stations.
+ * ViewModel that holds subway station information.
  */
-class SubwayBoundViewModel(subwayBound: SubwayBound) : ViewModel() {
-    private val mSubwayBound = subwayBound
+class SubwayStationsViewModel : ViewModel() {
     private var mSubwayStations: LiveData<List<SubwayStation>>? = null
     @Inject lateinit var mRepo: SubwayRepository
 
@@ -30,12 +28,11 @@ class SubwayBoundViewModel(subwayBound: SubwayBound) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     /**
-     * A creator is used to inject the subway bound into the ViewModel.
+     * A creator is used to inject the subway station and bound into the ViewModel.
      */
-    class Factory(subwayBound: SubwayBound): ViewModelProvider.NewInstanceFactory() {
-        private val mSubwayBound = subwayBound
+    class Factory: ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SubwayBoundViewModel(mSubwayBound) as T
+            return SubwayStationsViewModel() as T
         }
     }
 }

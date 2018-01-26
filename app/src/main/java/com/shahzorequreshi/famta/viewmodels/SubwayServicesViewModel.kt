@@ -12,15 +12,15 @@ import com.shahzorequreshi.famta.database.entities.SubwayService
 /**
  * ViewModel that holds subway line information, such as subway services.
  */
-class SubwayLineViewModel(subwayLine: SubwayLine) : ViewModel() {
-    private val mSubwayLine = subwayLine
+class SubwayServicesViewModel(subwayServices: List<String>) : ViewModel() {
+    private val mSubwayServicesList = subwayServices
     private var mSubwayServices: LiveData<List<SubwayService>>? = null
     @Inject lateinit var mRepo: SubwayRepository
 
     init {
         MainApplication.component.inject(this)
         if(mSubwayServices == null) {
-            mSubwayServices = mRepo.getSubwayServices(mSubwayLine)
+            mSubwayServices = mRepo.getSubwayServices(mSubwayServicesList)
         }
     }
 
@@ -32,10 +32,10 @@ class SubwayLineViewModel(subwayLine: SubwayLine) : ViewModel() {
     /**
      * A creator is used to inject the subway line into the ViewModel.
      */
-    class Factory(subwayLine: SubwayLine): ViewModelProvider.NewInstanceFactory() {
-        private val mSubwayLine = subwayLine
+    class Factory(subwayServices: List<String>): ViewModelProvider.NewInstanceFactory() {
+        private val mSubwayServicesList = subwayServices
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SubwayLineViewModel(mSubwayLine) as T
+            return SubwayServicesViewModel(mSubwayServicesList) as T
         }
     }
 }

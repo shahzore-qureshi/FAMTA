@@ -14,7 +14,7 @@ interface SubwayBoundDao {
     fun get(): LiveData<List<SubwayBound>>
 
     @Query("SELECT * FROM subway_bound WHERE service_id == :serviceId")
-    fun get(serviceId: Long): LiveData<List<SubwayBound>>
+    fun get(serviceId: String): LiveData<List<SubwayBound>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayBounds: SubwayBound)

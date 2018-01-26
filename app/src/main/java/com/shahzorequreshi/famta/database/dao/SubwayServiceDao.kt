@@ -12,11 +12,17 @@ interface SubwayServiceDao {
     @Query("SELECT * FROM subway_service")
     fun get(): LiveData<List<SubwayService>>
 
-    @Query("SELECT * FROM subway_service WHERE line_id == :lineId")
-    fun get(lineId: Long): LiveData<List<SubwayService>>
+    @Query("SELECT * FROM subway_service WHERE name in (:subwayServiceNames)")
+    fun get(subwayServiceNames: List<String>): LiveData<List<SubwayService>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(subwayService: SubwayService)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayServices: SubwayService)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(subwayServices: List<SubwayService>)
 
     @Delete
     fun delete(subwayService: SubwayService)

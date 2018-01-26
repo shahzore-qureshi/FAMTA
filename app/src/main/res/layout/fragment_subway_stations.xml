@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.shahzorequreshi.famta.fragments.SubwayServiceFragment"
-    tools:listitem="@layout/fragment_subway_service_list_item" />
+    tools:context="com.shahzorequreshi.famta.fragments.SubwayStationsFragment"
+    tools:listitem="@layout/fragment_subway_stations_list_item" />

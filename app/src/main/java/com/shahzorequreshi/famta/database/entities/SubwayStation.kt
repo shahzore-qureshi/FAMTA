@@ -1,20 +1,18 @@
 package com.shahzorequreshi.famta.database.entities
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
 /**
- * Created by Shahzore Qureshi on 1/14/18.
+ * Represents a subway station.
  */
 @Entity(tableName = "subway_station")
 data class SubwayStation(
-        @PrimaryKey val id: String,
-        val name: String,
-        @ColumnInfo(name = "bound_id") val boundId: Long) : Serializable {
+        @PrimaryKey val stop_id: String,
+        val stop_name: String,
+        val service_ids: List<String>) : Serializable {
     override fun toString(): String {
-        return name
+        return stop_name
     }
 }

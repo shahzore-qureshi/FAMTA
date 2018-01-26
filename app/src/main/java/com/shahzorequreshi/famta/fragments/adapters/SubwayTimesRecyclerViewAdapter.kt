@@ -8,23 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_station_list_item
+import com.shahzorequreshi.famta.R.layout.fragment_subway_stations_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayTime
-import com.shahzorequreshi.famta.fragments.SubwayStationFragment.OnSubwayStationFragmentInteractionListener
+import com.shahzorequreshi.famta.fragments.SubwayTimeFragment
 import java.util.*
 
 /**
- * [RecyclerView.Adapter] that can display subway stations.
+ * [RecyclerView.Adapter] that can display subway times.
  */
-class SubwayStationRecyclerViewAdapter(
+class SubwayTimesRecyclerViewAdapter(
         var mValues: List<SubwayTime>,
-        private val mListener: OnSubwayStationFragmentInteractionListener?,
+        private val mListener: SubwayTimeFragment.OnSubwayTimeFragmentInteractionListener?,
         private val mContext: Context?)
-    : RecyclerView.Adapter<SubwayStationRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<SubwayTimesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_station_list_item, parent, false)
+                .inflate(fragment_subway_stations_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -58,7 +58,7 @@ class SubwayStationRecyclerViewAdapter(
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView.findViewById(R.id.subway_station_list_item) as TextView
+        val mTextView: TextView = mView as TextView
         var mItem: SubwayTime? = null
         var mCounter: CountDownTimer? = null
     }

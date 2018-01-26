@@ -8,22 +8,23 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_line_list_item
+import com.shahzorequreshi.famta.R.layout.fragment_subway_services_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayService
-import com.shahzorequreshi.famta.fragments.SubwayLineFragment.OnSubwayLineFragmentInteractionListener
+import com.shahzorequreshi.famta.fragments.SubwayServicesFragment.OnSubwayServicesFragmentInteractionListener
 import com.shahzorequreshi.famta.util.SubwayMaps
 
 /**
- * [RecyclerView.Adapter] that can show information about a subway line.
+ * [RecyclerView.Adapter] that can show subway services.
  */
-class SubwayLineRecyclerViewAdapter(
+class SubwayServicesRecyclerViewAdapter(
         var mValues: List<SubwayService>,
-        private val mListener: OnSubwayLineFragmentInteractionListener?,
+        private val mListener: OnSubwayServicesFragmentInteractionListener?,
         private val mContext: Context?)
-    : RecyclerView.Adapter<SubwayLineRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<SubwayServicesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_line_list_item, parent, false)
+                .inflate(fragment_subway_services_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -46,7 +47,7 @@ class SubwayLineRecyclerViewAdapter(
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mImageView: ImageView = mView.findViewById(R.id.subway_line_list_item) as ImageView
+        val mImageView: ImageView = mView as ImageView
         var mItem: SubwayService? = null
     }
 }

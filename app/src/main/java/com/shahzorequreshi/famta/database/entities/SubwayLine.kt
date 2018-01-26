@@ -9,10 +9,7 @@ import java.io.Serializable
  * Represents a subway line (ex. blue line, orange line).
  */
 @Entity(tableName = "subway_line")
-data class SubwayLine(@ColumnInfo(name = "name") var name: String) : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-
+data class SubwayLine(@PrimaryKey val _id: String, val name: String) : Serializable {
     override fun toString(): String {
         return name
     }

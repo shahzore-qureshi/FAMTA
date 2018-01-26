@@ -26,7 +26,7 @@ class AppDatabaseTest {
     private lateinit var mDatabase: AppDatabase
 
     @Before
-    fun createDb() {
+    fun getDatabase() {
         mContext = InstrumentationRegistry.getTargetContext()
         mDatabase = AppModule(mContext).providesDatabase()
     }
@@ -39,7 +39,7 @@ class AppDatabaseTest {
         assertThat(noLines!!.size, equalTo(0))
 
         //Add blue and orange subway lines.
-        mDatabase.getSubwayLineDao().insert(SubwayLine("blue"), SubwayLine("orange"))
+        mDatabase.getSubwayLineDao().insert(SubwayLine("1", "blue"), SubwayLine("2", "orange"))
 
         //Check if the blue and orange lines were added correctly.
         val subwayLines = mDatabase.getSubwayLineDao().get().blockingObserve()
@@ -64,21 +64,21 @@ class AppDatabaseTest {
 
         //Add services to some lines.
         mDatabase.getSubwayServiceDao().insert(
-                SubwayService("A", 0),
-                SubwayService("C", 0),
-                SubwayService("E", 0))
+                SubwayService("0", "A", "0"),
+                SubwayService("1", "C", "0"),
+                SubwayService("2", "E", "0"))
         mDatabase.getSubwayServiceDao().insert(
-                SubwayService("B", 1),
-                SubwayService("D", 1),
-                SubwayService("F", 1),
-                SubwayService("M", 1))
+                SubwayService("3", "B", "1"),
+                SubwayService("4", "D", "1"),
+                SubwayService("5", "F", "1"),
+                SubwayService("6", "M", "1"))
 
         //Check if the services were added correctly.
         val subwayServices = mDatabase.getSubwayServiceDao().get().blockingObserve()
         assertThat(subwayServices!!.size, equalTo(7))
 
         //Check if the A, C, and E services show up under the first line (id is 0).
-        val servicesForFirstLine = mDatabase.getSubwayServiceDao().get(0).blockingObserve()
+        val servicesForFirstLine = mDatabase.getSubwayServiceDao().get("0").blockingObserve()
         assertThat(servicesForFirstLine!!.size, equalTo(3))
 
         //Delete all the services.
@@ -114,7 +114,7 @@ class AppDatabaseTest {
         assertThat(subwayBounds!!.size, equalTo(6))
 
         //Check if the bounds show up under a service.
-        val boundsForServiceA = mDatabase.getSubwayBoundDao().get(0).blockingObserve()
+        val boundsForServiceA = mDatabase.getSubwayBoundDao().get("0").blockingObserve()
         assertThat(boundsForServiceA!!.size, equalTo(2))
 
         //Delete all the bounds.
@@ -136,20 +136,16 @@ class AppDatabaseTest {
 
         //Add stations to some bounds.
         mDatabase.getSubwayStationDao().insert(
-                SubwayStation("101N", "238 St", 0),
-                SubwayStation("104N", "231 St", 0),
-                SubwayStation("106N", "225 St", 0),
-                SubwayStation("106S", "225 St", 1),
-                SubwayStation("104S", "231 St", 1),
-                SubwayStation("101S", "238 St", 1))
+                SubwayStation("101N", "238 St", listOf("A")),
+                SubwayStation("104N", "231 St", listOf("A")),
+                SubwayStation("106N", "225 St", listOf("A", "C")),
+                SubwayStation("106S", "225 St", listOf("A")),
+                SubwayStation("104S", "231 St", listOf("A", "E")),
+                SubwayStation("101S", "238 St", listOf("A")))
 
         //Check if the stations were added correctly.
         val subwayStations = mDatabase.getSubwayStationDao().get().blockingObserve()
         assertThat(subwayStations!!.size, equalTo(6))
-
-        //Check if the stations show up under a bound.
-        val stationsForFirstBound = mDatabase.getSubwayStationDao().get(0).blockingObserve()
-        assertThat(stationsForFirstBound!!.size, equalTo(3))
 
         //Delete all the stations.
         for (subwayStation in subwayStations) {

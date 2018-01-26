@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.repositories.SubwayRepository
+import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
 import dagger.Module
 import dagger.Provides
@@ -31,5 +32,11 @@ class AppModule(private val context: Context) {
     @Singleton
     fun providesSubwayRepository(): SubwayRepository {
         return SubwayRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun providesSubwayWebService(): SubwayWebService {
+        return SubwayWebService()
     }
 }

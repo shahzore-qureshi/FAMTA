@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4d6d910c9bf434a0bbe3353de3147401",
+    "identityHash": "b7c33e57dd5eb3a504e783ace65ab627",
     "entities": [
       {
         "tableName": "subway_line",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -23,21 +23,21 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "_id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "subway_service",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `line_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `name` TEXT NOT NULL, `line_id` TEXT NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -49,15 +49,15 @@
           {
             "fieldPath": "lineId",
             "columnName": "line_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "_id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -102,30 +102,30 @@
       },
       {
         "tableName": "subway_station",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `bound_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stop_id` TEXT NOT NULL, `stop_name` TEXT NOT NULL, `service_ids` TEXT NOT NULL, PRIMARY KEY(`stop_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "stop_id",
+            "columnName": "stop_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "stop_name",
+            "columnName": "stop_name",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "boundId",
-            "columnName": "bound_id",
-            "affinity": "INTEGER",
+            "fieldPath": "service_ids",
+            "columnName": "service_ids",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "stop_id"
           ],
           "autoGenerate": false
         },
@@ -173,7 +173,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4d6d910c9bf434a0bbe3353de3147401\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7c33e57dd5eb3a504e783ace65ab627\")"
     ]
   }
 }

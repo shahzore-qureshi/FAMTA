@@ -38,21 +38,25 @@ dependencies {
     implementation "com.android.support:support-vector-drawable:$android_support_version"
     implementation "com.android.support:support-v4:$android_support_version"
     implementation "com.android.support:recyclerview-v7:$android_support_version"
-    implementation "android.arch.lifecycle:extensions:$android_architecture_version"
-    implementation "android.arch.persistence.room:runtime:$android_architecture_version"
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
 
-    kapt "android.arch.lifecycle:compiler:$android_architecture_version"
-    kapt "android.arch.persistence.room:compiler:$android_architecture_version"
+    kapt "android.arch.lifecycle:compiler:1.1.0"
+    kapt "android.arch.persistence.room:compiler:1.0.0"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation 'org.mockito:mockito-core:2.7.6'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }

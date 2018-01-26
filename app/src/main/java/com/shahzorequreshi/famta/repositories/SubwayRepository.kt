@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.database.entities.*
+import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
 import java.util.*
 import javax.inject.Inject
@@ -16,33 +17,31 @@ import javax.inject.Singleton
 class SubwayRepository {
     @Inject lateinit var mDatabase: AppDatabase
     @Inject lateinit var mExecutors: AppExecutors
+    @Inject lateinit var mSubwayWebService: SubwayWebService
 
     init {
         MainApplication.component.inject(this)
-
-        mExecutors.diskIO().execute {
-            setUpDatabase()
-        }
+        setUpDatabase()
     }
 
     fun getSubwayLines(): LiveData<List<SubwayLine>>? {
         return mDatabase.getSubwayLineDao().get()
     }
 
-    fun getSubwayServices(subwayLine: SubwayLine): LiveData<List<SubwayService>>? {
-        return mDatabase.getSubwayServiceDao().get(subwayLine.id)
+    fun getSubwayServices(subwayServiceIds: List<String>): LiveData<List<SubwayService>>? {
+        return mDatabase.getSubwayServiceDao().get(subwayServiceIds)
     }
 
     fun getSubwayBounds(subwayService: SubwayService): LiveData<List<SubwayBound>>? {
-        return mDatabase.getSubwayBoundDao().get(subwayService.id)
+        return mDatabase.getSubwayBoundDao().get(subwayService._id)
     }
 
-    fun getSubwayStations(subwayBound: SubwayBound): LiveData<List<SubwayStation>>? {
-        return mDatabase.getSubwayStationDao().get(subwayBound.id)
+    fun getSubwayStations(): LiveData<List<SubwayStation>>? {
+        return mDatabase.getSubwayStationDao().get()
     }
 
     fun getSubwayTimes(subwayStation: SubwayStation, subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
-        return mDatabase.getSubwayTimeDao().get(subwayStation.id, subwayBound.id)
+        return mDatabase.getSubwayTimeDao().get(subwayStation.stop_id, subwayBound.id)
     }
 
     fun removeSubwayTime(subwayTime: SubwayTime) {
@@ -50,6 +49,22 @@ class SubwayRepository {
     }
 
     private fun setUpDatabase() {
+        mExecutors.diskIO().execute {
+            val subwayLines = mSubwayWebService.getSubwayLines()
+            if(subwayLines.isNotEmpty()) {
+                mDatabase.getSubwayLineDao().insert(subwayLines)
+            }
+            val subwayServices = mSubwayWebService.getSubwayServices()
+            if(subwayServices.isNotEmpty()) {
+                mDatabase.getSubwayServiceDao().insert(subwayServices)
+            }
+            val subwayStations = mSubwayWebService.getSubwayStations()
+            if(subwayStations.isNotEmpty()) {
+                mDatabase.getSubwayStationDao().insert(subwayStations)
+            }
+        }
+
+        /*
         mDatabase.getSubwayLineDao().insert(SubwayLine("blue"), SubwayLine("orange"))
 
         mDatabase.getSubwayServiceDao().insert(
@@ -84,5 +99,6 @@ class SubwayRepository {
                 SubwayTime(Date(), "101S", 2),
                 SubwayTime(Date(), "101S", 2),
                 SubwayTime(Date(), "101S", 2))
+        */
     }
 }

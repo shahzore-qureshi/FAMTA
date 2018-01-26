@@ -10,10 +10,10 @@ import java.io.Serializable
  * Represents a subway service (ex. service A, service C).
  */
 @Entity(tableName = "subway_service")
-data class SubwayService(val name: String, @ColumnInfo(name = "line_id") val lineId: Long) : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-
+data class SubwayService(
+        @PrimaryKey val _id: String,
+        val name: String,
+        @ColumnInfo(name = "line_id") val lineId: String) : Serializable {
     override fun toString(): String {
         return name
     }

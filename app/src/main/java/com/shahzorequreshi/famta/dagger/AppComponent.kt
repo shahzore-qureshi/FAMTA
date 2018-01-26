@@ -1,6 +1,5 @@
 package com.shahzorequreshi.famta.dagger
 
-import android.arch.lifecycle.ViewModel
 import com.shahzorequreshi.famta.activities.MainActivity
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import com.shahzorequreshi.famta.viewmodels.*
@@ -14,10 +13,10 @@ import javax.inject.Singleton
 @Component(modules = [(AppModule::class)])
 interface AppComponent {
     fun inject(viewModel: SubwayViewModel)
-    fun inject(viewModel: SubwayLineViewModel)
+    fun inject(viewModel: SubwayServicesViewModel)
     fun inject(viewModel: SubwayServiceViewModel)
     fun inject(viewModel: SubwayBoundViewModel)
-    fun inject(viewModel: SubwayStationViewModel)
+    fun inject(viewModel: SubwayStationsViewModel)
     fun inject(repository: SubwayRepository)
     fun inject(activity: MainActivity)
 }

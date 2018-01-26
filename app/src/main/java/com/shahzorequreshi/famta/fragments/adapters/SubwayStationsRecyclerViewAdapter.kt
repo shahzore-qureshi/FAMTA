@@ -7,32 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_bound_list_item
-import com.shahzorequreshi.famta.database.entities.SubwayBound
+import com.shahzorequreshi.famta.R.layout.fragment_subway_stations_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayStation
-import com.shahzorequreshi.famta.fragments.SubwayBoundFragment.OnSubwayBoundFragmentInteractionListener
+import com.shahzorequreshi.famta.fragments.SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener
 
 /**
- * [RecyclerView.Adapter] that can display subway bound information.
+ * [RecyclerView.Adapter] that can display subway stations.
  */
-class SubwayBoundRecyclerViewAdapter(
+class SubwayStationsRecyclerViewAdapter(
         var mValues: List<SubwayStation>,
-        private val mListener: OnSubwayBoundFragmentInteractionListener?,
-        private val mContext: Context?,
-        var mSubwayBound: SubwayBound? = null)
-    : RecyclerView.Adapter<SubwayBoundRecyclerViewAdapter.ViewHolder>() {
+        private val mListener: OnSubwayStationsFragmentInteractionListener?,
+        private val mContext: Context?)
+    : RecyclerView.Adapter<SubwayStationsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_bound_list_item, parent, false)
+                .inflate(fragment_subway_stations_list_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mTextView.text = holder.mItem!!.stop_name
+        holder.mTextView.text = holder.mItem!!.toString()
         holder.mView.setOnClickListener {
-            mListener?.onSubwayBoundFragmentInteraction(holder.mItem!!, mSubwayBound!!)
+            if(holder.mItem is SubwayStation) mListener?.onSubwayStationClick(holder.mItem as SubwayStation)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
@@ -47,7 +45,7 @@ class SubwayBoundRecyclerViewAdapter(
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView.findViewById(R.id.subway_bound_list_item) as TextView
+        val mTextView: TextView = mView as TextView
         var mItem: SubwayStation? = null
     }
 }

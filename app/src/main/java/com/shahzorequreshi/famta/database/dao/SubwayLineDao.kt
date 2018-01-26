@@ -13,7 +13,13 @@ interface SubwayLineDao {
     fun get(): LiveData<List<SubwayLine>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(subwayLine: SubwayLine)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayLines: SubwayLine)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(subwayLines: List<SubwayLine>)
 
     @Delete
     fun delete(subwayLine: SubwayLine)

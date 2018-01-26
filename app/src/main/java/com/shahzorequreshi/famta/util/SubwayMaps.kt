@@ -5,7 +5,7 @@ import com.shahzorequreshi.famta.database.entities.SubwayLine
 import com.shahzorequreshi.famta.database.entities.SubwayService
 
 /**
- * Created by Shahzore Qureshi on 1/15/18.
+ * Provides maps between subway objects and images.
  */
 object SubwayMaps {
     fun getDrawableIdForSubwayLine(subwayLine: SubwayLine): Int {
