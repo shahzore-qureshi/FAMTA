@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_stations_list_item
+import com.shahzorequreshi.famta.R.layout.fragment_subway_times_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayTime
-import com.shahzorequreshi.famta.fragments.SubwayTimeFragment
+import com.shahzorequreshi.famta.fragments.SubwayTimesFragment
 import java.util.*
 
 /**
@@ -18,13 +18,13 @@ import java.util.*
  */
 class SubwayTimesRecyclerViewAdapter(
         var mValues: List<SubwayTime>,
-        private val mListener: SubwayTimeFragment.OnSubwayTimeFragmentInteractionListener?,
+        private val mListener: SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener?,
         private val mContext: Context?)
     : RecyclerView.Adapter<SubwayTimesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_stations_list_item, parent, false)
+                .inflate(fragment_subway_times_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -43,7 +43,7 @@ class SubwayTimesRecyclerViewAdapter(
         if(holder.mCounter != null) {
             holder.mCounter?.cancel()
         }
-        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrivalTime.time - Date().time, 1000) {
+        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrivalTime - Date().time, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 holder.mTextView.text = holder.mItem!!.toString()
             }

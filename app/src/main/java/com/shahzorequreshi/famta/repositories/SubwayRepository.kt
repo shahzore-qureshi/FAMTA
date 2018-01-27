@@ -28,20 +28,22 @@ class SubwayRepository {
         return mDatabase.getSubwayLineDao().get()
     }
 
-    fun getSubwayServices(subwayServiceIds: List<String>): LiveData<List<SubwayService>>? {
-        return mDatabase.getSubwayServiceDao().get(subwayServiceIds)
+    fun getSubwayServices(subwayStation: SubwayStation): LiveData<List<SubwayService>>? {
+        return mDatabase.getSubwayServiceDao().get(subwayStation.service_ids)
     }
 
-    fun getSubwayBounds(subwayService: SubwayService): LiveData<List<SubwayBound>>? {
-        return mDatabase.getSubwayBoundDao().get(subwayService._id)
+    fun getSubwayBounds(): LiveData<List<SubwayBound>>? {
+        return mDatabase.getSubwayBoundDao().get()
     }
 
     fun getSubwayStations(): LiveData<List<SubwayStation>>? {
         return mDatabase.getSubwayStationDao().get()
     }
 
-    fun getSubwayTimes(subwayStation: SubwayStation, subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
-        return mDatabase.getSubwayTimeDao().get(subwayStation.stop_id, subwayBound.id)
+    fun getSubwayTimes(subwayStation: SubwayStation,
+                       subwayService: SubwayService,
+                       subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
+        return mDatabase.getSubwayTimeDao().get(subwayStation.stop_id, subwayService.name, subwayBound.direction)
     }
 
     fun removeSubwayTime(subwayTime: SubwayTime) {
@@ -62,6 +64,13 @@ class SubwayRepository {
             if(subwayStations.isNotEmpty()) {
                 mDatabase.getSubwayStationDao().insert(subwayStations)
             }
+            val subwayTimes = mSubwayWebService.getSubwayTimes()
+            if(subwayTimes.isNotEmpty()) {
+                mDatabase.getSubwayTimeDao().insert(subwayTimes)
+            }
+            mDatabase.getSubwayBoundDao().insert(
+                    SubwayBound("North", "N"),
+                    SubwayBound("South", "S"))
         }
 
         /*

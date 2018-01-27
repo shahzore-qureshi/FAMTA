@@ -12,11 +12,16 @@ interface SubwayTimeDao {
     @Query("SELECT * FROM subway_time")
     fun get(): LiveData<List<SubwayTime>>
 
-    @Query("SELECT * FROM subway_time WHERE station_id == :stationId AND bound_id == :boundId")
-    fun get(stationId: String, boundId: Long): LiveData<List<SubwayTime>>
+    @Query("SELECT * FROM subway_time WHERE "
+            + "station_id == :stationId AND "
+            + "service_id == :serviceId AND "
+            + "bound_id == :boundId")
+    fun get(stationId: String,
+            serviceId: String,
+            boundId: String): LiveData<List<SubwayTime>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg subwayTimes: SubwayTime)
+    fun insert(subwayTimes: List<SubwayTime>)
 
     @Delete
     fun delete(subwayTime: SubwayTime)

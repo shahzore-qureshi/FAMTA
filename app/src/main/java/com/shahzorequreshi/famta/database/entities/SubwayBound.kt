@@ -7,18 +7,15 @@ import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
 /**
- * Created by Shahzore Qureshi on 1/14/18.
+ * Represents a subway service direction (northbound or southbound).
  */
 @Entity(tableName = "subway_bound")
-data class SubwayBound(
-        val name: String,
-        val direction: String,
-        @ColumnInfo(name = "service_id") val serviceId: Long) : Serializable
+data class SubwayBound(val name: String, val direction: String) : Serializable
 {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
     override fun toString(): String {
-        return direction + " - " + name
+        return name
     }
 }

@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_line_list_item
 import com.shahzorequreshi.famta.R.layout.fragment_subway_services_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.SubwayServicesFragment.OnSubwayServicesFragmentInteractionListener
 import com.shahzorequreshi.famta.util.SubwayMaps
 
@@ -17,6 +17,7 @@ import com.shahzorequreshi.famta.util.SubwayMaps
  * [RecyclerView.Adapter] that can show subway services.
  */
 class SubwayServicesRecyclerViewAdapter(
+        var mSubwayStation: SubwayStation? = null,
         var mValues: List<SubwayService>,
         private val mListener: OnSubwayServicesFragmentInteractionListener?,
         private val mContext: Context?)
@@ -32,7 +33,7 @@ class SubwayServicesRecyclerViewAdapter(
         holder.mItem = mValues[position]
         holder.mImageView.setImageResource(SubwayMaps.getDrawableIdForSubwayService(holder.mItem!!))
         holder.mView.setOnClickListener {
-            mListener?.onSubwayLineFragmentInteraction(holder.mItem!!)
+            mListener?.onSubwayServiceClick(mSubwayStation!!, holder.mItem!!)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)

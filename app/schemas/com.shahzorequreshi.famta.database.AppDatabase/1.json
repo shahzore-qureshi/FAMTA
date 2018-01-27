@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b7c33e57dd5eb3a504e783ace65ab627",
+    "identityHash": "cd12279cfddc8e8fbc9ed23690c1c3dd",
     "entities": [
       {
         "tableName": "subway_line",
@@ -64,7 +64,7 @@
       },
       {
         "tableName": "subway_bound",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `direction` TEXT NOT NULL, `service_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `direction` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -83,12 +83,6 @@
             "columnName": "direction",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "serviceId",
-            "columnName": "service_id",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -102,8 +96,14 @@
       },
       {
         "tableName": "subway_station",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stop_id` TEXT NOT NULL, `stop_name` TEXT NOT NULL, `service_ids` TEXT NOT NULL, PRIMARY KEY(`stop_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `stop_id` TEXT NOT NULL, `stop_name` TEXT NOT NULL, `service_ids` TEXT NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
+          {
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "stop_id",
             "columnName": "stop_id",
@@ -125,7 +125,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "stop_id"
+            "_id"
           ],
           "autoGenerate": false
         },
@@ -134,18 +134,12 @@
       },
       {
         "tableName": "subway_time",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `arrival_time` INTEGER NOT NULL, `station_id` TEXT NOT NULL, `bound_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `station_id` TEXT NOT NULL, `service_id` TEXT NOT NULL, `bound_id` TEXT NOT NULL, `arrival_time` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "arrivalTime",
-            "columnName": "arrival_time",
-            "affinity": "INTEGER",
+            "fieldPath": "_id",
+            "columnName": "_id",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -155,17 +149,29 @@
             "notNull": true
           },
           {
+            "fieldPath": "serviceId",
+            "columnName": "service_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "boundId",
             "columnName": "bound_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "arrivalTime",
+            "columnName": "arrival_time",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "_id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -173,7 +179,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7c33e57dd5eb3a504e783ace65ab627\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cd12279cfddc8e8fbc9ed23690c1c3dd\")"
     ]
   }
 }

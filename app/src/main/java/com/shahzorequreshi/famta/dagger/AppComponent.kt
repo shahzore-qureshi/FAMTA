@@ -12,11 +12,10 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [(AppModule::class)])
 interface AppComponent {
-    fun inject(viewModel: SubwayViewModel)
     fun inject(viewModel: SubwayServicesViewModel)
-    fun inject(viewModel: SubwayServiceViewModel)
-    fun inject(viewModel: SubwayBoundViewModel)
+    fun inject(viewModel: SubwayBoundsViewModel)
     fun inject(viewModel: SubwayStationsViewModel)
+    fun inject(viewModel: SubwayTimesViewModel)
     fun inject(repository: SubwayRepository)
     fun inject(activity: MainActivity)
 }

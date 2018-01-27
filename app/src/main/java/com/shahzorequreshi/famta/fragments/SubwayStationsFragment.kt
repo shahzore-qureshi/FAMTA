@@ -26,14 +26,13 @@ class SubwayStationsFragment : Fragment() {
     private var mSubwayStationsAdapter: SubwayStationsRecyclerViewAdapter? = null
 
     companion object {
+        const val TAG = "subway_stations_fragment"
         fun newInstance() = SubwayStationsFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mSubwayStationsViewModel = ViewModelProviders
-                .of(this, SubwayStationsViewModel.Factory())
-                .get(SubwayStationsViewModel::class.java)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        mSubwayStationsViewModel = ViewModelProviders.of(this).get(SubwayStationsViewModel::class.java)
         mSubwayStationsViewModel.getSubwayStations()?.observe(this, Observer { subwayStations ->
             if(subwayStations !== null) {
                 mSubwayStationsAdapter?.mValues = subwayStations
@@ -44,7 +43,7 @@ class SubwayStationsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_subway_services, container, false)
+        val view = inflater.inflate(R.layout.fragment_subway_bounds, container, false)
         if (view is RecyclerView) {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)

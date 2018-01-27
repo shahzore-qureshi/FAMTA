@@ -14,9 +14,9 @@ import android.view.ViewGroup
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.SubwayService
 import android.support.v7.widget.DividerItemDecoration
+import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.adapters.SubwayServicesRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.SubwayServicesViewModel
-import java.io.Serializable
 
 /**
  * A fragment representing subway services.
@@ -27,27 +27,28 @@ class SubwayServicesFragment : Fragment() {
     private var mSubwayServicesAdapter: SubwayServicesRecyclerViewAdapter? = null
 
     companion object {
-        private const val ARG_SUBWAY_SERVICES = "subway-services"
+        const val TAG = "subway_services_fragment"
+        private const val ARG_SUBWAY_STATION = "subway-station"
 
-        fun newInstance(subwayServices: List<String>): SubwayServicesFragment {
+        fun newInstance(subwayStation: SubwayStation): SubwayServicesFragment {
             val fragment = SubwayServicesFragment()
             val args = Bundle()
-            args.putSerializable(ARG_SUBWAY_SERVICES, subwayServices as Serializable)
+            args.putSerializable(ARG_SUBWAY_STATION, subwayStation)
             fragment.arguments = args
             return fragment
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null && arguments is Bundle) {
-            @Suppress("UNCHECKED_CAST")
-            val subwayServices = (arguments as Bundle).getSerializable(ARG_SUBWAY_SERVICES) as List<String>
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (arguments != null) {
+            val subwayStation = (arguments as Bundle).getSerializable(ARG_SUBWAY_STATION) as SubwayStation
             mSubwayServicesViewModel = ViewModelProviders
-                    .of(this, SubwayServicesViewModel.Factory(subwayServices))
+                    .of(this, SubwayServicesViewModel.Factory(subwayStation))
                     .get(SubwayServicesViewModel::class.java)
             mSubwayServicesViewModel.getSubwayServices()?.observe(this, Observer { services ->
                 if(services !== null) {
+                    mSubwayServicesAdapter?.mSubwayStation = subwayStation
                     mSubwayServicesAdapter?.mValues = services
                     mSubwayServicesAdapter?.notifyDataSetChanged()
                 }
@@ -62,7 +63,7 @@ class SubwayServicesFragment : Fragment() {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
 
-            mSubwayServicesAdapter = SubwayServicesRecyclerViewAdapter(listOf(), mListener, activity)
+            mSubwayServicesAdapter = SubwayServicesRecyclerViewAdapter(null, listOf(), mListener, activity)
             view.adapter = mSubwayServicesAdapter
 
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
@@ -85,6 +86,6 @@ class SubwayServicesFragment : Fragment() {
     }
 
     interface OnSubwayServicesFragmentInteractionListener {
-        fun onSubwayLineFragmentInteraction(item: SubwayService)
+        fun onSubwayServiceClick(subwayStation: SubwayStation, subwayService: SubwayService)
     }
 }

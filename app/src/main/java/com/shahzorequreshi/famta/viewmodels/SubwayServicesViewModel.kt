@@ -8,19 +8,20 @@ import javax.inject.Inject
 import android.arch.lifecycle.ViewModelProvider
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.database.entities.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayStation
 
 /**
  * ViewModel that holds subway line information, such as subway services.
  */
-class SubwayServicesViewModel(subwayServices: List<String>) : ViewModel() {
-    private val mSubwayServicesList = subwayServices
+class SubwayServicesViewModel(subwayStation: SubwayStation) : ViewModel() {
+    private val mSubwayStation = subwayStation
     private var mSubwayServices: LiveData<List<SubwayService>>? = null
     @Inject lateinit var mRepo: SubwayRepository
 
     init {
         MainApplication.component.inject(this)
         if(mSubwayServices == null) {
-            mSubwayServices = mRepo.getSubwayServices(mSubwayServicesList)
+            mSubwayServices = mRepo.getSubwayServices(mSubwayStation)
         }
     }
 
@@ -32,10 +33,10 @@ class SubwayServicesViewModel(subwayServices: List<String>) : ViewModel() {
     /**
      * A creator is used to inject the subway line into the ViewModel.
      */
-    class Factory(subwayServices: List<String>): ViewModelProvider.NewInstanceFactory() {
-        private val mSubwayServicesList = subwayServices
+    class Factory(subwayStation: SubwayStation): ViewModelProvider.NewInstanceFactory() {
+        private val mSubwayStation = subwayStation
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SubwayServicesViewModel(mSubwayServicesList) as T
+            return SubwayServicesViewModel(mSubwayStation) as T
         }
     }
 }

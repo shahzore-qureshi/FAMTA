@@ -5,33 +5,36 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.TextView
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.R.layout.fragment_subway_list_item
-import com.shahzorequreshi.famta.database.entities.SubwayLine
-import com.shahzorequreshi.famta.fragments.SubwayFragment.OnSubwayFragmentInteractionListener
-import com.shahzorequreshi.famta.util.SubwayMaps
+import com.shahzorequreshi.famta.R.layout.fragment_subway_bounds_list_item
+import com.shahzorequreshi.famta.database.entities.SubwayBound
+import com.shahzorequreshi.famta.database.entities.SubwayService
+import com.shahzorequreshi.famta.database.entities.SubwayStation
+import com.shahzorequreshi.famta.fragments.SubwayBoundsFragment.OnSubwayBoundsFragmentInteractionListener
 
 /**
- * [RecyclerView.Adapter] that can display information about a subway.
+ * [RecyclerView.Adapter] that can display subway service information.
  */
-class SubwayRecyclerViewAdapter(
-        var mValues: List<SubwayLine>,
-        private val mListener: OnSubwayFragmentInteractionListener?,
+class SubwayBoundsRecyclerViewAdapter(
+        var mSubwayStation: SubwayStation? = null,
+        var mSubwayService: SubwayService? = null,
+        var mValues: List<SubwayBound>,
+        private val mListener: OnSubwayBoundsFragmentInteractionListener?,
         private val mContext: Context?)
-    : RecyclerView.Adapter<SubwayRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<SubwayBoundsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_list_item, parent, false)
+                .inflate(fragment_subway_bounds_list_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mImageView.setImageResource(SubwayMaps.getDrawableIdForSubwayLine(holder.mItem!!))
+        holder.mTextView.text = holder.mItem!!.toString()
         holder.mView.setOnClickListener {
-            mListener?.onSubwayFragmentInteraction(holder.mItem!!)
+            mListener?.onSubwayBoundClick(mSubwayStation!!, mSubwayService!!, holder.mItem!!)
         }
         if(position == 0 && mContext != null) {
             val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
@@ -46,7 +49,7 @@ class SubwayRecyclerViewAdapter(
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mImageView: ImageView = mView.findViewById(R.id.subway_list_item) as ImageView
-        var mItem: SubwayLine? = null
+        val mTextView: TextView = mView as TextView
+        var mItem: SubwayBound? = null
     }
 }

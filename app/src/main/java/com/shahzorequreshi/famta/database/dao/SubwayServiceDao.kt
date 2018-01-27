@@ -12,8 +12,8 @@ interface SubwayServiceDao {
     @Query("SELECT * FROM subway_service")
     fun get(): LiveData<List<SubwayService>>
 
-    @Query("SELECT * FROM subway_service WHERE name in (:subwayServiceNames)")
-    fun get(subwayServiceNames: List<String>): LiveData<List<SubwayService>>
+    @Query("SELECT * FROM subway_service WHERE name in (:serviceIds)")
+    fun get(serviceIds: List<String>): LiveData<List<SubwayService>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayService: SubwayService)

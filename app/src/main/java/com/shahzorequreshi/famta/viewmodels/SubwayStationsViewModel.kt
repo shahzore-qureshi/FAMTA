@@ -25,14 +25,4 @@ class SubwayStationsViewModel : ViewModel() {
     fun getSubwayStations(): LiveData<List<SubwayStation>>? {
         return mSubwayStations
     }
-
-    @Suppress("UNCHECKED_CAST")
-    /**
-     * A creator is used to inject the subway station and bound into the ViewModel.
-     */
-    class Factory: ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SubwayStationsViewModel() as T
-        }
-    }
 }
