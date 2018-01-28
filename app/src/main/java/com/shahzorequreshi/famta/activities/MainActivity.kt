@@ -1,8 +1,14 @@
 package com.shahzorequreshi.famta.activities
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.FragmentManager
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.R
@@ -11,6 +17,9 @@ import com.shahzorequreshi.famta.fragments.*
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import android.support.design.widget.Snackbar
+import android.view.View
+import com.google.android.gms.location.FusedLocationProviderClient
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,
@@ -21,10 +30,14 @@ class MainActivity : AppCompatActivity(),
         SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener {
 
     @Inject lateinit var mRepo: SubwayRepository
+    @Inject lateinit var mLocationProvider: FusedLocationProviderClient
+    private val mRequestForLocationPermission = 1
+    lateinit var mLayout: View
+    private val mBackStackRootTag = "root-fragment"
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_subway_lines -> changeFragment(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
             //R.id.navigation_feeds -> changeFragment(FeedFragment.newInstance(1))
             //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
         }
@@ -38,29 +51,38 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mLayout = findViewById(R.id.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        changeFragmentForFirstTime(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+        changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
     }
 
-    private fun changeFragmentForFirstTime(chosenFragment: Fragment, fragmentTag: String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(fragmentContainer.id, chosenFragment, fragmentTag)
-        transaction.commit()
+    private fun changeFragmentWithoutHistory(chosenFragment: Fragment, fragmentTag: String) {
+        supportFragmentManager
+                .popBackStack(mBackStackRootTag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(fragmentContainer.id, chosenFragment, fragmentTag)
+                .commit()
     }
 
-    private fun changeFragment(chosenFragment: Fragment, fragmentTag: String) {
+    private fun changeFragment(chosenFragment: Fragment, fragmentTag: String, backStackTag: String? = null) {
         var fragment = supportFragmentManager.findFragmentByTag(fragmentTag)
         if(fragment == null) {
             fragment = chosenFragment
         }
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(fragmentContainer.id, fragment, fragmentTag)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(fragmentContainer.id, fragment, fragmentTag)
+                .addToBackStack(backStackTag)
+                .commit()
     }
 
     override fun onSubwayStationClick(subwayStation: SubwayStation) {
-        changeFragment(SubwayServicesFragment.newInstance(subwayStation), SubwayServicesFragment.TAG)
+        changeFragment(SubwayServicesFragment.newInstance(subwayStation), SubwayServicesFragment.TAG, mBackStackRootTag)
+    }
+
+    override fun onLocationRequest() {
+        requestLocationPermission()
     }
 
     override fun onSubwayServiceClick(subwayStation: SubwayStation, subwayService: SubwayService) {
@@ -85,5 +107,38 @@ class MainActivity : AppCompatActivity(),
 
     override fun onFeedFragmentInteraction(item: SubwayLine) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Snackbar.make(mLayout, "May we use your location to find the nearest train stations?",
+                    Snackbar.LENGTH_INDEFINITE).setAction("Sure!") {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                        mRequestForLocationPermission)
+            }.show()
+        } else {
+            initializeLocator()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        if(requestCode == mRequestForLocationPermission) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                initializeLocator()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initializeLocator() {
+        mLocationProvider.lastLocation.addOnCompleteListener {
+            if(it.isSuccessful) {
+                println("*********LOCATION: " + it.result.latitude.toString() + " " + it.result.longitude.toString())
+                mRepo.setUserLocation(it.result.latitude, it.result.longitude)
+            }
+        }
     }
 }

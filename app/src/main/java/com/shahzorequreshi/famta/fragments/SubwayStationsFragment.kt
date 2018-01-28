@@ -60,6 +60,7 @@ class SubwayStationsFragment : Fragment() {
         super.onAttach(context)
         if (context is OnSubwayStationsFragmentInteractionListener) {
             mListener = context
+            mListener?.onLocationRequest()
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnSubwayStationsFragmentInteractionListener")
         }
@@ -72,5 +73,6 @@ class SubwayStationsFragment : Fragment() {
 
     interface OnSubwayStationsFragmentInteractionListener {
         fun onSubwayStationClick(subwayStation: SubwayStation)
+        fun onLocationRequest()
     }
 }

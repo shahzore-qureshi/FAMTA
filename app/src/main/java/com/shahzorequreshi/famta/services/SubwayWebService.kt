@@ -61,7 +61,7 @@ class SubwayWebService {
         }
     }
 
-    fun getSubwayStations(latitude: Float, longitude: Float): List<SubwayStation> {
+    fun getSubwayStations(latitude: Double, longitude: Double): List<SubwayStation> {
         val request = Request.Builder().url("$mSubwayStationURL/$latitude/$longitude").build()
         val response = mClient.newCall(request).execute()
         return if(response.isSuccessful && response.body() != null) {
