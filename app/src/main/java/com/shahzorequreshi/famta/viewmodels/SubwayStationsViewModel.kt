@@ -17,7 +17,7 @@ class SubwayStationsViewModel : ViewModel() {
     init {
         MainApplication.component.inject(this)
         if(mSubwayStations == null) {
-            mSubwayStations = mRepo.getNearestSubwayStations()
+            mSubwayStations = mRepo.getSubwayStations()
         }
     }
 

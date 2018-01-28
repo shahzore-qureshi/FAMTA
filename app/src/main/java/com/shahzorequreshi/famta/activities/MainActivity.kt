@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -17,7 +18,6 @@ import com.shahzorequreshi.famta.fragments.*
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import android.support.design.widget.Snackbar
 import android.view.View
 import com.google.android.gms.location.FusedLocationProviderClient
 
@@ -27,12 +27,13 @@ class MainActivity : AppCompatActivity(),
         SubwayServicesFragment.OnSubwayServicesFragmentInteractionListener,
         SubwayBoundsFragment.OnSubwayBoundsFragmentInteractionListener,
         SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener,
-        SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener {
+        SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener,
+        LocationRequestDialogFragment.OnLocationRequestDialogFragmentInteractionListener {
 
     @Inject lateinit var mRepo: SubwayRepository
     @Inject lateinit var mLocationProvider: FusedLocationProviderClient
     private val mRequestForLocationPermission = 1
-    lateinit var mLayout: View
+    private lateinit var mLayout: View
     private val mBackStackRootTag = "root-fragment"
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayTimeExpired(subwayTime: SubwayTime) {
-        //mRepo.removeSubwayTime(subwayTime)
+        mRepo.removeSubwayTime(subwayTime)
     }
 
     override fun onSubwayTimeClick(subwayTime: SubwayTime) {
@@ -112,12 +113,14 @@ class MainActivity : AppCompatActivity(),
     private fun requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            Snackbar.make(mLayout, "May we use your location to find the nearest train stations?",
-                    Snackbar.LENGTH_INDEFINITE).setAction("Sure!") {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                LocationRequestDialogFragment().show(supportFragmentManager, null)
+            } else {
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                         mRequestForLocationPermission)
-            }.show()
+            }
         } else {
             initializeLocator()
         }
@@ -128,6 +131,8 @@ class MainActivity : AppCompatActivity(),
         if(requestCode == mRequestForLocationPermission) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 initializeLocator()
+            } else {
+                mRepo.setUserLocation(null, null)
             }
         }
     }
@@ -136,9 +141,18 @@ class MainActivity : AppCompatActivity(),
     private fun initializeLocator() {
         mLocationProvider.lastLocation.addOnCompleteListener {
             if(it.isSuccessful) {
-                println("*********LOCATION: " + it.result.latitude.toString() + " " + it.result.longitude.toString())
                 mRepo.setUserLocation(it.result.latitude, it.result.longitude)
             }
         }
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                mRequestForLocationPermission)
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        mRepo.setUserLocation(null, null)
     }
 }

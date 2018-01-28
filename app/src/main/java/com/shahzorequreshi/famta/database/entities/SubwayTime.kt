@@ -21,13 +21,22 @@ data class SubwayTime(
         if(timeDifference < 0) timeDifference = 0
         var stringToPrint = ""
         when {
-            timeDifference == 0 -> stringToPrint = "Train has arrived"
             timeDifference == 1 -> stringToPrint += timeDifference.toString() + " second away"
             timeDifference in 2..59 -> stringToPrint += timeDifference.toString() + " seconds away"
-            timeDifference == 60 -> stringToPrint += (Math.round(timeDifference / 60f)).toString() + " minute away"
-            timeDifference in 61..3599 -> stringToPrint += (Math.round(timeDifference / 60f)).toString() + " minutes away"
-            timeDifference in 3600..7199 -> stringToPrint += (Math.round(timeDifference / 3600f)).toString() + " hour away"
-            timeDifference >= 7200 -> stringToPrint += (Math.round(timeDifference / 3600f)).toString() + " hours away"
+            timeDifference >= 60 -> {
+                val timeDifferenceInMin = Math.round(timeDifference / 60f)
+                when {
+                    timeDifferenceInMin == 1 -> stringToPrint += timeDifferenceInMin.toString() + " minute away"
+                    timeDifferenceInMin in 2..59 -> stringToPrint += timeDifferenceInMin.toString() + " minutes away"
+                    timeDifferenceInMin >= 60 -> {
+                        val timeDifferenceInHours = Math.round(timeDifferenceInMin / 60f)
+                        when {
+                            timeDifferenceInHours == 1 -> stringToPrint += timeDifferenceInHours.toString() + " hour away"
+                            timeDifferenceInHours > 1 -> stringToPrint += timeDifferenceInHours.toString() + " hours away"
+                        }
+                    }
+                }
+            }
         }
         return stringToPrint
     }

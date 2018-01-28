@@ -1,12 +1,13 @@
 package com.shahzorequreshi.famta.repositories
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.MediatorLiveData
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.database.entities.*
 import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +19,7 @@ class SubwayRepository {
     @Inject lateinit var mDatabase: AppDatabase
     @Inject lateinit var mExecutors: AppExecutors
     @Inject lateinit var mSubwayWebService: SubwayWebService
-    private var mNearestSubwayStations = object : MutableLiveData<List<SubwayStation>>() {}
+    private var mSubwayStations = MediatorLiveData<List<SubwayStation>>()
 
     init {
         MainApplication.component.inject(this)
@@ -49,20 +50,20 @@ class SubwayRepository {
         }
     }
 
-    fun getSubwayStations(): LiveData<List<SubwayStation>>? {
-        return mDatabase.getSubwayStationDao().get()
-    }
-
-    fun getNearestSubwayStations(): LiveData<List<SubwayStation>>? {
-        return mNearestSubwayStations
-    }
-
-    fun setUserLocation(latitude: Double, longitude: Double) {
-        val newLatitude = 40.759560
-        val newLongitude = -73.980692
-        mExecutors.networkIO().execute {
-            mNearestSubwayStations.postValue(mSubwayWebService.getSubwayStations(newLatitude, newLongitude))
+    fun setUserLocation(latitude: Double?, longitude: Double?) {
+        if(latitude != null && longitude != null) {
+            mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(latitude, longitude), {
+                mSubwayStations.postValue(it)
+            })
+        } else {
+            mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(), {
+                mSubwayStations.postValue(it)
+            })
         }
+    }
+
+    fun getSubwayStations(): LiveData<List<SubwayStation>>? {
+        return mSubwayStations
     }
 
     fun getSubwayServices(subwayStation: SubwayStation): LiveData<List<SubwayService>>? {
@@ -76,7 +77,11 @@ class SubwayRepository {
     fun getSubwayTimes(subwayStation: SubwayStation,
                        subwayService: SubwayService,
                        subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
-        return mDatabase.getSubwayTimeDao().get(subwayStation.stop_id, subwayService.name, subwayBound.direction)
+        return mDatabase.getSubwayTimeDao().get(
+                subwayStation.stop_id,
+                subwayService.name,
+                subwayBound.direction,
+                Date().time)
     }
 
     fun removeSubwayTime(subwayTime: SubwayTime) {

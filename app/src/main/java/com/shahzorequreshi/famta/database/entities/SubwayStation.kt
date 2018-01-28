@@ -12,6 +12,8 @@ data class SubwayStation(
         @PrimaryKey val _id: String,
         val stop_id: String,
         val stop_name: String,
+        val stop_lat: Double,
+        val stop_lon: Double,
         val service_ids: List<String>) : Serializable {
     override fun toString(): String {
         return stop_name

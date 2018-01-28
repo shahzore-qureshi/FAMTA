@@ -15,10 +15,12 @@ interface SubwayTimeDao {
     @Query("SELECT * FROM subway_time WHERE "
             + "station_id == :stationId AND "
             + "service_id == :serviceId AND "
-            + "bound_id == :boundId")
+            + "bound_id == :boundId AND "
+            + "arrival_time > :currentTime")
     fun get(stationId: String,
             serviceId: String,
-            boundId: String): LiveData<List<SubwayTime>>
+            boundId: String,
+            currentTime: Long): LiveData<List<SubwayTime>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayTimes: List<SubwayTime>)
