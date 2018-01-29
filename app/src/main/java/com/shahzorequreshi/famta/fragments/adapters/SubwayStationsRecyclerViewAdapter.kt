@@ -1,6 +1,5 @@
 package com.shahzorequreshi.famta.fragments.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,164 +10,170 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.*
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.oneService
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.threeServices
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.twoServices
+import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.zeroServices
 import com.shahzorequreshi.famta.util.SubwayMaps
 
 /**
  * [RecyclerView.Adapter] that can display subway stations.
  */
-class SubwayStationsRecyclerViewAdapter(
-        var mValues: List<SubwayStation>,
-        private val mListener: OnSubwayStationsFragmentInteractionListener?,
-        private val mContext: Context?)
+class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsFragmentInteractionListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var mValues = listOf<SubwayStation>()
+        set(newValues) {
+            //Add empty station to the top of the list
+            //to compensate for the height of the app
+            //navigation bar. The bar covers the top
+            //of the list.
+            val emptyStation = SubwayStation("", "", "", 0.0, 0.0, listOf())
+            val newList = mutableListOf(emptyStation)
+            newList.addAll(newValues)
+            field = newList
+        }
 
     override fun getItemViewType(position: Int): Int {
         when(mValues[position].service_ids.size) {
-            0 -> return ViewType.zeroServices
-            1 -> return ViewType.oneService
-            2 -> return ViewType.twoServices
-            3 -> return ViewType.threeServices
+            0 -> return SubwayStationViewTypes.zeroServices
+            1 -> return SubwayStationViewTypes.oneService
+            2 -> return SubwayStationViewTypes.twoServices
+            3 -> return SubwayStationViewTypes.threeServices
         }
-        return ViewType.zeroServices
+        return SubwayStationViewTypes.zeroServices
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when(viewType) {
-            ViewType.zeroServices -> {
-                val view = LayoutInflater.from(parent.context)
-                        .inflate(fragment_subway_stations_list_item, parent, false)
-                return ViewHolderZeroServices(view)
-            }
-            ViewType.oneService -> {
-                val view = LayoutInflater.from(parent.context)
-                        .inflate(fragment_subway_stations_list_item_with_one_service, parent, false)
-                return ViewHolderOneService(view)
-            }
-            ViewType.twoServices -> {
-                val view = LayoutInflater.from(parent.context)
-                        .inflate(fragment_subway_stations_list_item_with_two_services, parent, false)
-                return ViewHolderTwoServices(view)
-            }
-            ViewType.threeServices -> {
-                val view = LayoutInflater.from(parent.context)
-                        .inflate(fragment_subway_stations_list_item_with_three_services, parent, false)
-                return ViewHolderThreeServices(view)
-            }
-        }
-        val view = LayoutInflater.from(parent.context)
-                .inflate(fragment_subway_stations_list_item, parent, false)
-        return ViewHolderZeroServices(view)
+        return SubwayStationViewHolderFactory().createViewHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        when(viewHolder) {
-            is ViewHolderZeroServices -> {
-                viewHolder.mItem = mValues[position]
-                viewHolder.mTextView.text = viewHolder.mItem!!.toString()
-                viewHolder.mView.setOnClickListener {
-                    if(viewHolder.mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(viewHolder.mItem as SubwayStation)
-                }
-                if(position == 0 && mContext != null) {
-                    val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
-                    val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-                    val params = viewHolder.mView.layoutParams as ViewGroup.MarginLayoutParams
-                    params.setMargins(0, marginTop.toInt(), 0, 0)
-                }
-            }
-            is ViewHolderOneService -> {
-                viewHolder.mItem = mValues[position]
-                viewHolder.mTextView.text = viewHolder.mItem!!.toString()
-                viewHolder.mImageView.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[0]))
-                viewHolder.mView.setOnClickListener {
-                    if(viewHolder.mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(viewHolder.mItem as SubwayStation)
-                }
-                if(position == 0 && mContext != null) {
-                    val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
-                    val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-                    val params = viewHolder.mView.layoutParams as ViewGroup.MarginLayoutParams
-                    params.setMargins(0, marginTop.toInt(), 0, 0)
-                }
-            }
-            is ViewHolderTwoServices -> {
-                viewHolder.mItem = mValues[position]
-                viewHolder.mTextView.text = viewHolder.mItem!!.toString()
-                viewHolder.mImageViewOne.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[0]))
-                viewHolder.mImageViewTwo.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[1]))
-                viewHolder.mView.setOnClickListener {
-                    if(viewHolder.mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(viewHolder.mItem as SubwayStation)
-                }
-                if(position == 0 && mContext != null) {
-                    val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
-                    val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-                    val params = viewHolder.mView.layoutParams as ViewGroup.MarginLayoutParams
-                    params.setMargins(0, marginTop.toInt(), 0, 0)
-                }
-            }
-            is ViewHolderThreeServices -> {
-                viewHolder.mItem = mValues[position]
-                viewHolder.mTextView.text = viewHolder.mItem!!.toString()
-                viewHolder.mImageViewOne.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[0]))
-                viewHolder.mImageViewTwo.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[1]))
-                viewHolder.mImageViewThree.setImageResource(
-                        SubwayMaps.getDrawableIdForSubwayService(viewHolder.mItem!!.service_ids[2]))
-                viewHolder.mView.setOnClickListener {
-                    if(viewHolder.mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(viewHolder.mItem as SubwayStation)
-                }
-                if(position == 0 && mContext != null) {
-                    val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
-                    val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-                    val params = viewHolder.mView.layoutParams as ViewGroup.MarginLayoutParams
-                    params.setMargins(0, marginTop.toInt(), 0, 0)
-                }
-            }
-        }
+        return SubwayStationViewHolderFactory().bindViewHolder(viewHolder, position)
     }
 
     override fun getItemCount(): Int {
         return mValues.size
     }
 
-    inner class ViewHolderZeroServices(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView as TextView
-        var mItem: SubwayStation? = null
+    private object SubwayStationViewTypes {
+        const val zeroServices = 0
+        const val oneService = 1
+        const val twoServices = 2
+        const val threeServices  = 3
     }
 
-    inner class ViewHolderOneService(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView.findViewById(R.id.subway_station_one_service_text) as TextView
-        var mItem: SubwayStation? = null
-        val mImageView: ImageView = mView.findViewById(R.id.subway_station_one_service_image)
+    private interface SubwayStationViewHolder {
+        fun bindViewHolder(position: Int)
     }
 
-    inner class ViewHolderTwoServices(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView.findViewById(R.id.subway_station_two_services_text) as TextView
-        var mItem: SubwayStation? = null
-        val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_two_services_image_one)
-        val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_two_services_image_two)
-    }
+    inner class SubwayStationViewHolderFactory {
+        fun createViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            when(viewType) {
+                zeroServices -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item, parent, false)
+                    return ViewHolderZeroServices(view)
+                }
+                oneService -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item_with_one_service, parent, false)
+                    return ViewHolderOneService(view)
+                }
+                twoServices -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item_with_two_services, parent, false)
+                    return ViewHolderTwoServices(view)
+                }
+                threeServices -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item_with_three_services, parent, false)
+                    return ViewHolderThreeServices(view)
+                }
+                else -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item, parent, false)
+                    return ViewHolderZeroServices(view)
+                }
+            }
+        }
 
-    inner class ViewHolderThreeServices(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mTextView: TextView = mView.findViewById(R.id.subway_station_three_services_text) as TextView
-        var mItem: SubwayStation? = null
-        val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_three_services_image_one)
-        val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_three_services_image_two)
-        val mImageViewThree: ImageView = mView.findViewById(R.id.subway_station_three_services_image_three)
-    }
+        fun bindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+            if(viewHolder is SubwayStationViewHolder) viewHolder.bindViewHolder(position)
+        }
 
-    private class ViewType {
-        companion object {
-            val zeroServices = 0
-            val oneService = 1
-            val twoServices = 2
-            val threeServices  = 3
+        inner class ViewHolderZeroServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
+            private val mTextView: TextView = mView as TextView
+            private var mItem: SubwayStation? = null
+
+            override fun bindViewHolder(position: Int) {
+                mItem = mValues[position]
+                mTextView.text = mItem!!.toString()
+                mView.setOnClickListener {
+                    if (mItem is SubwayStation)
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
+                }
+            }
+        }
+
+        inner class ViewHolderOneService(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_one_service_text) as TextView
+            private var mItem: SubwayStation? = null
+            private val mImageView: ImageView = mView.findViewById(R.id.subway_station_one_service_image)
+
+            override fun bindViewHolder(position: Int) {
+                mItem = mValues[position]
+                mTextView.text = mItem!!.toString()
+                mImageView.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
+                mView.setOnClickListener {
+                    if(mItem is SubwayStation)
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
+                }
+            }
+        }
+
+        inner class ViewHolderTwoServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_two_services_text) as TextView
+            private var mItem: SubwayStation? = null
+            private val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_two_services_image_one)
+            private val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_two_services_image_two)
+
+            override fun bindViewHolder(position: Int) {
+                mItem = mValues[position]
+                mTextView.text = mItem!!.toString()
+                mImageViewOne.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
+                mImageViewTwo.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
+                mView.setOnClickListener {
+                    if(mItem is SubwayStation)
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
+                }
+            }
+        }
+
+        inner class ViewHolderThreeServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_three_services_text) as TextView
+            private var mItem: SubwayStation? = null
+            private val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_three_services_image_one)
+            private val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_three_services_image_two)
+            private val mImageViewThree: ImageView = mView.findViewById(R.id.subway_station_three_services_image_three)
+
+            override fun bindViewHolder(position: Int) {
+                mItem = mValues[position]
+                mTextView.text = mItem!!.toString()
+                mImageViewOne.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
+                mImageViewTwo.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
+                mImageViewThree.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
+                mView.setOnClickListener {
+                    if(mItem is SubwayStation)
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
+                }
+            }
         }
     }
 }

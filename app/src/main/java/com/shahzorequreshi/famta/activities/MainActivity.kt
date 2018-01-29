@@ -20,6 +20,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.view.View
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.shahzorequreshi.famta.threads.AppExecutors
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,
@@ -139,11 +143,19 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("MissingPermission")
     private fun initializeLocator() {
-        mLocationProvider.lastLocation.addOnCompleteListener {
-            if(it.isSuccessful) {
-                mRepo.setUserLocation(it.result.latitude, it.result.longitude)
-            }
-        }
+        mLocationProvider.requestLocationUpdates(
+            LocationRequest()
+                    .setInterval(10000)
+                    .setFastestInterval(5000)
+                    .setPriority(LocationRequest.PRIORITY_LOW_POWER),
+            object: LocationCallback() {
+                override fun onLocationResult(result: LocationResult?) {
+                    if(result != null && result.locations.size > 0) {
+                        mRepo.setUserLocation(result.locations[0].latitude, result.locations[0].longitude)
+                        mLocationProvider.removeLocationUpdates(this)
+                    }
+                }
+            }, null)
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
