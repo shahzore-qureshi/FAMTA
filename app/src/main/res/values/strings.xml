@@ -33,6 +33,7 @@
     <string name="queens">Queens</string>
     <string name="brooklyn">Brooklyn</string>
     <string name="placeholder">Placeholder</string>
+    <string name="long_placeholder">Very Very Very Very Super Incredibly Long Placeholder</string>
     <string name="use_location">May we use your location to find nearby subway stations?</string>
     <string name="yes_please">Yes please!</string>
     <string name="no_thanks">No thanks creep.</string>

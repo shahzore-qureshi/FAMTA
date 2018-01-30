@@ -9,9 +9,9 @@
 
     <TextView
         android:id="@+id/subway_station_three_services_text"
-        android:layout_width="wrap_content"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
+        android:text="@string/long_placeholder"
         android:textSize="@dimen/text_size_normal"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_gravity="center_vertical"/>
