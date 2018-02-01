@@ -1,12 +1,10 @@
 package com.shahzorequreshi.famta.fragments.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.fragment_subway_bounds_list_item
 import com.shahzorequreshi.famta.database.entities.SubwayBound
 import com.shahzorequreshi.famta.database.entities.SubwayService
@@ -17,12 +15,12 @@ import com.shahzorequreshi.famta.fragments.SubwayBoundsFragment.OnSubwayBoundsFr
  * [RecyclerView.Adapter] that can display subway service information.
  */
 class SubwayBoundsRecyclerViewAdapter(
-        var mSubwayStation: SubwayStation? = null,
-        var mSubwayService: SubwayService? = null,
-        var mValues: List<SubwayBound>,
-        private val mListener: OnSubwayBoundsFragmentInteractionListener?,
-        private val mContext: Context?)
+        private val mListener: OnSubwayBoundsFragmentInteractionListener?)
     : RecyclerView.Adapter<SubwayBoundsRecyclerViewAdapter.ViewHolder>() {
+
+    var mSubwayStation: SubwayStation? = null
+    var mSubwayService: SubwayService? = null
+    var mValues = listOf<SubwayBound>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,12 +33,6 @@ class SubwayBoundsRecyclerViewAdapter(
         holder.mTextView.text = holder.mItem!!.toString()
         holder.mView.setOnClickListener {
             mListener?.onSubwayBoundClick(mSubwayStation!!, mSubwayService!!, holder.mItem!!)
-        }
-        if(position == 0 && mContext != null) {
-            val marginTop = mContext.resources.getDimension(R.dimen.bottom_navigation_view_height)
-            val marginBottom = mContext.resources.getDimension(R.dimen.activity_vertical_margin)
-            val params = holder.mView.layoutParams as ViewGroup.MarginLayoutParams
-            params.setMargins(0, marginTop.toInt(), 0, marginBottom.toInt())
         }
     }
 

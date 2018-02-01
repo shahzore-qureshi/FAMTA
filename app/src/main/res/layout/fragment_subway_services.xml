@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="LinearLayoutManager"
+    app:layoutManager="GridLayoutManager"
+    app:spanCount="4"
     tools:context="com.shahzorequreshi.famta.fragments.SubwayServicesFragment"
     tools:listitem="@layout/fragment_subway_services_list_item" />

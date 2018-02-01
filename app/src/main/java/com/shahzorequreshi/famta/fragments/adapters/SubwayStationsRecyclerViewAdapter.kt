@@ -23,16 +23,6 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var mValues = listOf<SubwayStation>()
-        set(newValues) {
-            //Add empty station to the top of the list
-            //to compensate for the height of the app
-            //navigation bar. The bar covers the top
-            //of the list.
-            val emptyStation = SubwayStation("", "", 0.0, 0.0, listOf())
-            val newList = mutableListOf(emptyStation)
-            newList.addAll(newValues)
-            field = newList
-        }
 
     override fun getItemViewType(position: Int): Int {
         when(mValues[position].service_ids.size) {
@@ -40,8 +30,8 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
             1 -> return SubwayStationViewTypes.oneService
             2 -> return SubwayStationViewTypes.twoServices
             3 -> return SubwayStationViewTypes.threeServices
+            else -> return SubwayStationViewTypes.zeroServices
         }
-        return SubwayStationViewTypes.zeroServices
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -66,8 +66,7 @@ class SubwayBoundsFragment : Fragment() {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
 
-            mSubwayBoundsAdapter = SubwayBoundsRecyclerViewAdapter(
-                    null, null, listOf(), mListener, activity)
+            mSubwayBoundsAdapter = SubwayBoundsRecyclerViewAdapter(mListener)
             view.adapter = mSubwayBoundsAdapter
 
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

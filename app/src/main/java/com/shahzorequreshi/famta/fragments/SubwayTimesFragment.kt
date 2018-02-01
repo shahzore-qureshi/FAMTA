@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -61,6 +62,12 @@ class SubwayTimesFragment : Fragment() {
             mSubwayTimesViewModel = ViewModelProviders.of(this).get(SubwayTimesViewModel::class.java)
             mSubwayTimesViewModel.getSubwayTimes()?.observe(this, Observer { subwayTimes ->
                 if(subwayTimes !== null) {
+                    if(subwayTimes.isEmpty() && view != null) {
+                        Snackbar.make(view!!, getText(R.string.trains_not_available), Snackbar.LENGTH_INDEFINITE)
+                                .setAction(R.string.reluctant_ok, {
+
+                                }).show()
+                    }
                     mSubwayTimesAdapter?.mValues = subwayTimes
                     mSubwayTimesAdapter?.notifyDataSetChanged()
                 }
@@ -75,7 +82,7 @@ class SubwayTimesFragment : Fragment() {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
 
-            mSubwayTimesAdapter = SubwayTimesRecyclerViewAdapter(listOf(), mListener, activity)
+            mSubwayTimesAdapter = SubwayTimesRecyclerViewAdapter(mListener)
             view.adapter = mSubwayTimesAdapter
 
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

@@ -74,7 +74,7 @@ class SubwayRepository {
             val lastUpdate =  mDatabase.getSubwayStationDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
-                if (timeSinceLastUpdate >= 3600000) { //Update stations every hour.
+                if (timeSinceLastUpdate >= 900000) { //Update stations every 15 minutes.
                     val subwayStations = mSubwayWebService.getSubwayStations()
                     if (subwayStations.isNotEmpty()) {
                         mDatabase.getSubwayStationDao().update(subwayStations)
@@ -112,7 +112,7 @@ class SubwayRepository {
             val lastUpdate =  mDatabase.getSubwayTimeDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
-                if (timeSinceLastUpdate >= 3600000) { //Update times every hour.
+                if (timeSinceLastUpdate >= 900000) { //Update times every 15 minutes.
                     val subwayTimes = mSubwayWebService.getSubwayTimes()
                     if (subwayTimes.isNotEmpty()) {
                         mDatabase.getSubwayTimeDao().deleteAll()

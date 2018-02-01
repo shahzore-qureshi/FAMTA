@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.SubwayService
 import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.GridLayoutManager
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.adapters.SubwayServicesRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.SubwayServicesViewModel
@@ -61,12 +62,9 @@ class SubwayServicesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_subway_services, container, false)
         if (view is RecyclerView) {
             val context = view.getContext()
-            view.layoutManager = LinearLayoutManager(context)
-
-            mSubwayServicesAdapter = SubwayServicesRecyclerViewAdapter(null, listOf(), mListener, activity)
+            view.layoutManager = GridLayoutManager(context, 4)
+            mSubwayServicesAdapter = SubwayServicesRecyclerViewAdapter(mListener)
             view.adapter = mSubwayServicesAdapter
-
-            view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
         return view
     }
