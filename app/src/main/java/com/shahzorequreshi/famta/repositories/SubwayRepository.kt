@@ -50,9 +50,9 @@ class SubwayRepository {
             }
 
             if(mDatabase.getSubwayBoundDao().getSize() == 0) {
-                mDatabase.getSubwayBoundDao().insert(
+                mDatabase.getSubwayBoundDao().insert(listOf(
                         SubwayBound("N", "North"),
-                        SubwayBound("S", "South"))
+                        SubwayBound("S", "South")))
             }
         }
     }

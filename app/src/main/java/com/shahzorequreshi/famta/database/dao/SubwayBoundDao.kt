@@ -16,7 +16,7 @@ interface SubwayBoundDao {
     fun getSize(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg subwayBounds: SubwayBound)
+    fun insert(subwayBounds: List<SubwayBound>)
 
     @Delete
     fun delete(subwayBound: SubwayBound)

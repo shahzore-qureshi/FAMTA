@@ -18,11 +18,12 @@ class SubwayWebServiceTest {
     }
 
     @Test
-    fun getSubwayLines() {
-        val subwayLines = mService.getSubwayLines()
-        for(subwayLine in subwayLines) {
-            println(subwayLine.name)
+    fun getSubwayStations() {
+        val subwayStations = mService.getSubwayStations()
+        for(subwayStation in subwayStations) {
+            println(subwayStation.name)
         }
+        assert(subwayStations.isNotEmpty())
     }
 
     @Test
@@ -31,13 +32,15 @@ class SubwayWebServiceTest {
         for(subwayService in subwayServices) {
             println(subwayService.name)
         }
+        assert(subwayServices.isNotEmpty())
     }
 
     @Test
-    fun getSubwayStations() {
-        val subwayStations = mService.getSubwayStations()
-        for(subwayStation in subwayStations) {
-            println(subwayStation.stop_name)
+    fun getSubwayTimes() {
+        val subwayTimes = mService.getSubwayTimes()
+        for(subwayTime in subwayTimes) {
+            println(subwayTime.arrival_time)
         }
+        assert(subwayTimes.isNotEmpty())
     }
 }
