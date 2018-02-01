@@ -12,6 +12,9 @@ interface SubwayBoundDao {
     @Query("SELECT * FROM subway_bound")
     fun get(): LiveData<List<SubwayBound>>
 
+    @Query("SELECT COUNT(*) FROM subway_bound")
+    fun getSize(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg subwayBounds: SubwayBound)
 

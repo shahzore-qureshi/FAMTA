@@ -13,14 +13,17 @@ interface SubwayTimeDao {
     fun get(): LiveData<List<SubwayTime>>
 
     @Query("SELECT * FROM subway_time WHERE "
-            + "station_id == :stationId AND "
-            + "service_id == :serviceId AND "
-            + "bound_id == :boundId AND "
-            + "arrival_time > :currentTime")
-    fun get(stationId: String,
-            serviceId: String,
-            boundId: String,
-            currentTime: Long): LiveData<List<SubwayTime>>
+            + "station_id == :station_id AND "
+            + "service_id == :service_id AND "
+            + "bound_id == :bound_id AND "
+            + "arrival_time > :current_time")
+    fun get(station_id: String,
+            service_id: String,
+            bound_id: String,
+            current_time: Long): LiveData<List<SubwayTime>>
+
+    @Query("SELECT COUNT(*) FROM subway_time")
+    fun getSize(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayTimes: List<SubwayTime>)

@@ -9,13 +9,12 @@ import java.io.Serializable
  */
 @Entity(tableName = "subway_station")
 data class SubwayStation(
-        @PrimaryKey val _id: String,
-        val stop_id: String,
-        val stop_name: String,
-        val stop_lat: Double,
-        val stop_lon: Double,
+        @PrimaryKey val id: String,
+        val name: String,
+        val latitude: Double,
+        val longitude: Double,
         val service_ids: List<String>) : Serializable {
     override fun toString(): String {
-        return stop_name
+        return name
     }
 }

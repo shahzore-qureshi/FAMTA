@@ -43,7 +43,7 @@ class SubwayTimesRecyclerViewAdapter(
         if(holder.mCounter != null) {
             holder.mCounter?.cancel()
         }
-        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrivalTime - Date().time, 1000) {
+        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrival_time - Date().time, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 holder.mTextView.text = holder.mItem!!.toString()
             }

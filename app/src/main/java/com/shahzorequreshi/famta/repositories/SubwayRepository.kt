@@ -28,25 +28,32 @@ class SubwayRepository {
 
     private fun setUpDatabase() {
         mExecutors.diskIO().execute {
-            val subwayLines = mSubwayWebService.getSubwayLines()
-            if(subwayLines.isNotEmpty()) {
-                mDatabase.getSubwayLineDao().insert(subwayLines)
+            if(mDatabase.getSubwayStationDao().getSize() == 0) {
+                val subwayStations = mSubwayWebService.getSubwayStations()
+                if (subwayStations.isNotEmpty()) {
+                    mDatabase.getSubwayStationDao().insert(subwayStations)
+                }
             }
-            val subwayServices = mSubwayWebService.getSubwayServices()
-            if(subwayServices.isNotEmpty()) {
-                mDatabase.getSubwayServiceDao().insert(subwayServices)
+
+            if(mDatabase.getSubwayServiceDao().getSize() == 0) {
+                val subwayServices = mSubwayWebService.getSubwayServices()
+                if (subwayServices.isNotEmpty()) {
+                    mDatabase.getSubwayServiceDao().insert(subwayServices)
+                }
             }
-            val subwayStations = mSubwayWebService.getSubwayStations()
-            if(subwayStations.isNotEmpty()) {
-                mDatabase.getSubwayStationDao().insert(subwayStations)
+
+            if(mDatabase.getSubwayTimeDao().getSize() == 0) {
+                val subwayTimes = mSubwayWebService.getSubwayTimes()
+                if (subwayTimes.isNotEmpty()) {
+                    mDatabase.getSubwayTimeDao().insert(subwayTimes)
+                }
             }
-            val subwayTimes = mSubwayWebService.getSubwayTimes()
-            if(subwayTimes.isNotEmpty()) {
-                mDatabase.getSubwayTimeDao().insert(subwayTimes)
+
+            if(mDatabase.getSubwayBoundDao().getSize() == 0) {
+                mDatabase.getSubwayBoundDao().insert(
+                        SubwayBound("N", "North"),
+                        SubwayBound("S", "South"))
             }
-            mDatabase.getSubwayBoundDao().insert(
-                    SubwayBound("North", "N"),
-                    SubwayBound("South", "S"))
         }
     }
 
@@ -78,9 +85,9 @@ class SubwayRepository {
                        subwayService: SubwayService,
                        subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
         return mDatabase.getSubwayTimeDao().get(
-                subwayStation.stop_id,
-                subwayService.name,
-                subwayBound.direction,
+                subwayStation.id,
+                subwayService.id,
+                subwayBound.id,
                 Date().time)
     }
 

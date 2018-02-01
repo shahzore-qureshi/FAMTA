@@ -28,7 +28,7 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
             //to compensate for the height of the app
             //navigation bar. The bar covers the top
             //of the list.
-            val emptyStation = SubwayStation("", "", "", 0.0, 0.0, listOf())
+            val emptyStation = SubwayStation("", "", 0.0, 0.0, listOf())
             val newList = mutableListOf(emptyStation)
             newList.addAll(newValues)
             field = newList

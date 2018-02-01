@@ -19,13 +19,10 @@ import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.view.View
-import com.crashlytics.android.Crashlytics
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.shahzorequreshi.famta.threads.AppExecutors
 
 class MainActivity : AppCompatActivity(),
         ConstructionFragment.OnConstructionFragmentInteractionListener,

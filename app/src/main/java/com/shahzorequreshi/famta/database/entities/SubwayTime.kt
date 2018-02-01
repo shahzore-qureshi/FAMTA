@@ -11,13 +11,16 @@ import java.util.Date
  */
 @Entity(tableName = "subway_time")
 data class SubwayTime(
-        @PrimaryKey val _id: String,
-        @ColumnInfo(name = "station_id") val stationId: String,
-        @ColumnInfo(name = "service_id") val serviceId: String,
-        @ColumnInfo(name = "bound_id") val boundId: String,
-        @ColumnInfo(name = "arrival_time") val arrivalTime: Long) : Serializable {
+        val station_id: String,
+        val service_id: String,
+        val bound_id: String,
+        val arrival_time: Long) : Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+
     override fun toString(): String {
-        var timeDifference = Math.round((arrivalTime - Date().time) / 1000f)
+        var timeDifference = Math.round((arrival_time - Date().time) / 1000f)
         if(timeDifference < 0) timeDifference = 0
         var stringToPrint = ""
         when {
