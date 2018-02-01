@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(),
     @Inject lateinit var mRepo: SubwayRepository
     @Inject lateinit var mLocationProvider: FusedLocationProviderClient
     private val mRequestForLocationPermission = 1
-    private lateinit var mLayout: View
     private val mBackStackRootTag = "root-fragment"
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mLayout = findViewById(R.id.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
     }
@@ -85,6 +83,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun onLocationRequest() {
         requestLocationPermission()
+    }
+
+    override fun onCancelLocationRequest() {
+        cancelLocationRequest()
     }
 
     override fun onSubwayServiceClick(subwayStation: SubwayStation, subwayService: SubwayService) {
@@ -137,14 +139,20 @@ class MainActivity : AppCompatActivity(),
                     .setInterval(10000)
                     .setFastestInterval(5000)
                     .setPriority(LocationRequest.PRIORITY_LOW_POWER),
-            object: LocationCallback() {
-                override fun onLocationResult(result: LocationResult?) {
-                    if(result != null && result.locations.size > 0) {
-                        mRepo.setUserLocation(result.locations[0].latitude, result.locations[0].longitude)
-                        mLocationProvider.removeLocationUpdates(this)
-                    }
-                }
-            }, null)
+                mLocationCallback, null)
+    }
+
+    private val mLocationCallback = object: LocationCallback() {
+        override fun onLocationResult(result: LocationResult?) {
+            if(result != null && result.locations.size > 0) {
+                mRepo.setUserLocation(result.locations[0].latitude, result.locations[0].longitude)
+                mLocationProvider.removeLocationUpdates(this)
+            }
+        }
+    }
+
+    private fun cancelLocationRequest() {
+        mLocationProvider.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {

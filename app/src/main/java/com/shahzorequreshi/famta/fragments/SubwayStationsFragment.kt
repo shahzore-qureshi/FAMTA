@@ -60,7 +60,6 @@ class SubwayStationsFragment : Fragment() {
         super.onAttach(context)
         if (context is OnSubwayStationsFragmentInteractionListener) {
             mListener = context
-            mListener?.onLocationRequest()
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnSubwayStationsFragmentInteractionListener")
         }
@@ -71,8 +70,19 @@ class SubwayStationsFragment : Fragment() {
         mListener = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        mListener?.onLocationRequest()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mListener?.onCancelLocationRequest()
+    }
+
     interface OnSubwayStationsFragmentInteractionListener {
         fun onSubwayStationClick(subwayStation: SubwayStation)
         fun onLocationRequest()
+        fun onCancelLocationRequest()
     }
 }
