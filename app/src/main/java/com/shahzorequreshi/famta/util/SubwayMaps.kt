@@ -1,7 +1,6 @@
 package com.shahzorequreshi.famta.util
 
 import com.shahzorequreshi.famta.R
-import com.shahzorequreshi.famta.database.entities.SubwayLine
 import com.shahzorequreshi.famta.database.entities.SubwayService
 
 /**

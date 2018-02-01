@@ -2,7 +2,6 @@ package com.shahzorequreshi.famta.database.entities
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.ColumnInfo
 import java.io.Serializable
 import java.util.Date
 
@@ -14,7 +13,8 @@ data class SubwayTime(
         val station_id: String,
         val service_id: String,
         val bound_id: String,
-        val arrival_time: Long) : Serializable {
+        val arrival_time: Long,
+        var last_updated: Long = 0) : Serializable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

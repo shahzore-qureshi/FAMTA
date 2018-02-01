@@ -13,7 +13,6 @@ import javax.inject.Singleton
  * Database that holds all application persistent information.
  */
 @Database(entities = [
-    SubwayLine::class,
     SubwayService::class,
     SubwayBound::class,
     SubwayStation::class,
@@ -24,7 +23,6 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "app-database"
     }
-    abstract fun getSubwayLineDao(): SubwayLineDao
     abstract fun getSubwayServiceDao(): SubwayServiceDao
     abstract fun getSubwayBoundDao(): SubwayBoundDao
     abstract fun getSubwayStationDao(): SubwayStationDao

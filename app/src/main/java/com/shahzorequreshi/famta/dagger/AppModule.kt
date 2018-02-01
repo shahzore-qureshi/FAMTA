@@ -26,8 +26,7 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun providesDatabase(): AppDatabase {
-        return Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java)
-                .build()
+        return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, AppDatabase.DATABASE_NAME).build()
     }
 
     @Provides

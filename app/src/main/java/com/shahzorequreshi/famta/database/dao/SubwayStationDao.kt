@@ -14,14 +14,20 @@ interface SubwayStationDao {
 
     @Query("SELECT * FROM subway_station ORDER BY "
             + "((:latitude - latitude) * (:latitude - latitude) + (:longitude - longitude) * (:longitude - longitude)) "
-            + "LIMIT 0, 10")
+            + "LIMIT 10")
     fun get(latitude: Double, longitude: Double): LiveData<List<SubwayStation>>
 
     @Query("SELECT COUNT(*) FROM subway_station")
     fun getSize(): Int
 
+    @Query("SELECT last_updated FROM subway_station LIMIT 1")
+    fun getLastUpdated(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayStations: List<SubwayStation>)
+
+    @Update
+    fun update(subwayStations: List<SubwayStation>)
 
     @Delete
     fun delete(subwayStation: SubwayStation)

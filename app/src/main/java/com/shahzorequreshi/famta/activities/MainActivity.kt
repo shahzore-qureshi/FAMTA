@@ -25,8 +25,6 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 
 class MainActivity : AppCompatActivity(),
-        ConstructionFragment.OnConstructionFragmentInteractionListener,
-        FeedFragment.OnFeedFragmentInteractionListener,
         SubwayServicesFragment.OnSubwayServicesFragmentInteractionListener,
         SubwayBoundsFragment.OnSubwayBoundsFragmentInteractionListener,
         SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener,
@@ -103,14 +101,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSubwayTimeClick(subwayTime: SubwayTime) {
         //mRepo.removeSubwayTime(item)
-    }
-
-    override fun onConstructionFragmentInteraction(item: SubwayLine) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onFeedFragmentInteraction(item: SubwayLine) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun requestLocationPermission() {

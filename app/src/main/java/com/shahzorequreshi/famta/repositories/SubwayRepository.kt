@@ -7,7 +7,7 @@ import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.database.entities.*
 import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,10 +70,34 @@ class SubwayRepository {
     }
 
     fun getSubwayStations(): LiveData<List<SubwayStation>>? {
+        mExecutors.diskIO().execute {
+            val lastUpdate =  mDatabase.getSubwayStationDao().getLastUpdated()
+            if(lastUpdate > 0) {
+                val timeSinceLastUpdate = Date().time - lastUpdate
+                if (timeSinceLastUpdate >= 3600000) { //Update stations every hour.
+                    val subwayStations = mSubwayWebService.getSubwayStations()
+                    if (subwayStations.isNotEmpty()) {
+                        mDatabase.getSubwayStationDao().update(subwayStations)
+                    }
+                }
+            }
+        }
         return mSubwayStations
     }
 
     fun getSubwayServices(subwayStation: SubwayStation): LiveData<List<SubwayService>>? {
+        mExecutors.diskIO().execute {
+            val lastUpdate =  mDatabase.getSubwayServiceDao().getLastUpdated()
+            if(lastUpdate > 0) {
+                val timeSinceLastUpdate = Date().time - lastUpdate
+                if (timeSinceLastUpdate >= 86400000) { //Update services every day.
+                    val subwayServices = mSubwayWebService.getSubwayServices()
+                    if (subwayServices.isNotEmpty()) {
+                        mDatabase.getSubwayServiceDao().update(subwayServices)
+                    }
+                }
+            }
+        }
         return mDatabase.getSubwayServiceDao().get(subwayStation.service_ids)
     }
 
@@ -84,6 +108,19 @@ class SubwayRepository {
     fun getSubwayTimes(subwayStation: SubwayStation,
                        subwayService: SubwayService,
                        subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
+        mExecutors.diskIO().execute {
+            val lastUpdate =  mDatabase.getSubwayTimeDao().getLastUpdated()
+            if(lastUpdate > 0) {
+                val timeSinceLastUpdate = Date().time - lastUpdate
+                if (timeSinceLastUpdate >= 3600000) { //Update times every hour.
+                    val subwayTimes = mSubwayWebService.getSubwayTimes()
+                    if (subwayTimes.isNotEmpty()) {
+                        mDatabase.getSubwayTimeDao().deleteAll()
+                        mDatabase.getSubwayTimeDao().insert(subwayTimes)
+                    }
+                }
+            }
+        }
         return mDatabase.getSubwayTimeDao().get(
                 subwayStation.id,
                 subwayService.id,

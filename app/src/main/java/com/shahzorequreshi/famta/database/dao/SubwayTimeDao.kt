@@ -25,9 +25,15 @@ interface SubwayTimeDao {
     @Query("SELECT COUNT(*) FROM subway_time")
     fun getSize(): Int
 
+    @Query("SELECT last_updated FROM subway_time LIMIT 1")
+    fun getLastUpdated(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayTimes: List<SubwayTime>)
 
     @Delete
     fun delete(subwayTime: SubwayTime)
+
+    @Query("DELETE FROM subway_time")
+    fun deleteAll()
 }

@@ -18,14 +18,14 @@ interface SubwayServiceDao {
     @Query("SELECT COUNT(*) FROM subway_service")
     fun getSize(): Int
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(subwayService: SubwayService)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg subwayServices: SubwayService)
+    @Query("SELECT last_updated FROM subway_service LIMIT 1")
+    fun getLastUpdated(): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayServices: List<SubwayService>)
+
+    @Update
+    fun update(subwayServices: List<SubwayService>)
 
     @Delete
     fun delete(subwayService: SubwayService)
