@@ -11,6 +11,7 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.*
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.fourServices
 import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.oneService
 import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.threeServices
 import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.twoServices
@@ -33,7 +34,8 @@ class SubwayStationsRecyclerViewAdapter(
             1 -> SubwayStationViewTypes.oneService
             2 -> SubwayStationViewTypes.twoServices
             3 -> SubwayStationViewTypes.threeServices
-            else -> SubwayStationViewTypes.threeServices
+            4 -> SubwayStationViewTypes.fourServices
+            else -> SubwayStationViewTypes.fourServices
         }
     }
 
@@ -54,6 +56,7 @@ class SubwayStationsRecyclerViewAdapter(
         const val oneService = 1
         const val twoServices = 2
         const val threeServices  = 3
+        const val fourServices = 4
     }
 
     private interface SubwayStationViewHolder {
@@ -82,6 +85,11 @@ class SubwayStationsRecyclerViewAdapter(
                     val view = LayoutInflater.from(parent.context)
                             .inflate(fragment_subway_stations_list_item_with_three_services, parent, false)
                     return ViewHolderThreeServices(view)
+                }
+                fourServices -> {
+                    val view = LayoutInflater.from(parent.context)
+                            .inflate(fragment_subway_stations_list_item_with_four_services, parent, false)
+                    return ViewHolderFourServices(view)
                 }
                 else -> {
                     val view = LayoutInflater.from(parent.context)
@@ -181,6 +189,38 @@ class SubwayStationsRecyclerViewAdapter(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
                 mImageViewThree.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
+                if(mItem?.distanceFromUser == 0.0) {
+                    mDistanceView.text = ""
+                } else {
+                    mDistanceView.text = mContext.getString(R.string.distance_miles, mItem?.distanceFromUser)
+                }
+                mView.setOnClickListener {
+                    if(mItem is SubwayStation)
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
+                }
+            }
+        }
+
+        inner class ViewHolderFourServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
+            private var mItem: SubwayStation? = null
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_four_services_text) as TextView
+            private val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_four_services_image_one)
+            private val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_four_services_image_two)
+            private val mImageViewThree: ImageView = mView.findViewById(R.id.subway_station_four_services_image_three)
+            private val mImageViewFour: ImageView = mView.findViewById(R.id.subway_station_four_services_image_four)
+            private val mDistanceView = mView.findViewById(R.id.subway_station_four_services_distance) as TextView
+
+            override fun bindViewHolder(position: Int) {
+                mItem = mValues[position]
+                mTextView.text = mItem!!.toString()
+                mImageViewOne.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
+                mImageViewTwo.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
+                mImageViewThree.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
+                mImageViewFour.setImageResource(
+                        SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[3]))
                 if(mItem?.distanceFromUser == 0.0) {
                     mDistanceView.text = ""
                 } else {
