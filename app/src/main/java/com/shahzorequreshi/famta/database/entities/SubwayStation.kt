@@ -14,7 +14,8 @@ data class SubwayStation(
         val latitude: Double,
         val longitude: Double,
         val service_ids: List<String>,
-        var last_updated: Long = 0) : Serializable {
+        var last_updated: Long = 0,
+        var distanceFromUser: Double = 0.0) : Serializable {
     override fun toString(): String {
         return name
     }

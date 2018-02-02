@@ -1,5 +1,6 @@
 package com.shahzorequreshi.famta.fragments.adapters
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -19,18 +20,20 @@ import com.shahzorequreshi.famta.util.SubwayMaps
 /**
  * [RecyclerView.Adapter] that can display subway stations.
  */
-class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsFragmentInteractionListener?)
+class SubwayStationsRecyclerViewAdapter(
+        private val mListener: OnSubwayStationsFragmentInteractionListener?,
+        private val mContext: Context)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var mValues = listOf<SubwayStation>()
 
     override fun getItemViewType(position: Int): Int {
-        when(mValues[position].service_ids.size) {
-            0 -> return SubwayStationViewTypes.zeroServices
-            1 -> return SubwayStationViewTypes.oneService
-            2 -> return SubwayStationViewTypes.twoServices
-            3 -> return SubwayStationViewTypes.threeServices
-            else -> return SubwayStationViewTypes.zeroServices
+        return when(mValues[position].service_ids.size) {
+            0 -> SubwayStationViewTypes.zeroServices
+            1 -> SubwayStationViewTypes.oneService
+            2 -> SubwayStationViewTypes.twoServices
+            3 -> SubwayStationViewTypes.threeServices
+            else -> SubwayStationViewTypes.zeroServices
         }
     }
 
@@ -93,12 +96,18 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
         }
 
         inner class ViewHolderZeroServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
-            private val mTextView: TextView = mView as TextView
             private var mItem: SubwayStation? = null
+            private val mTextView = mView.findViewById(R.id.subway_station_zero_services_text) as TextView
+            private val mDistanceView = mView.findViewById(R.id.subway_station_zero_services_distance) as TextView
 
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.toString()
+                if(mItem?.distanceFromUser == 0.0) {
+                    mDistanceView.text = ""
+                } else {
+                    mDistanceView.text = mContext.getString(R.string.distance_miles, mItem?.distanceFromUser)
+                }
                 mView.setOnClickListener {
                     if (mItem is SubwayStation)
                         mListener?.onSubwayStationClick(mItem as SubwayStation)
@@ -107,15 +116,21 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
         }
 
         inner class ViewHolderOneService(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
-            private val mTextView: TextView = mView.findViewById(R.id.subway_station_one_service_text) as TextView
             private var mItem: SubwayStation? = null
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_one_service_text) as TextView
             private val mImageView: ImageView = mView.findViewById(R.id.subway_station_one_service_image)
+            private val mDistanceView = mView.findViewById(R.id.subway_station_one_service_distance) as TextView
 
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.toString()
                 mImageView.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
+                if(mItem?.distanceFromUser == 0.0) {
+                    mDistanceView.text = ""
+                } else {
+                    mDistanceView.text = mContext.getString(R.string.distance_miles, mItem?.distanceFromUser)
+                }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
                         mListener?.onSubwayStationClick(mItem as SubwayStation)
@@ -124,10 +139,11 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
         }
 
         inner class ViewHolderTwoServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
-            private val mTextView: TextView = mView.findViewById(R.id.subway_station_two_services_text) as TextView
             private var mItem: SubwayStation? = null
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_two_services_text) as TextView
             private val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_two_services_image_one)
             private val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_two_services_image_two)
+            private val mDistanceView = mView.findViewById(R.id.subway_station_two_services_distance) as TextView
 
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
@@ -136,6 +152,11 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
                 mImageViewTwo.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
+                if(mItem?.distanceFromUser == 0.0) {
+                    mDistanceView.text = ""
+                } else {
+                    mDistanceView.text = mContext.getString(R.string.distance_miles, mItem?.distanceFromUser)
+                }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
                         mListener?.onSubwayStationClick(mItem as SubwayStation)
@@ -144,11 +165,12 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
         }
 
         inner class ViewHolderThreeServices(private val mView: View) : RecyclerView.ViewHolder(mView), SubwayStationViewHolder {
-            private val mTextView: TextView = mView.findViewById(R.id.subway_station_three_services_text) as TextView
             private var mItem: SubwayStation? = null
+            private val mTextView: TextView = mView.findViewById(R.id.subway_station_three_services_text) as TextView
             private val mImageViewOne: ImageView = mView.findViewById(R.id.subway_station_three_services_image_one)
             private val mImageViewTwo: ImageView = mView.findViewById(R.id.subway_station_three_services_image_two)
             private val mImageViewThree: ImageView = mView.findViewById(R.id.subway_station_three_services_image_three)
+            private val mDistanceView = mView.findViewById(R.id.subway_station_three_services_distance) as TextView
 
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
@@ -159,6 +181,11 @@ class SubwayStationsRecyclerViewAdapter(private val mListener: OnSubwayStationsF
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
                 mImageViewThree.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
+                if(mItem?.distanceFromUser == 0.0) {
+                    mDistanceView.text = ""
+                } else {
+                    mDistanceView.text = mContext.getString(R.string.distance_miles, mItem?.distanceFromUser)
+                }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
                         mListener?.onSubwayStationClick(mItem as SubwayStation)

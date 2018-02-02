@@ -9,12 +9,15 @@
 
     <TextView
         android:id="@+id/subway_station_three_services_text"
-        android:layout_width="225dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="@string/long_placeholder"
+        android:text="@string/placeholder_long"
         android:textSize="@dimen/text_size_normal"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <ImageView
         android:id="@+id/subway_station_three_services_image_one"
@@ -22,8 +25,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_subway_service_1"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <ImageView
         android:id="@+id/subway_station_three_services_image_two"
@@ -31,8 +34,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_subway_service_2"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <ImageView
         android:id="@+id/subway_station_three_services_image_three"
@@ -40,7 +43,16 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_subway_service_3"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:id="@+id/subway_station_three_services_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_distance"
+        android:textSize="@dimen/text_size_small"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

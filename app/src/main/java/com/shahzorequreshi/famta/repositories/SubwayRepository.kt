@@ -7,6 +7,7 @@ import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.database.entities.*
 import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
+import java.lang.Math.*
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,6 +61,12 @@ class SubwayRepository {
     fun setUserLocation(latitude: Double?, longitude: Double?) {
         if(latitude != null && longitude != null) {
             mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(latitude, longitude), {
+                if(it != null) {
+                    for (station in it.listIterator()) {
+                        station.distanceFromUser = calculateDistance(
+                                latitude, longitude, station.latitude, station.longitude)
+                    }
+                }
                 mSubwayStations.postValue(it)
             })
         } else {
@@ -71,7 +78,7 @@ class SubwayRepository {
 
     fun getSubwayStations(): LiveData<List<SubwayStation>>? {
         mExecutors.diskIO().execute {
-            val lastUpdate =  mDatabase.getSubwayStationDao().getLastUpdated()
+            val lastUpdate = mDatabase.getSubwayStationDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
                 if (timeSinceLastUpdate >= 900000) { //Update stations every 15 minutes.
@@ -87,7 +94,7 @@ class SubwayRepository {
 
     fun getSubwayServices(subwayStation: SubwayStation): LiveData<List<SubwayService>>? {
         mExecutors.diskIO().execute {
-            val lastUpdate =  mDatabase.getSubwayServiceDao().getLastUpdated()
+            val lastUpdate = mDatabase.getSubwayServiceDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
                 if (timeSinceLastUpdate >= 86400000) { //Update services every day.
@@ -109,7 +116,7 @@ class SubwayRepository {
                        subwayService: SubwayService,
                        subwayBound: SubwayBound): LiveData<List<SubwayTime>>? {
         mExecutors.diskIO().execute {
-            val lastUpdate =  mDatabase.getSubwayTimeDao().getLastUpdated()
+            val lastUpdate = mDatabase.getSubwayTimeDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
                 if (timeSinceLastUpdate >= 900000) { //Update times every 15 minutes.
@@ -130,5 +137,16 @@ class SubwayRepository {
 
     fun removeSubwayTime(subwayTime: SubwayTime) {
         mExecutors.diskIO().execute { mDatabase.getSubwayTimeDao().delete(subwayTime) }
+    }
+
+    private fun calculateDistance(
+            latitude1: Double, longitude1: Double,
+            latitude2: Double, longitude2: Double): Double {
+        val theta = longitude1 - longitude2
+        var distance = (sin(toRadians(latitude1)) * sin(toRadians(latitude2))) +
+        (cos(toRadians(latitude1)) * cos(toRadians(latitude2)) *
+        cos(toRadians(theta)))
+        distance = toDegrees(acos(distance)) * 60 * 1.1515
+        return distance //for kilometers, multiply this by 1.609344
     }
 }

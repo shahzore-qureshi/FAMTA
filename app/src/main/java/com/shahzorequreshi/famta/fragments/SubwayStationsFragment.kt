@@ -48,7 +48,7 @@ class SubwayStationsFragment : Fragment() {
             val context = view.getContext()
             view.layoutManager = LinearLayoutManager(context)
 
-            mSubwayStationsAdapter = SubwayStationsRecyclerViewAdapter(mListener)
+            mSubwayStationsAdapter = SubwayStationsRecyclerViewAdapter(mListener, context)
             view.adapter = mSubwayStationsAdapter
 
             view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa1f7330e6e901f06fcdc9a38e1a0389",
+    "identityHash": "ef7f7db4c97dfee1f6339a71338f2611",
     "entities": [
       {
         "tableName": "subway_service",
@@ -64,7 +64,7 @@
       },
       {
         "tableName": "subway_station",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `service_ids` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `service_ids` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, `distanceFromUser` REAL NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -100,6 +100,12 @@
             "fieldPath": "last_updated",
             "columnName": "last_updated",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distanceFromUser",
+            "columnName": "distanceFromUser",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -165,7 +171,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"aa1f7330e6e901f06fcdc9a38e1a0389\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ef7f7db4c97dfee1f6339a71338f2611\")"
     ]
   }
 }
