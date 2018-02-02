@@ -12,11 +12,6 @@ interface SubwayStationDao {
     @Query("SELECT * FROM subway_station ORDER BY name")
     fun get(): LiveData<List<SubwayStation>>
 
-    @Query("SELECT * FROM subway_station ORDER BY "
-            + "((:latitude - latitude) * (:latitude - latitude) + (:longitude - longitude) * (:longitude - longitude)) "
-            + "LIMIT 10")
-    fun get(latitude: Double, longitude: Double): LiveData<List<SubwayStation>>
-
     @Query("SELECT COUNT(*) FROM subway_station")
     fun getSize(): Int
 

@@ -59,24 +59,6 @@ class SubwayRepository {
     }
 
     fun setUserLocation(latitude: Double?, longitude: Double?) {
-        if(latitude != null && longitude != null) {
-            mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(latitude, longitude), {
-                if(it != null) {
-                    for (station in it.listIterator()) {
-                        station.distanceFromUser = calculateDistance(
-                                latitude, longitude, station.latitude, station.longitude)
-                    }
-                }
-                mSubwayStations.postValue(it)
-            })
-        } else {
-            mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(), {
-                mSubwayStations.postValue(it)
-            })
-        }
-    }
-
-    fun getSubwayStations(): LiveData<List<SubwayStation>>? {
         mExecutors.diskIO().execute {
             val lastUpdate = mDatabase.getSubwayStationDao().getLastUpdated()
             if(lastUpdate > 0) {
@@ -88,7 +70,26 @@ class SubwayRepository {
                     }
                 }
             }
+            mSubwayStations.addSource(mDatabase.getSubwayStationDao().get(), {
+                var result = it
+                if(it != null && latitude != null && longitude != null) {
+                    for (station in it.listIterator()) {
+                        station.distanceFromUser = calculateDistance(
+                                latitude, longitude, station.latitude, station.longitude)
+                    }
+                    result = it.sortedBy {
+                        it.distanceFromUser
+                    }
+                    if(result.size > 10) {
+                        result = result.take(10)
+                    }
+                }
+                mSubwayStations.postValue(result)
+            })
         }
+    }
+
+    fun getSubwayStations(): LiveData<List<SubwayStation>>? {
         return mSubwayStations
     }
 
