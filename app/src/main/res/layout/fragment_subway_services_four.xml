@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context="com.shahzorequreshi.famta.fragments.SubwayServicesFragment" >
+
+    <ImageView
+        android:id="@+id/fragment_subway_services_four_first_service"
+        android:layout_width="@dimen/subway_service_icon_size_large"
+        android:layout_height="@dimen/subway_service_icon_size_large"
+        app:srcCompat="@drawable/ic_subway_service_a"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+
+    <ImageView
+        android:id="@+id/fragment_subway_services_four_second_service"
+        android:layout_width="@dimen/subway_service_icon_size_large"
+        android:layout_height="@dimen/subway_service_icon_size_large"
+        app:srcCompat="@drawable/ic_subway_service_c"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+
+    <ImageView
+        android:id="@+id/fragment_subway_services_four_third_service"
+        android:layout_width="@dimen/subway_service_icon_size_large"
+        android:layout_height="@dimen/subway_service_icon_size_large"
+        app:srcCompat="@drawable/ic_subway_service_e"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+
+    <ImageView
+        android:id="@+id/fragment_subway_services_four_fourth_service"
+        android:layout_width="@dimen/subway_service_icon_size_large"
+        android:layout_height="@dimen/subway_service_icon_size_large"
+        app:srcCompat="@drawable/ic_subway_service_a" />
+
+</LinearLayout>
+
