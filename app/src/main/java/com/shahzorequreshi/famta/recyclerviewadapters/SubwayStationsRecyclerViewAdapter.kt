@@ -1,4 +1,4 @@
-package com.shahzorequreshi.famta.fragments.adapters
+package com.shahzorequreshi.famta.recyclerviewadapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -11,10 +11,10 @@ import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.R.layout.*
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.fragments.SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener
-import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.oneService
-import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.threeServices
-import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.twoServices
-import com.shahzorequreshi.famta.fragments.adapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.zeroServices
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.oneService
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.threeServices
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.twoServices
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter.SubwayStationViewTypes.zeroServices
 import com.shahzorequreshi.famta.util.SubwayMaps
 
 /**
@@ -33,7 +33,7 @@ class SubwayStationsRecyclerViewAdapter(
             1 -> SubwayStationViewTypes.oneService
             2 -> SubwayStationViewTypes.twoServices
             3 -> SubwayStationViewTypes.threeServices
-            else -> SubwayStationViewTypes.zeroServices
+            else -> SubwayStationViewTypes.threeServices
         }
     }
 

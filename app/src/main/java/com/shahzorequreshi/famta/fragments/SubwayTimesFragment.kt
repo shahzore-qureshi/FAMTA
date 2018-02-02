@@ -18,7 +18,7 @@ import com.shahzorequreshi.famta.database.entities.SubwayBound
 import com.shahzorequreshi.famta.database.entities.SubwayService
 import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.database.entities.SubwayTime
-import com.shahzorequreshi.famta.fragments.adapters.SubwayTimesRecyclerViewAdapter
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayTimesRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.SubwayTimesViewModel
 
 /**

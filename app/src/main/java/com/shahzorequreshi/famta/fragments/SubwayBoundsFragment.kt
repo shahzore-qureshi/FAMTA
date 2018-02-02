@@ -16,7 +16,7 @@ import com.shahzorequreshi.famta.database.entities.SubwayService
 import com.shahzorequreshi.famta.database.entities.SubwayBound
 import android.support.v7.widget.DividerItemDecoration
 import com.shahzorequreshi.famta.database.entities.SubwayStation
-import com.shahzorequreshi.famta.fragments.adapters.SubwayBoundsRecyclerViewAdapter
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayBoundsRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.SubwayBoundsViewModel
 
 /**
