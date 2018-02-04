@@ -5,6 +5,7 @@ import com.facebook.stetho.Stetho
 import com.shahzorequreshi.famta.dagger.AppComponent
 import com.shahzorequreshi.famta.dagger.AppModule
 import com.shahzorequreshi.famta.dagger.DaggerAppComponent
+import com.twitter.sdk.android.core.Twitter
 
 /**
  * Application class is inherited in order to initialize Dagger, Stetho, and other libraries.
@@ -18,7 +19,8 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeDagger()
-        Stetho.initializeWithDefaults(this)
+        //Stetho.initializeWithDefaults(this)
+        Twitter.initialize(this)
     }
 
     private fun initializeDagger() {

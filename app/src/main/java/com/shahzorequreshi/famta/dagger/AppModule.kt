@@ -8,6 +8,7 @@ import com.shahzorequreshi.famta.database.AppDatabase
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import com.shahzorequreshi.famta.services.SubwayWebService
 import com.shahzorequreshi.famta.threads.AppExecutors
+import com.twitter.sdk.android.core.Twitter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -26,7 +27,9 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun providesDatabase(): AppDatabase {
-        return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, AppDatabase.DATABASE_NAME).build()
+        return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .build()
     }
 
     @Provides
