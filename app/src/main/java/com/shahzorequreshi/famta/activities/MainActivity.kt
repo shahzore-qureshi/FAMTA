@@ -4,20 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.FragmentManager
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.transition.Fade
-import android.support.transition.Transition
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionSet
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Xml
-import android.view.View
 import com.shahzorequreshi.famta.MainApplication
 import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.*
@@ -25,6 +18,7 @@ import com.shahzorequreshi.famta.fragments.*
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import android.view.View
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -69,37 +63,22 @@ class MainActivity : AppCompatActivity(),
                 .beginTransaction()
                 .replace(fragmentContainer.id, chosenFragment, fragmentTag)
                 .commit()
-        chosenFragment.exitTransition = Fade()
-        chosenFragment.reenterTransition = Fade()
     }
 
-    private fun changeFragment(chosenFragment: Fragment, fragmentTag: String,
-                               backStackTag: String? = null, sharedElements: List<View>? = null) {
+    private fun changeFragment(chosenFragment: Fragment, fragmentTag: String, backStackTag: String? = null) {
         var fragment = supportFragmentManager.findFragmentByTag(fragmentTag)
         if(fragment == null) {
             fragment = chosenFragment
         }
-        fragment.sharedElementEnterTransition = TransitionInflater.
-                from(this).inflateTransition(R.transition.click_station)
-        fragment.sharedElementReturnTransition = TransitionInflater.
-                from(this).inflateTransition(R.transition.click_station)
-
-        val transaction = supportFragmentManager.beginTransaction()
-        if(sharedElements != null) {
-            val transitionNamePrefix = "service"
-            for((index, element) in sharedElements.withIndex()) {
-                transaction.addSharedElement(element, "$transitionNamePrefix-${index+1}")
-            }
-        }
-
-        transaction.replace(fragmentContainer.id, fragment, fragmentTag)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(fragmentContainer.id, fragment, fragmentTag)
                 .addToBackStack(backStackTag)
                 .commit()
     }
 
-    override fun onSubwayStationClick(subwayStation: SubwayStation, subwayServiceViews: List<View>) {
-        changeFragment(SubwayServicesFragment.newInstance(subwayStation.service_ids),
-                SubwayServicesFragment.TAG, mBackStackRootTag, subwayServiceViews)
+    override fun onSubwayStationClick(subwayStation: SubwayStation) {
+        changeFragment(SubwayServicesFragment.newInstance(subwayStation), SubwayServicesFragment.TAG, mBackStackRootTag)
     }
 
     override fun onLocationRequest() {

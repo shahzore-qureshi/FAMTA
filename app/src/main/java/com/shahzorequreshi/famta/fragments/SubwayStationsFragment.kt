@@ -94,7 +94,7 @@ class SubwayStationsFragment : Fragment() {
     }
 
     interface OnSubwayStationsFragmentInteractionListener {
-        fun onSubwayStationClick(subwayStation: SubwayStation, subwayServiceViews: List<View>)
+        fun onSubwayStationClick(subwayStation: SubwayStation)
         fun onLocationRequest()
         fun onCancelLocationRequest()
     }

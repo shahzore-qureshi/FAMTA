@@ -1,7 +1,6 @@
 package com.shahzorequreshi.famta.recyclerviewadapters
 
 import android.content.Context
-import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -119,7 +118,7 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 mView.setOnClickListener {
                     if (mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(mItem as SubwayStation, listOf())
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
                 }
             }
         }
@@ -135,7 +134,6 @@ class SubwayStationsRecyclerViewAdapter(
                 mTextView.text = mItem!!.toString()
                 mImageView.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
-                ViewCompat.setTransitionName(mImageView, "service-1")
                 if(mItem?.distanceFromUser == 0.0) {
                     mDistanceView.text = ""
                 } else {
@@ -143,7 +141,7 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(mItem as SubwayStation, listOf(mImageView))
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
                 }
             }
         }
@@ -162,8 +160,6 @@ class SubwayStationsRecyclerViewAdapter(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[0]))
                 mImageViewTwo.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
-                ViewCompat.setTransitionName(mImageViewOne, "service-1")
-                ViewCompat.setTransitionName(mImageViewTwo, "service-2")
                 if(mItem?.distanceFromUser == 0.0) {
                     mDistanceView.text = ""
                 } else {
@@ -171,7 +167,7 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(mItem as SubwayStation, listOf(mImageViewOne, mImageViewTwo))
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
                 }
             }
         }
@@ -193,9 +189,6 @@ class SubwayStationsRecyclerViewAdapter(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[1]))
                 mImageViewThree.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
-                ViewCompat.setTransitionName(mImageViewOne, "service-1")
-                ViewCompat.setTransitionName(mImageViewTwo, "service-2")
-                ViewCompat.setTransitionName(mImageViewThree, "service-3")
                 if(mItem?.distanceFromUser == 0.0) {
                     mDistanceView.text = ""
                 } else {
@@ -203,8 +196,7 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(mItem as SubwayStation,
-                                listOf(mImageViewOne, mImageViewTwo, mImageViewThree))
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
                 }
             }
         }
@@ -229,10 +221,6 @@ class SubwayStationsRecyclerViewAdapter(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[2]))
                 mImageViewFour.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.service_ids[3]))
-                ViewCompat.setTransitionName(mImageViewOne, "service-1")
-                ViewCompat.setTransitionName(mImageViewTwo, "service-2")
-                ViewCompat.setTransitionName(mImageViewThree, "service-3")
-                ViewCompat.setTransitionName(mImageViewFour, "service-4")
                 if(mItem?.distanceFromUser == 0.0) {
                     mDistanceView.text = ""
                 } else {
@@ -240,8 +228,7 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 mView.setOnClickListener {
                     if(mItem is SubwayStation)
-                        mListener?.onSubwayStationClick(mItem as SubwayStation,
-                                listOf(mImageViewOne, mImageViewTwo, mImageViewThree, mImageViewFour))
+                        mListener?.onSubwayStationClick(mItem as SubwayStation)
                 }
             }
         }
