@@ -3,6 +3,7 @@ package com.shahzorequreshi.famta.fragments
 import android.content.Context
 import android.support.v4.app.DialogFragment
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.shahzorequreshi.famta.R
@@ -38,6 +39,15 @@ class LocationRequestDialogFragment : DialogFragment() {
                     mListener?.onDialogNegativeClick(this)
                 })
         return builder.create()
+    }
+
+    override fun onCancel(dialog: DialogInterface?) {
+        super.onCancel(dialog)
+        mListener?.onDialogNegativeClick(this)
+    }
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        mListener?.onDialogNegativeClick(this)
     }
 
     interface OnLocationRequestDialogFragmentInteractionListener {

@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_subway_stations"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="com.shahzorequreshi.famta.fragments.SubwayStationsFragment"
-    tools:listitem="@layout/fragment_subway_stations_list_item" />
+    tools:context="com.shahzorequreshi.famta.fragments.SubwayStationsFragment" >
+
+    <ProgressBar
+        android:id="@+id/fragment_subway_stations_loading"
+        style="?android:progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_subway_stations_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_subway_stations_list_item"
+        android:visibility="gone"/>
+
+</FrameLayout>
+

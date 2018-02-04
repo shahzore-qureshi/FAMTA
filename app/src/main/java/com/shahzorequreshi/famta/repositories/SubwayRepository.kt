@@ -24,42 +24,11 @@ class SubwayRepository {
 
     init {
         MainApplication.component.inject(this)
-        setUpDatabase()
-    }
-
-    private fun setUpDatabase() {
-        mExecutors.diskIO().execute {
-            if(mDatabase.getSubwayStationDao().getSize() == 0) {
-                val subwayStations = mSubwayWebService.getSubwayStations()
-                if (subwayStations.isNotEmpty()) {
-                    mDatabase.getSubwayStationDao().insert(subwayStations)
-                }
-            }
-
-            if(mDatabase.getSubwayServiceDao().getSize() == 0) {
-                val subwayServices = mSubwayWebService.getSubwayServices()
-                if (subwayServices.isNotEmpty()) {
-                    mDatabase.getSubwayServiceDao().insert(subwayServices)
-                }
-            }
-
-            if(mDatabase.getSubwayTimeDao().getSize() == 0) {
-                val subwayTimes = mSubwayWebService.getSubwayTimes()
-                if (subwayTimes.isNotEmpty()) {
-                    mDatabase.getSubwayTimeDao().insert(subwayTimes)
-                }
-            }
-
-            if(mDatabase.getSubwayBoundDao().getSize() == 0) {
-                mDatabase.getSubwayBoundDao().insert(listOf(
-                        SubwayBound("N", "North"),
-                        SubwayBound("S", "South")))
-            }
-        }
     }
 
     fun setUserLocation(latitude: Double?, longitude: Double?) {
         mExecutors.diskIO().execute {
+            setUpDatabase()
             val lastUpdate = mDatabase.getSubwayStationDao().getLastUpdated()
             if(lastUpdate > 0) {
                 val timeSinceLastUpdate = Date().time - lastUpdate
@@ -86,6 +55,35 @@ class SubwayRepository {
                 }
                 mSubwayStations.postValue(result)
             })
+        }
+    }
+
+    private fun setUpDatabase() {
+        if(mDatabase.getSubwayStationDao().getSize() == 0) {
+            val subwayStations = mSubwayWebService.getSubwayStations()
+            if (subwayStations.isNotEmpty()) {
+                mDatabase.getSubwayStationDao().insert(subwayStations)
+            }
+        }
+
+        if(mDatabase.getSubwayServiceDao().getSize() == 0) {
+            val subwayServices = mSubwayWebService.getSubwayServices()
+            if (subwayServices.isNotEmpty()) {
+                mDatabase.getSubwayServiceDao().insert(subwayServices)
+            }
+        }
+
+        if(mDatabase.getSubwayTimeDao().getSize() == 0) {
+            val subwayTimes = mSubwayWebService.getSubwayTimes()
+            if (subwayTimes.isNotEmpty()) {
+                mDatabase.getSubwayTimeDao().insert(subwayTimes)
+            }
+        }
+
+        if(mDatabase.getSubwayBoundDao().getSize() == 0) {
+            mDatabase.getSubwayBoundDao().insert(listOf(
+                    SubwayBound("N", "North"),
+                    SubwayBound("S", "South")))
         }
     }
 

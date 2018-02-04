@@ -3,6 +3,8 @@ package com.shahzorequreshi.famta.activities
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.FragmentManager
+import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -18,11 +20,8 @@ import com.shahzorequreshi.famta.fragments.*
 import com.shahzorequreshi.famta.repositories.SubwayRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import android.view.View
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 
 class MainActivity : AppCompatActivity(),
         SubwayServicesFragment.OnSubwayServicesFragmentInteractionListener,
@@ -36,15 +35,6 @@ class MainActivity : AppCompatActivity(),
     private val mRequestForLocationPermission = 1
     private val mBackStackRootTag = "root-fragment"
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
-            //R.id.navigation_feeds -> changeFragment(FeedFragment.newInstance(1))
-            //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
-        }
-        return@OnNavigationItemSelectedListener true
-    }
-
     init {
         MainApplication.component.inject(this)
     }
@@ -54,6 +44,15 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+    }
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+        //R.id.navigation_feeds -> changeFragment(FeedFragment.newInstance(1))
+        //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
+        }
+        return@OnNavigationItemSelectedListener true
     }
 
     private fun changeFragmentWithoutHistory(chosenFragment: Fragment, fragmentTag: String) {
@@ -75,6 +74,87 @@ class MainActivity : AppCompatActivity(),
                 .replace(fragmentContainer.id, fragment, fragmentTag)
                 .addToBackStack(backStackTag)
                 .commit()
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)) {
+                LocationRequestDialogFragment().show(supportFragmentManager, null)
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        mRequestForLocationPermission)
+            }
+        } else {
+            initializeLocator()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        if(requestCode == mRequestForLocationPermission) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                initializeLocator()
+            } else {
+                mRepo.setUserLocation(null, null)
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initializeLocator() {
+        val locationSettingsRequest = LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest).build()
+        LocationServices.getSettingsClient(this).checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener {
+                    mLocationProvider.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+                }
+                .addOnFailureListener {
+                    if(it is ResolvableApiException) {
+                        try {
+                            it.startResolutionForResult(this, mRequestForLocationPermission)
+                        } catch (err: IntentSender.SendIntentException) {
+
+                        }
+                    }
+                }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == mRequestForLocationPermission) {
+            initializeLocator()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private val mLocationRequest = LocationRequest()
+            .setInterval(10000)
+            .setFastestInterval(5000)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+    private val mLocationCallback = object: LocationCallback() {
+        override fun onLocationResult(result: LocationResult?) {
+            if(result != null && result.locations.size > 0) {
+                mRepo.setUserLocation(result.locations[0].latitude, result.locations[0].longitude)
+                mLocationProvider.removeLocationUpdates(this)
+            }
+        }
+    }
+
+    private fun cancelLocationRequest() {
+        mLocationProvider.removeLocationUpdates(mLocationCallback)
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                mRequestForLocationPermission)
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        mRepo.setUserLocation(null, null)
     }
 
     override fun onSubwayStationClick(subwayStation: SubwayStation) {
@@ -103,65 +183,5 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSubwayTimeClick(subwayTime: SubwayTime) {
         //mRepo.removeSubwayTime(item)
-    }
-
-    private fun requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                LocationRequestDialogFragment().show(supportFragmentManager, null)
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                        mRequestForLocationPermission)
-            }
-        } else {
-            initializeLocator()
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
-        if(requestCode == mRequestForLocationPermission) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                initializeLocator()
-            } else {
-                mRepo.setUserLocation(null, null)
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun initializeLocator() {
-        mLocationProvider.requestLocationUpdates(
-            LocationRequest()
-                    .setInterval(10000)
-                    .setFastestInterval(5000)
-                    .setPriority(LocationRequest.PRIORITY_LOW_POWER),
-                mLocationCallback, null)
-    }
-
-    private val mLocationCallback = object: LocationCallback() {
-        override fun onLocationResult(result: LocationResult?) {
-            if(result != null && result.locations.size > 0) {
-                mRepo.setUserLocation(result.locations[0].latitude, result.locations[0].longitude)
-                mLocationProvider.removeLocationUpdates(this)
-            }
-        }
-    }
-
-    private fun cancelLocationRequest() {
-        mLocationProvider.removeLocationUpdates(mLocationCallback)
-    }
-
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                mRequestForLocationPermission)
-    }
-
-    override fun onDialogNegativeClick(dialog: DialogFragment) {
-        mRepo.setUserLocation(null, null)
     }
 }
