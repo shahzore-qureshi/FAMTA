@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity(),
             initializeLocator()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
+            supportFragmentManager.findFragmentByTag(FeedsFragment.TAG)?.onActivityResult(requestCode, resultCode, data)
         }
     }
 

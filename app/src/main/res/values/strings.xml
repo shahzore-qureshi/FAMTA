@@ -39,6 +39,7 @@
     <string name="yes_please">Yes please!</string>
     <string name="no_thanks">No thanks creep.</string>
     <string name="trains_not_available">Trains are not available right now.</string>
-    <string name="reluctant_ok">Ughhh ok</string>
+    <string name="reluctant_ok">Ughhh OK</string>
     <string name="distance_miles">%.1f mi</string>
+    <string name="create_tweet">Create Tweet</string>
 </resources>
