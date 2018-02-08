@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity(),
         SubwayBoundsFragment.OnSubwayBoundsFragmentInteractionListener,
         SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener,
         SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener,
-        LocationRequestDialogFragment.OnLocationRequestDialogFragmentInteractionListener {
+        LocationRequestDialogFragment.OnLocationRequestDialogFragmentInteractionListener,
+        FeedsFragment.OnFeedsFragmentInteractionListener {
 
     @Inject lateinit var mRepo: SubwayRepository
     @Inject lateinit var mLocationProvider: FusedLocationProviderClient
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(),
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
-        //R.id.navigation_feeds -> changeFragment(FeedFragment.newInstance(1))
+            R.id.navigation_feeds -> changeFragmentWithoutHistory(FeedsFragment.newInstance(), FeedsFragment.TAG)
         //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
         }
         return@OnNavigationItemSelectedListener true
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity(),
             initializeLocator()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
+            supportFragmentManager.findFragmentByTag(FeedsFragment.TAG)?.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -183,5 +185,9 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSubwayTimeClick(subwayTime: SubwayTime) {
         //mRepo.removeSubwayTime(item)
+    }
+
+    override fun onFeedClick() {
+        //todo
     }
 }
