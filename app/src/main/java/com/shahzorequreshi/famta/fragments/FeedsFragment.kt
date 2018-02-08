@@ -8,11 +8,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.shahzorequreshi.famta.R
-import android.widget.ProgressBar
 import com.shahzorequreshi.famta.recyclerviewadapters.FeedsRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.FeedsViewModel
 import com.twitter.sdk.android.core.*
@@ -29,7 +29,7 @@ class FeedsFragment : Fragment() {
     private lateinit var mFeedsViewModel: FeedsViewModel
     private var mListener: OnFeedsFragmentInteractionListener? = null
     private var mFeedsAdapter: FeedsRecyclerViewAdapter? = null
-    private var mLoadingView: ProgressBar? = null
+    private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
     private var mRecyclerView: RecyclerView? = null
 
     companion object {
@@ -47,20 +47,19 @@ class FeedsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_feeds, container, false)
-
-        val checkLoadingView = view.findViewById<ProgressBar>(R.id.fragment_feeds_loading)
-        if(checkLoadingView is ProgressBar) {
-            mLoadingView = checkLoadingView
+        if(view is SwipeRefreshLayout) {
+            mSwipeRefreshLayout = view
+            mSwipeRefreshLayout?.post({
+                mSwipeRefreshLayout?.isRefreshing = true
+            })
         }
 
         val checkRecyclerView = view.findViewById<RecyclerView>(R.id.fragment_feeds_recyclerview)
         if(checkRecyclerView is RecyclerView) {
-            checkRecyclerView.layoutManager = LinearLayoutManager(context)
-
-            mFeedsAdapter = FeedsRecyclerViewAdapter(mListener)
-            checkRecyclerView.adapter = mFeedsAdapter
-
             mRecyclerView = checkRecyclerView
+            mRecyclerView?.layoutManager = LinearLayoutManager(context)
+            mFeedsAdapter = FeedsRecyclerViewAdapter(mListener)
+            mRecyclerView?.adapter = mFeedsAdapter
         }
 
         return view
@@ -74,10 +73,12 @@ class FeedsFragment : Fragment() {
             if(it != null) {
                 mFeedsAdapter?.mValues = it
                 mFeedsAdapter?.notifyDataSetChanged()
-                mLoadingView?.visibility = View.GONE
-                mRecyclerView?.visibility = View.VISIBLE
+                mSwipeRefreshLayout?.isRefreshing = false
             }
         })
+        mSwipeRefreshLayout?.setOnRefreshListener {
+            mFeedsViewModel.updateTweets()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -88,7 +89,7 @@ class FeedsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId) {
-            R.id.navigation_compose -> {
+            R.id.navigation_fragment_feeds_compose -> {
                 val session = TwitterCore.getInstance().sessionManager.activeSession
                 if(session != null) {
                     val intent = ComposerActivity.Builder(context)
@@ -114,6 +115,11 @@ class FeedsFragment : Fragment() {
                     }
                     mStartTwitterLoginButton?.callOnClick()
                 }
+                true
+            }
+            R.id.navigation_fragment_feeds_refresh -> {
+                mSwipeRefreshLayout?.isRefreshing = true
+                mFeedsViewModel.updateTweets()
                 true
             }
             else -> super.onOptionsItemSelected(item)

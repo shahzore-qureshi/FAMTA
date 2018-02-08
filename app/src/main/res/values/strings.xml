@@ -42,4 +42,5 @@
     <string name="reluctant_ok">Ughhh OK</string>
     <string name="distance_miles">%.1f mi</string>
     <string name="create_tweet">Create Tweet</string>
+    <string name="refresh">Refresh</string>
 </resources>

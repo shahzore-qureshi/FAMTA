@@ -35,7 +35,7 @@ class FeedsViewModel : ViewModel() {
 
     fun updateTweets() {
         mRequest = TwitterCore.getInstance().apiClient.searchService.tweets(
-                "mta delay -maryland", null, null, null, "recent",
+                "mta delay -maryland", null, null, null, "mixed",
                 null, null, null, null, null)
 
         mRequest?.enqueue(object: Callback<Search>() {
