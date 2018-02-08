@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FAMTA</string>
-    <string name="title_subway_lines">Subway Lines</string>
-    <string name="title_feeds">Feeds</string>
+    <string name="subway_stations">Subway Stations</string>
+    <string name="social_feed">Social Feed</string>
     <string name="title_construction">Construction</string>
     <string name="subway_service_1">Subway Service 1</string>
     <string name="subway_service_2">Subway Service 2</string>

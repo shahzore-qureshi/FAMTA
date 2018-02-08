@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
             R.id.navigation_feeds -> changeFragmentWithoutHistory(FeedsFragment.newInstance(), FeedsFragment.TAG)
-        //R.id.navigation_construction -> changeFragment(ConstructionFragment.newInstance(1))
         }
         return@OnNavigationItemSelectedListener true
     }
