@@ -58,7 +58,13 @@ class FeedsFragment : Fragment() {
         if(checkRecyclerView is RecyclerView) {
             mRecyclerView = checkRecyclerView
             mRecyclerView?.layoutManager = LinearLayoutManager(context)
+
             mFeedsAdapter = FeedsRecyclerViewAdapter(mListener)
+            mFeedsAdapter?.mOnRefreshListener = object : FeedsRecyclerViewAdapter.OnRefreshListener {
+                override fun onRefresh() {
+                    mFeedsViewModel.updateOlderTweets()
+                }
+            }
             mRecyclerView?.adapter = mFeedsAdapter
         }
 

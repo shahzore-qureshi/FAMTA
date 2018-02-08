@@ -20,6 +20,7 @@ class FeedsRecyclerViewAdapter(
 
     var mValues = listOf<Tweet>()
     private lateinit var mContext: Context
+    var mOnRefreshListener: OnRefreshListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mContext = parent.context
@@ -31,6 +32,7 @@ class FeedsRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mTweet = mValues[position]
         holder.mTweetLayout.addView(TweetView(mContext, holder.mTweet))
+        if(position == mValues.size - 3) mOnRefreshListener?.onRefresh()
     }
 
     override fun getItemCount(): Int {
@@ -40,5 +42,9 @@ class FeedsRecyclerViewAdapter(
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val mTweetLayout = mView as FrameLayout
         var mTweet: Tweet? = null
+    }
+
+    interface OnRefreshListener {
+        fun onRefresh()
     }
 }
