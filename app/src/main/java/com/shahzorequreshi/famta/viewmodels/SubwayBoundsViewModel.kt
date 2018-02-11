@@ -20,7 +20,7 @@ class SubwayBoundsViewModel(subwayService: SubwayService) : ViewModel() {
     init {
         MainApplication.component.inject(this)
         if(mSubwayBounds == null) {
-            mSubwayBounds = mRepo.getSubwayBounds(mSubwayService.bound_ids)
+            mSubwayBounds = mRepo.getSubwayBounds(mSubwayService)
         }
     }
 

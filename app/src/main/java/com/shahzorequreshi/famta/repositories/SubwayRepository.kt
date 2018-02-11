@@ -108,8 +108,20 @@ class SubwayRepository {
         return mDatabase.getSubwayServiceDao().get(subwayStation.service_ids)
     }
 
-    fun getSubwayBounds(bound_ids: List<String>): LiveData<List<SubwayBound>>? {
-        return mDatabase.getSubwayBoundDao().get(bound_ids)
+    fun getSubwayBounds(subwayService: SubwayService): LiveData<List<SubwayBound>>? {
+        mExecutors.diskIO().execute {
+            val lastUpdate = mDatabase.getSubwayBoundDao().getLastUpdated()
+            if(lastUpdate > 0) {
+                val timeSinceLastUpdate = Date().time - lastUpdate
+                if (timeSinceLastUpdate >= 86400000) { //Update bounds every day.
+                    val subwayBounds = mSubwayWebService.getSubwayBounds()
+                    if (subwayBounds.isNotEmpty()) {
+                        mDatabase.getSubwayBoundDao().update(subwayBounds)
+                    }
+                }
+            }
+        }
+        return mDatabase.getSubwayBoundDao().get(subwayService.bound_ids)
     }
 
     fun getSubwayTimes(subwayStation: SubwayStation,

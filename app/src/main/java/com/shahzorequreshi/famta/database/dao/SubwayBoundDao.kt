@@ -18,8 +18,14 @@ interface SubwayBoundDao {
     @Query("SELECT COUNT(*) FROM subway_bound")
     fun getSize(): Int
 
+    @Query("SELECT last_updated FROM subway_bound LIMIT 1")
+    fun getLastUpdated(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subwayBounds: List<SubwayBound>)
+
+    @Update
+    fun update(subwayBounds: List<SubwayBound>)
 
     @Delete
     fun delete(subwayBound: SubwayBound)
