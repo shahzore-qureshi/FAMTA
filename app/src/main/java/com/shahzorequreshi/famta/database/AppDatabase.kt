@@ -16,7 +16,7 @@ import javax.inject.Singleton
     SubwayService::class,
     SubwayBound::class,
     SubwayStation::class,
-    SubwayTime::class], version = 6)
+    SubwayTime::class], version = 7)
 @TypeConverters(DateConverter::class, ListConverter::class)
 @Singleton
 abstract class AppDatabase : RoomDatabase() {

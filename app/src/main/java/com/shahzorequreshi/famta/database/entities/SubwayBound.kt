@@ -8,7 +8,11 @@ import java.io.Serializable
  * Represents a subway service direction (northbound or southbound).
  */
 @Entity(tableName = "subway_bound")
-data class SubwayBound(@PrimaryKey val id: String, val name: String) : Serializable {
+data class SubwayBound(
+        @PrimaryKey val id: String,
+        val name: String,
+        val direction: String,
+        var last_updated: Long = 0) : Serializable {
     override fun toString(): String {
         return name
     }

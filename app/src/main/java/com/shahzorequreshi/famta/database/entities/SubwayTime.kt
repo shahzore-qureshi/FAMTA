@@ -12,7 +12,7 @@ import java.util.Date
 data class SubwayTime(
         val station_id: String,
         val service_id: String,
-        val bound_id: String,
+        val bound_direction: String,
         val arrival_time: Long,
         var last_updated: Long = 0) : Serializable {
 

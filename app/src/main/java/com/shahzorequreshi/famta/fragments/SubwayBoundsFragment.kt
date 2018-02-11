@@ -47,7 +47,9 @@ class SubwayBoundsFragment : Fragment() {
         if (arguments != null) {
             val subwayStation = arguments!![ARG_SUBWAY_STATION] as SubwayStation
             val subwayService = arguments!![ARG_SUBWAY_SERVICE] as SubwayService
-            mSubwayBoundsViewModel = ViewModelProviders.of(this).get(SubwayBoundsViewModel::class.java)
+            mSubwayBoundsViewModel = ViewModelProviders
+                    .of(this, SubwayBoundsViewModel.Factory(subwayService))
+                    .get(SubwayBoundsViewModel::class.java)
             mSubwayBoundsViewModel.getSubwayBounds()?.observe(this, Observer { subwayBounds ->
                 if(subwayBounds !== null) {
                     mSubwayBoundsAdapter?.mSubwayStation = subwayStation

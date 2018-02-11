@@ -8,7 +8,11 @@ import java.io.Serializable
  * Represents a subway service (ex. service A, service C).
  */
 @Entity(tableName = "subway_service")
-data class SubwayService(@PrimaryKey val id: String, val name: String, var last_updated: Long = 0) : Serializable {
+data class SubwayService(
+        @PrimaryKey val id: String,
+        val name: String,
+        val bound_ids: List<String>,
+        var last_updated: Long = 0) : Serializable {
     override fun toString(): String {
         return name
     }

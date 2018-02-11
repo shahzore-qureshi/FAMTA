@@ -81,9 +81,10 @@ class SubwayRepository {
         }
 
         if(mDatabase.getSubwayBoundDao().getSize() == 0) {
-            mDatabase.getSubwayBoundDao().insert(listOf(
-                    SubwayBound("N", "North"),
-                    SubwayBound("S", "South")))
+            val subwayBounds = mSubwayWebService.getSubwayBounds()
+            if (subwayBounds.isNotEmpty()) {
+                mDatabase.getSubwayBoundDao().insert(subwayBounds)
+            }
         }
     }
 
@@ -107,8 +108,8 @@ class SubwayRepository {
         return mDatabase.getSubwayServiceDao().get(subwayStation.service_ids)
     }
 
-    fun getSubwayBounds(): LiveData<List<SubwayBound>>? {
-        return mDatabase.getSubwayBoundDao().get()
+    fun getSubwayBounds(bound_ids: List<String>): LiveData<List<SubwayBound>>? {
+        return mDatabase.getSubwayBoundDao().get(bound_ids)
     }
 
     fun getSubwayTimes(subwayStation: SubwayStation,
@@ -130,7 +131,7 @@ class SubwayRepository {
         return mDatabase.getSubwayTimeDao().get(
                 subwayStation.id,
                 subwayService.id,
-                subwayBound.id,
+                subwayBound.direction,
                 Date().time)
     }
 

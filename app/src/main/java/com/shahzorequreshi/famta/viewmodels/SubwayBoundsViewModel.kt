@@ -12,18 +12,30 @@ import com.shahzorequreshi.famta.database.entities.SubwayService
 /**
  * ViewModel that holds subway service information, such as subway bounds.
  */
-class SubwayBoundsViewModel : ViewModel() {
+class SubwayBoundsViewModel(subwayService: SubwayService) : ViewModel() {
+    private val mSubwayService = subwayService
     private var mSubwayBounds: LiveData<List<SubwayBound>>? = null
     @Inject lateinit var mRepo: SubwayRepository
 
     init {
         MainApplication.component.inject(this)
         if(mSubwayBounds == null) {
-            mSubwayBounds = mRepo.getSubwayBounds()
+            mSubwayBounds = mRepo.getSubwayBounds(mSubwayService.bound_ids)
         }
     }
 
     fun getSubwayBounds(): LiveData<List<SubwayBound>>? {
         return mSubwayBounds
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    /**
+     * A creator is used to inject the subway bound into the ViewModel.
+     */
+    class Factory(subwayService: SubwayService): ViewModelProvider.NewInstanceFactory() {
+        private val mSubwayService = subwayService
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SubwayBoundsViewModel(mSubwayService) as T
+        }
     }
 }
