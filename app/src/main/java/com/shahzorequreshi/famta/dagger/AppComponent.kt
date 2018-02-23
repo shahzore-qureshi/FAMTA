@@ -16,6 +16,7 @@ interface AppComponent {
     fun inject(viewModel: SubwayBoundsViewModel)
     fun inject(viewModel: SubwayStationsViewModel)
     fun inject(viewModel: SubwayTimesViewModel)
+    fun inject(viewModel: SubwayLinesViewModel)
     fun inject(repository: SubwayRepository)
     fun inject(activity: MainActivity)
 }

@@ -86,6 +86,14 @@ class SubwayRepository {
                 mDatabase.getSubwayBoundDao().insert(subwayBounds)
             }
         }
+
+        if(mDatabase.getSubwayLineDao().getSize() == 0) {
+            val subwayLines = mSubwayWebService.getSubwayLines()
+            if (subwayLines.isNotEmpty()) {
+                println(subwayLines)
+                mDatabase.getSubwayLineDao().insert(subwayLines)
+            }
+        }
     }
 
     fun getSubwayStations(): LiveData<List<SubwayStation>>? {
@@ -145,6 +153,22 @@ class SubwayRepository {
                 subwayService.id,
                 subwayBound.direction,
                 Date().time)
+    }
+
+    fun getSubwayLines(): LiveData<List<SubwayLine>>? {
+        mExecutors.diskIO().execute {
+            val lastUpdate = mDatabase.getSubwayLineDao().getLastUpdated()
+            if(lastUpdate > 0) {
+                val timeSinceLastUpdate = Date().time - lastUpdate
+                if (timeSinceLastUpdate >= 900000) { //Update lines every 15 minutes.
+                    val subwayLines = mSubwayWebService.getSubwayLines()
+                    if (subwayLines.isNotEmpty()) {
+                        mDatabase.getSubwayLineDao().update(subwayLines)
+                    }
+                }
+            }
+        }
+        return mDatabase.getSubwayLineDao().get()
     }
 
     fun removeSubwayTime(subwayTime: SubwayTime) {

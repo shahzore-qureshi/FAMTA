@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity(),
         SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener,
         SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener,
         LocationRequestDialogFragment.OnLocationRequestDialogFragmentInteractionListener,
-        FeedsFragment.OnFeedsFragmentInteractionListener {
+        FeedsFragment.OnFeedsFragmentInteractionListener,
+        SubwayLinesFragment.OnSubwayLinesFragmentInteractionListener {
 
     @Inject lateinit var mRepo: SubwayRepository
     @Inject lateinit var mLocationProvider: FusedLocationProviderClient
@@ -49,7 +50,8 @@ class MainActivity : AppCompatActivity(),
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+            R.id.navigation_subway_stations -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayLinesFragment.newInstance(), SubwayLinesFragment.TAG)
             R.id.navigation_feeds -> changeFragmentWithoutHistory(FeedsFragment.newInstance(), FeedsFragment.TAG)
         }
         return@OnNavigationItemSelectedListener true
@@ -188,5 +190,9 @@ class MainActivity : AppCompatActivity(),
 
     override fun onFeedClick() {
         //todo
+    }
+
+    override fun onSubwayLineClick(subwayLine: SubwayLine) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

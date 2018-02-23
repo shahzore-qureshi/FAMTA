@@ -1,9 +1,6 @@
 package com.shahzorequreshi.famta.services
 
-import com.shahzorequreshi.famta.database.entities.SubwayBound
-import com.shahzorequreshi.famta.database.entities.SubwayService
-import com.shahzorequreshi.famta.database.entities.SubwayStation
-import com.shahzorequreshi.famta.database.entities.SubwayTime
+import com.shahzorequreshi.famta.database.entities.*
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -24,6 +21,7 @@ class SubwayWebService {
     private val mSubwayServiceURL = "$mDomain/services"
     private val mSubwayBoundURL = "$mDomain/bounds"
     private val mSubwayTimeURL = "$mDomain/times"
+    private val mSubwayLineURL = "$mDomain/lines"
     private val mClient: OkHttpClient = OkHttpClient()
     private val mMoshi: Moshi = Moshi.Builder().build()
 
@@ -35,6 +33,8 @@ class SubwayWebService {
             = mMoshi.adapter(Types.newParameterizedType(List::class.java, SubwayBound::class.java))
     private val mSubwayTimeJsonAdapter: JsonAdapter<List<SubwayTime>>
             = mMoshi.adapter(Types.newParameterizedType(List::class.java, SubwayTime::class.java))
+    private val mSubwayLineJsonAdapter: JsonAdapter<List<SubwayLine>>
+            = mMoshi.adapter(Types.newParameterizedType(List::class.java, SubwayLine::class.java))
 
     fun getSubwayStations(): List<SubwayStation> {
         val response = getSubwayData(mSubwayStationURL)
@@ -79,6 +79,19 @@ class SubwayWebService {
         val response = getSubwayData(mSubwayTimeURL)
         return if(response != null) {
             val list = mSubwayTimeJsonAdapter.fromJson(response) ?: listOf()
+            list.forEach {
+                it.last_updated = Date().time
+            }
+            list
+        } else {
+            listOf()
+        }
+    }
+
+    fun getSubwayLines(): List<SubwayLine> {
+        val response = getSubwayData(mSubwayLineURL)
+        return if(response != null) {
+            val list = mSubwayLineJsonAdapter.fromJson(response) ?: listOf()
             list.forEach {
                 it.last_updated = Date().time
             }

@@ -7,9 +7,9 @@ import com.squareup.moshi.Types
 import java.util.*
 
 /**
- * Converts timestamps to dates and vice versa.
+ * Converts string lists to jsons and vice versa.
  */
-class ListConverter {
+class StringListConverter {
     private val mMoshi: Moshi = Moshi.Builder().build()
     private val mJsonAdapter: JsonAdapter<List<String>>
             = mMoshi.adapter(Types.newParameterizedType(List::class.java, String::class.java))

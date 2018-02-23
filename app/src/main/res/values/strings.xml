@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">FAMTA</string>
-    <string name="subway_stations">Subway Stations</string>
+    <string name="subway_stations">Stations</string>
     <string name="social_feed">Social Feed</string>
-    <string name="title_construction">Construction</string>
+    <string name="status">Status</string>
     <string name="subway_service_1">Subway Service 1</string>
     <string name="subway_service_2">Subway Service 2</string>
     <string name="subway_service_3">Subway Service 3</string>
@@ -35,6 +35,7 @@
     <string name="placeholder">Placeholder</string>
     <string name="placeholder_long">Very Very Very Very Super Incredibly Long Placeholder</string>
     <string name="placeholder_distance">1.4 mi</string>
+    <string name="placeholder_status">GOOD SERVICE</string>
     <string name="use_location">May we use your location to find nearby subway stations?</string>
     <string name="yes_please">Yes please!</string>
     <string name="no_thanks">No thanks creep.</string>
