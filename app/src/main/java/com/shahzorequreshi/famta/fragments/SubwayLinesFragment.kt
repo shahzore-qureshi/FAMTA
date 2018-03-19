@@ -6,54 +6,54 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.shahzorequreshi.famta.R
-import android.support.v7.widget.DividerItemDecoration
 import android.widget.ProgressBar
-import com.shahzorequreshi.famta.database.entities.SubwayStation
-import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter
-import com.shahzorequreshi.famta.viewmodels.SubwayStationsViewModel
+import com.shahzorequreshi.famta.R
+import com.shahzorequreshi.famta.database.entities.SubwayLine
+import com.shahzorequreshi.famta.recyclerviewadapters.SubwayLinesRecyclerViewAdapter
+import com.shahzorequreshi.famta.viewmodels.SubwayLinesViewModel
 
 /**
- * A fragment representing subway stations.
+ * A fragment representing subway lines.
  */
-class SubwayStationsFragment : Fragment() {
-    private lateinit var mSubwayStationsViewModel: SubwayStationsViewModel
-    private var mListener: OnSubwayStationsFragmentInteractionListener? = null
-    private var mSubwayStationsAdapter: SubwayStationsRecyclerViewAdapter? = null
+class SubwayLinesFragment : Fragment() {
+    private lateinit var mSubwayStationsViewModel: SubwayLinesViewModel
+    private var mListener: OnSubwayLinesFragmentInteractionListener? = null
+    private var mSubwayStationsAdapter: SubwayLinesRecyclerViewAdapter? = null
     private var mLoadingView: ProgressBar? = null
     private var mRecyclerView: RecyclerView? = null
     private var mRecyclerViewState: Bundle? = null
     private val mRecyclerViewStateKey = "RECYCLER-VIEW"
 
     companion object {
-        const val TAG = "subway_stations_fragment"
-        fun newInstance() = SubwayStationsFragment()
+        const val TAG = "subway_lines_fragment"
+        fun newInstance() = SubwayLinesFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_subway_stations, container, false)
-        val checkForLoadingView = view.findViewById<ProgressBar>(R.id.fragment_subway_stations_loading)
+        val view = inflater.inflate(R.layout.fragment_subway_lines, container, false)
+        val checkForLoadingView = view.findViewById<ProgressBar>(R.id.fragment_subway_lines_loading)
         if(checkForLoadingView is ProgressBar) {
             mLoadingView = checkForLoadingView
         }
 
-        val checkForRecyclerView = view.findViewById<RecyclerView>(R.id.fragment_subway_stations_recyclerview)
+        val checkForRecyclerView = view.findViewById<RecyclerView>(R.id.fragment_subway_lines_recyclerview)
         if (checkForRecyclerView is RecyclerView) {
             val context = checkForRecyclerView.context
             checkForRecyclerView.layoutManager = LinearLayoutManager(context)
+
             if(mSubwayStationsAdapter == null) {
-                mSubwayStationsAdapter = SubwayStationsRecyclerViewAdapter(mListener, context)
+                mSubwayStationsAdapter = SubwayLinesRecyclerViewAdapter(mListener, context)
             }
 
             checkForRecyclerView.adapter = mSubwayStationsAdapter
-            checkForRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            checkForRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             mRecyclerView = checkForRecyclerView
         }
 
@@ -62,10 +62,10 @@ class SubwayStationsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mSubwayStationsViewModel = ViewModelProviders.of(this).get(SubwayStationsViewModel::class.java)
-        mSubwayStationsViewModel.getSubwayStations()?.observe(this, Observer { subwayStations ->
-            if(subwayStations !== null) {
-                mSubwayStationsAdapter?.mValues = subwayStations
+        mSubwayStationsViewModel = ViewModelProviders.of(this).get(SubwayLinesViewModel::class.java)
+        mSubwayStationsViewModel.getSubwayLines()?.observe(this, Observer { subwayLines ->
+            if(subwayLines !== null) {
+                mSubwayStationsAdapter?.mValues = subwayLines
                 mSubwayStationsAdapter?.notifyDataSetChanged()
                 mLoadingView?.visibility = View.GONE
                 mRecyclerView?.visibility = View.VISIBLE
@@ -75,11 +75,10 @@ class SubwayStationsFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnSubwayStationsFragmentInteractionListener) {
+        if (context is OnSubwayLinesFragmentInteractionListener) {
             mListener = context
-            mListener?.onLocationRequest()
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnSubwayStationsFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnSubwayLinesFragmentInteractionListener")
         }
     }
 
@@ -91,7 +90,7 @@ class SubwayStationsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //When subway station list becomes long, restore the last scroll position
+        //When subway lines list becomes long, restore the last scroll position
         //that the user scrolled to.
         if(mRecyclerViewState != null) {
             val savedState = mRecyclerViewState!!.getParcelable<Parcelable>(mRecyclerViewStateKey)
@@ -101,14 +100,11 @@ class SubwayStationsFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        mListener?.onCancelLocationRequest()
         mRecyclerViewState = Bundle()
         mRecyclerViewState!!.putParcelable(mRecyclerViewStateKey, mRecyclerView?.layoutManager?.onSaveInstanceState())
     }
 
-    interface OnSubwayStationsFragmentInteractionListener {
-        fun onSubwayStationClick(subwayStation: SubwayStation)
-        fun onLocationRequest()
-        fun onCancelLocationRequest()
+    interface OnSubwayLinesFragmentInteractionListener {
+        fun onSubwayLineClick(subwayLine: SubwayLine)
     }
 }

@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity(),
         SubwayStationsFragment.OnSubwayStationsFragmentInteractionListener,
         SubwayTimesFragment.OnSubwayTimesFragmentInteractionListener,
         LocationRequestDialogFragment.OnLocationRequestDialogFragmentInteractionListener,
-        FeedsFragment.OnFeedsFragmentInteractionListener {
+        FeedsFragment.OnFeedsFragmentInteractionListener,
+        SubwayLinesFragment.OnSubwayLinesFragmentInteractionListener {
 
     @Inject lateinit var mRepo: SubwayRepository
     @Inject lateinit var mLocationProvider: FusedLocationProviderClient
@@ -49,7 +50,8 @@ class MainActivity : AppCompatActivity(),
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+            R.id.navigation_subway_stations -> changeFragmentWithoutHistory(SubwayStationsFragment.newInstance(), SubwayStationsFragment.TAG)
+            R.id.navigation_subway_lines -> changeFragmentWithoutHistory(SubwayLinesFragment.newInstance(), SubwayLinesFragment.TAG)
             R.id.navigation_feeds -> changeFragmentWithoutHistory(FeedsFragment.newInstance(), FeedsFragment.TAG)
         }
         return@OnNavigationItemSelectedListener true
@@ -64,6 +66,9 @@ class MainActivity : AppCompatActivity(),
                 .commit()
     }
 
+    //Back stack tag parameter is optional. Only add one when the user is about to go down a long
+    //stack of fragments within a navigation tab. See the URL below for more information:
+    //https://medium.com/@bherbst/managing-the-fragment-back-stack-373e87e4ff62
     private fun changeFragment(chosenFragment: Fragment, fragmentTag: String, backStackTag: String? = null) {
         var fragment = supportFragmentManager.findFragmentByTag(fragmentTag)
         if(fragment == null) {
@@ -159,7 +164,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayStationClick(subwayStation: SubwayStation) {
-        changeFragment(SubwayServicesFragment.newInstance(subwayStation), SubwayServicesFragment.TAG, mBackStackRootTag)
+        changeFragment(
+                SubwayServicesFragment.newInstance(subwayStation),
+                SubwayServicesFragment.TAG, mBackStackRootTag)
     }
 
     override fun onLocationRequest() {
@@ -171,22 +178,31 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubwayServiceClick(subwayStation: SubwayStation, subwayService: SubwayService) {
-        changeFragment(SubwayBoundsFragment.newInstance(subwayStation, subwayService), SubwayBoundsFragment.TAG)
+        changeFragment(
+                SubwayBoundsFragment.newInstance(subwayStation, subwayService),
+                SubwayBoundsFragment.TAG)
     }
 
-    override fun onSubwayBoundClick(subwayStation: SubwayStation, subwayService: SubwayService, subwayBound: SubwayBound) {
-        changeFragment(SubwayTimesFragment.newInstance(subwayStation, subwayService, subwayBound), SubwayTimesFragment.TAG)
+    override fun onSubwayBoundClick(
+            subwayStation: SubwayStation,
+            subwayService: SubwayService,
+            subwayBound: SubwayBound) {
+        changeFragment(
+                SubwayTimesFragment.newInstance(subwayStation, subwayService, subwayBound),
+                SubwayTimesFragment.TAG)
     }
 
     override fun onSubwayTimeExpired(subwayTime: SubwayTime) {
         mRepo.removeSubwayTime(subwayTime)
     }
 
-    override fun onSubwayTimeClick(subwayTime: SubwayTime) {
-        //mRepo.removeSubwayTime(item)
-    }
-
     override fun onFeedClick() {
         //todo
+    }
+
+    override fun onSubwayLineClick(subwayLine: SubwayLine) {
+        changeFragment(
+                SubwayLineEventsFragment.newInstance(subwayLine.events),
+                SubwayLineEventsFragment.TAG, mBackStackRootTag)
     }
 }

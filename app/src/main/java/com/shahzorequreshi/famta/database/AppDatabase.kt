@@ -4,7 +4,8 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.TypeConverters
 import com.shahzorequreshi.famta.database.converters.DateConverter
-import com.shahzorequreshi.famta.database.converters.ListConverter
+import com.shahzorequreshi.famta.database.converters.StringListConverter
+import com.shahzorequreshi.famta.database.converters.SubwayLineEventListConverter
 import com.shahzorequreshi.famta.database.dao.*
 import com.shahzorequreshi.famta.database.entities.*
 import javax.inject.Singleton
@@ -16,8 +17,9 @@ import javax.inject.Singleton
     SubwayService::class,
     SubwayBound::class,
     SubwayStation::class,
-    SubwayTime::class], version = 7)
-@TypeConverters(DateConverter::class, ListConverter::class)
+    SubwayTime::class,
+    SubwayLine::class], version = 8)
+@TypeConverters(DateConverter::class, StringListConverter::class, SubwayLineEventListConverter::class)
 @Singleton
 abstract class AppDatabase : RoomDatabase() {
     companion object {
@@ -27,4 +29,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getSubwayBoundDao(): SubwayBoundDao
     abstract fun getSubwayStationDao(): SubwayStationDao
     abstract fun getSubwayTimeDao(): SubwayTimeDao
+    abstract fun getSubwayLineDao(): SubwayLineDao
 }

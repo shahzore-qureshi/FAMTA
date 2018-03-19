@@ -93,8 +93,8 @@ class SubwayStationsRecyclerViewAdapter(
                 }
                 else -> {
                     val view = LayoutInflater.from(parent.context)
-                            .inflate(fragment_subway_stations_list_item, parent, false)
-                    return ViewHolderZeroServices(view)
+                            .inflate(fragment_subway_stations_list_item_with_four_services, parent, false)
+                    return ViewHolderFourServices(view)
                 }
             }
         }

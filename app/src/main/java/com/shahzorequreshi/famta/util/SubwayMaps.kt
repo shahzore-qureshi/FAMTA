@@ -43,7 +43,9 @@ object SubwayMaps {
             "N" -> return R.drawable.ic_subway_service_n
             "Q" -> return R.drawable.ic_subway_service_q
             "R" -> return R.drawable.ic_subway_service_r
+            "S" -> return R.drawable.ic_subway_service_s
             "SI" -> return R.drawable.ic_subway_service_sir
+            "SIR" -> return R.drawable.ic_subway_service_sir
             "W" -> return R.drawable.ic_subway_service_w
             "Z" -> return R.drawable.ic_subway_service_z
         }
