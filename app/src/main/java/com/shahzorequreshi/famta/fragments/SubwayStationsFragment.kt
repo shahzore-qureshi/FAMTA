@@ -90,6 +90,9 @@ class SubwayStationsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        //When subway station list becomes long, restore the last scroll position
+        //that the user scrolled to.
         if(mRecyclerViewState != null) {
             val savedState = mRecyclerViewState!!.getParcelable<Parcelable>(mRecyclerViewStateKey)
             mRecyclerView?.layoutManager?.onRestoreInstanceState(savedState)

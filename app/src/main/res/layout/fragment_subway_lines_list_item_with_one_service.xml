@@ -26,6 +26,7 @@
         app:autoSizeStepGranularity="@dimen/text_size_auto_granularity"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_gravity="center_vertical"
-        android:gravity="end" />
+        android:gravity="end"
+        android:textStyle="bold"/>
 
 </LinearLayout>

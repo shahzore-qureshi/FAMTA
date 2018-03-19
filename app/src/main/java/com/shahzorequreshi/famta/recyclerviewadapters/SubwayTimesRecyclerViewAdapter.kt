@@ -29,15 +29,13 @@ class SubwayTimesRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
         holder.mTextView.text = holder.mItem!!.toString()
-        holder.mView.setOnClickListener {
-            mListener?.onSubwayTimeClick(holder.mItem!!)
-        }
 
         if(holder.mCounter != null) {
             holder.mCounter?.cancel()
         }
 
-        holder.mCounter = object: CountDownTimer(holder.mItem!!.arrival_time - Date().time, 1000) {
+        val timerDuration = holder.mItem!!.arrival_time - Date().time
+        holder.mCounter = object: CountDownTimer(timerDuration, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 holder.mTextView.text = holder.mItem!!.toString()
             }
@@ -51,7 +49,7 @@ class SubwayTimesRecyclerViewAdapter(
         return mValues.size
     }
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val mTextView: TextView = mView as TextView
         var mItem: SubwayTime? = null
         var mCounter: CountDownTimer? = null

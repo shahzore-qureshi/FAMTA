@@ -59,7 +59,6 @@ class SubwayTimesFragment : Fragment() {
             mSubwayTimesViewModel = ViewModelProviders
                     .of(this, SubwayTimesViewModel.Factory(subwayStation, subwayService, subwayBound))
                     .get(SubwayTimesViewModel::class.java)
-            mSubwayTimesViewModel = ViewModelProviders.of(this).get(SubwayTimesViewModel::class.java)
             mSubwayTimesViewModel.getSubwayTimes()?.observe(this, Observer { subwayTimes ->
                 if(subwayTimes !== null) {
                     if(subwayTimes.isEmpty() && view != null) {
@@ -105,7 +104,6 @@ class SubwayTimesFragment : Fragment() {
     }
 
     interface OnSubwayTimesFragmentInteractionListener {
-        fun onSubwayTimeClick(subwayTime: SubwayTime)
         fun onSubwayTimeExpired(subwayTime: SubwayTime)
     }
 }

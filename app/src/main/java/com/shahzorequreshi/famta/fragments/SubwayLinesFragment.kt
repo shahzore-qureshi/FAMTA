@@ -6,21 +6,17 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.shahzorequreshi.famta.R
-import android.support.v7.widget.DividerItemDecoration
 import android.widget.ProgressBar
+import com.shahzorequreshi.famta.R
 import com.shahzorequreshi.famta.database.entities.SubwayLine
-import com.shahzorequreshi.famta.database.entities.SubwayStation
 import com.shahzorequreshi.famta.recyclerviewadapters.SubwayLinesRecyclerViewAdapter
-import com.shahzorequreshi.famta.recyclerviewadapters.SubwayStationsRecyclerViewAdapter
 import com.shahzorequreshi.famta.viewmodels.SubwayLinesViewModel
-import com.shahzorequreshi.famta.viewmodels.SubwayStationsViewModel
 
 /**
  * A fragment representing subway lines.
@@ -51,12 +47,13 @@ class SubwayLinesFragment : Fragment() {
         if (checkForRecyclerView is RecyclerView) {
             val context = checkForRecyclerView.context
             checkForRecyclerView.layoutManager = LinearLayoutManager(context)
+
             if(mSubwayStationsAdapter == null) {
                 mSubwayStationsAdapter = SubwayLinesRecyclerViewAdapter(mListener, context)
             }
 
             checkForRecyclerView.adapter = mSubwayStationsAdapter
-            checkForRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            checkForRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             mRecyclerView = checkForRecyclerView
         }
 
@@ -92,6 +89,9 @@ class SubwayLinesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        //When subway lines list becomes long, restore the last scroll position
+        //that the user scrolled to.
         if(mRecyclerViewState != null) {
             val savedState = mRecyclerViewState!!.getParcelable<Parcelable>(mRecyclerViewStateKey)
             mRecyclerView?.layoutManager?.onRestoreInstanceState(savedState)

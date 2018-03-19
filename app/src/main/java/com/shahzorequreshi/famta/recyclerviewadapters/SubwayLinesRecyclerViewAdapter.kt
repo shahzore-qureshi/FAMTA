@@ -1,6 +1,7 @@
 package com.shahzorequreshi.famta.recyclerviewadapters
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -103,10 +104,22 @@ class SubwayLinesRecyclerViewAdapter(
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.status
+
+                var textColor = -1
+                when(mItem!!.status) {
+                    "PLANNED WORK" -> textColor = R.color.bronze
+                    "SERVICE CHANGE" -> textColor = R.color.bronze
+                    "DELAYS" -> textColor = R.color.red
+                    "GOOD SERVICE" -> textColor = R.color.green
+                }
+                if(textColor != -1) {
+                    mTextView.setTextColor(ContextCompat.getColor(mContext, textColor))
+                }
+
                 mImageView.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name))
                 mView.setOnClickListener {
-                    if(mItem is SubwayLine)
+                    if(mItem!!.status != "GOOD SERVICE")
                         mListener?.onSubwayLineClick(mItem as SubwayLine)
                 }
             }
@@ -121,12 +134,24 @@ class SubwayLinesRecyclerViewAdapter(
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.status
+
+                var textColor = -1
+                when(mItem!!.status) {
+                    "PLANNED WORK" -> textColor = R.color.bronze
+                    "SERVICE CHANGE" -> textColor = R.color.bronze
+                    "DELAYS" -> textColor = R.color.red
+                    "GOOD SERVICE" -> textColor = R.color.green
+                }
+                if(textColor != -1) {
+                    mTextView.setTextColor(ContextCompat.getColor(mContext, textColor))
+                }
+
                 mImageViewOne.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[0].toString()))
                 mImageViewTwo.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[1].toString()))
                 mView.setOnClickListener {
-                    if(mItem is SubwayLine)
+                    if(mItem!!.status != "GOOD SERVICE")
                         mListener?.onSubwayLineClick(mItem as SubwayLine)
                 }
             }
@@ -142,6 +167,18 @@ class SubwayLinesRecyclerViewAdapter(
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.status
+
+                var textColor = -1
+                when(mItem!!.status) {
+                    "PLANNED WORK" -> textColor = R.color.bronze
+                    "SERVICE CHANGE" -> textColor = R.color.bronze
+                    "DELAYS" -> textColor = R.color.red
+                    "GOOD SERVICE" -> textColor = R.color.green
+                }
+                if(textColor != -1) {
+                    mTextView.setTextColor(ContextCompat.getColor(mContext, textColor))
+                }
+
                 mImageViewOne.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[0].toString()))
                 mImageViewTwo.setImageResource(
@@ -149,7 +186,7 @@ class SubwayLinesRecyclerViewAdapter(
                 mImageViewThree.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[2].toString()))
                 mView.setOnClickListener {
-                    if(mItem is SubwayLine)
+                    if(mItem!!.status != "GOOD SERVICE")
                         mListener?.onSubwayLineClick(mItem as SubwayLine)
                 }
             }
@@ -166,6 +203,18 @@ class SubwayLinesRecyclerViewAdapter(
             override fun bindViewHolder(position: Int) {
                 mItem = mValues[position]
                 mTextView.text = mItem!!.status
+
+                var textColor = -1
+                when(mItem!!.status) {
+                    "PLANNED WORK" -> textColor = R.color.bronze
+                    "SERVICE CHANGE" -> textColor = R.color.bronze
+                    "DELAYS" -> textColor = R.color.red
+                    "GOOD SERVICE" -> textColor = R.color.green
+                }
+                if(textColor != -1) {
+                    mTextView.setTextColor(ContextCompat.getColor(mContext, textColor))
+                }
+
                 mImageViewOne.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[0].toString()))
                 mImageViewTwo.setImageResource(
@@ -175,7 +224,7 @@ class SubwayLinesRecyclerViewAdapter(
                 mImageViewFour.setImageResource(
                         SubwayMaps.getDrawableIdForSubwayService(mItem!!.name[3].toString()))
                 mView.setOnClickListener {
-                    if(mItem is SubwayLine)
+                    if(mItem!!.status != "GOOD SERVICE")
                         mListener?.onSubwayLineClick(mItem as SubwayLine)
                 }
             }
